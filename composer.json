@@ -1,0 +1,45 @@
+{
+    "name": "rutatrans/api",
+    "type": "project",
+    "description": "Open source digital platform for citizen participation",
+    "keywords": [
+        "virtuagora",
+        "participation",
+        "open",
+        "goverment",
+        "contents",
+        "cms"
+    ],
+    "homepage": "http://www.virtuagora.org",
+    "license": "TBA",
+    "authors": [
+        {
+            "name": "Augusto Mathurin",
+            "homepage": "https://github.com/augusthur"
+        }, {
+            "name": "Guillermo Croppi",
+            "homepage": "https://github.com/guillecro"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.0",
+        "slim/slim": "^3.0",
+        "slim/php-view": "^2.2",
+        "monolog/monolog": "^1.17",
+        "illuminate/database": "^5.5",
+        "illuminate/mail": "^5.5",
+        "augusthur/json-respector": "dev-master",
+        "grimzy/laravel-mysql-spatial": "^2.1",
+        "firebase/php-jwt": "^5.0",
+        "guzzlehttp/guzzle": "^6.2",
+        "google/recaptcha": "^1.2"
+    },
+    "scripts": {
+
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "src"
+        }
+    }
+}

@@ -1,2 +1,2 @@
-# making-networks-api
-API repository for the implementation of Making Networks, powered by Virtuagora, for the Youth Observatory, a chapter from the Internet Society
+# creating-networks-api
+API repository for the implementation of Creating Networks, powered by Virtuagora, for the Youth Observatory, a SIG from the Internet Society
