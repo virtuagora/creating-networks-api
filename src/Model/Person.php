@@ -1,7 +1,8 @@
-<?php namespace App\Model;
+<?php
+
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Person extends Model
 {
@@ -10,7 +11,7 @@ class Person extends Model
         'id', 'names', 'surnames', 'created_at', 'subject',
     ];
     protected $fillable = [
-        'names', 'surnames', 'email', 'facebook', 'phone',
+        'names', 'surnames', 'email', 'facebook', 'phone', 'person_id',
     ];
 
     public function subject()
@@ -18,10 +19,10 @@ class Person extends Model
         return $this->hasOne('App\Model\Subject');
     }
 
-    public function groups()
-    {
-        return $this->belongsToMany('App\Model\Group')->withPivot('relation', 'title');
-    }
+    // public function groups()
+    // {
+    //     return $this->belongsToMany('App\Model\Group')->withPivot('relation', 'title');
+    // }
 
     // public function setNamesAttribute($value)
     // {

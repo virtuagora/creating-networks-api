@@ -17,6 +17,14 @@ class AuthorizationService
         $this->logger = $logger;
     }
 
+    public function hasRoles(Subject $subject, $roles) {
+        if (!is_array($roles)) {
+            $roles = [$roles];
+        }
+        $subRoles = $subject->rolesList();
+        return array_intersect($subRoles, $roles);
+    }
+
     public function check(Subject $subject, string $actName, Object $object = null, $proxy = null)
     {
         $action = $this->db->query('App:Action')->find($actName);

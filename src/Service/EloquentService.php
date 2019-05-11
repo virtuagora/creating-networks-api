@@ -82,6 +82,13 @@ class EloquentService
         return $entity;
     }
 
+    public function createAndSave($model, $attributes = [])
+    {
+        $entity = $this->create($model, $attributes);
+        $entity->save();
+        return $entity;
+    }
+
     public function findDuplicatedFields($model, $instance, $fields = [])
     {
         $dupFields = [];

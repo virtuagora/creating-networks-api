@@ -29,7 +29,7 @@ class Subject extends Model implements SubjectInterface, ObjectInterface
 
     public function groups()
     {
-        return $this->belongsToMany('App\Model\Group')->withPivot('relation', 'title');
+        return $this->belongsToMany('App\Model\Group', 'subject_group')->withPivot('relation', 'title');
     }
 
     public function roles()

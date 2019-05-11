@@ -9,9 +9,9 @@ class Role extends Model
     public $incrementing = false;
     protected $table = 'roles';
     protected $visible = [
-        'id', 'name', 'show_badge', 'icon', 'meta',
+        'id', 'name', 'show_badge', 'icon', 'data',
     ];
     protected $casts = [
-        'meta' => 'array',
+        'data' => 'array',
     ];
 }

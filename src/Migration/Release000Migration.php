@@ -20,12 +20,12 @@ class Release000Migration
 
     public function isInstalled()
     {
-        return $this->db->schema()->hasTable('options');
+        return $this->schema->hasTable('options');
     }
 
     public function up()
     {
-        $this->schema->create('spaces', function(Blueprint $t) {
+        $this->schema->create('spaces', function (Blueprint $t) {
             $t->increments('id');
             $t->point('point');
             $t->lineString('line')->nullable();
@@ -33,39 +33,55 @@ class Release000Migration
             $t->timestamps();
             $t->spatialIndex('point');
         });
-        $this->db->schema()->create('regions', function ($t) {
+        $this->schema->create('regions', function (Blueprint $t) {
             $t->engine = 'InnoDB';
             $t->increments('id');
             $t->string('name');
             $t->json('data')->nullable();
+            $t->json('localization')->nullable();
             $t->integer('space_id')->unsigned();
             $t->foreign('space_id')->references('id')->on('spaces')->onDelete('cascade');
             $t->timestamps();
         });
-        $this->db->schema()->create('countries', function ($t) {
+        $this->schema->create('countries', function (Blueprint $t) {
             $t->engine = 'InnoDB';
             $t->increments('id');
             $t->string('name');
             $t->string('code');
             $t->json('data')->nullable();
+            $t->json('localization')->nullable();
             $t->integer('region_id')->unsigned();
-            $t->foreign('region_id')->references('id')->on('regions')->onDelete('cascade');
+            $t->foreign('region_id')->references('id')->on('regions')->onDelete('restrict');
             $t->integer('space_id')->unsigned();
             $t->foreign('space_id')->references('id')->on('spaces')->onDelete('cascade');
             $t->timestamps();
         });
-        $this->db->schema()->create('cities', function ($t) {
+        $this->schema->create('cities', function (Blueprint $t) {
             $t->engine = 'InnoDB';
             $t->increments('id');
             $t->string('name');
             $t->json('data')->nullable();
+            $t->json('localization')->nullable();
+            $t->integer('initiatives_count')->unsigned();
             $t->integer('country_id')->unsigned();
-            $t->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
+            $t->foreign('country_id')->references('id')->on('countries')->onDelete('restrict');
             $t->integer('space_id')->unsigned();
             $t->foreign('space_id')->references('id')->on('spaces')->onDelete('cascade');
             $t->timestamps();
         });
-        $this->schema->create('options', function($t) {
+        $this->schema->create('registered_cities', function (Blueprint $t) {
+            $t->engine = 'InnoDB';
+            $t->increments('id');
+            $t->string('name');
+            $t->point('point');
+            $t->string('trace')->nullable();
+            $t->json('localization')->nullable();
+            $t->integer('country_id')->unsigned();
+            $t->foreign('country_id')->references('id')->on('countries')->onDelete('restrict');
+            $t->integer('city_id')->unsigned()->nullable();
+            $t->foreign('city_id')->references('id')->on('cities')->onDelete('set null');
+        });
+        $this->schema->create('options', function (Blueprint $t) {
             $t->engine = 'InnoDB';
             $t->increments('id');
             $t->string('key')->unique();
@@ -75,7 +91,7 @@ class Release000Migration
             $t->boolean('autoload');
             $t->timestamps();
         });
-        $this->schema->create('roles', function($t) {
+        $this->schema->create('roles', function (Blueprint $t) {
             $t->engine = 'InnoDB';
             $t->string('id')->primary();
             $t->string('name')->unique();
@@ -84,12 +100,13 @@ class Release000Migration
             $t->json('data')->nullable();
             $t->timestamps();
         });
-        $this->schema->create('people', function($t) {
+        $this->schema->create('people', function (Blueprint $t) {
             $t->engine = 'InnoDB';
             $t->increments('id');
             $t->string('email')->nullable();
             $t->string('facebook')->nullable();
             $t->string('phone')->nullable();
+            $t->string('person_id')->nullable();
             $t->string('names');
             $t->string('surnames');
             $t->string('trace')->nullable();
@@ -98,36 +115,37 @@ class Release000Migration
             $t->index('facebook');
             $t->index('phone');
         });
-        $this->schema->create('group_types', function($t) {
+        $this->schema->create('group_types', function (Blueprint $t) {
             $t->engine = 'InnoDB';
-            $t->increments('id');
+            $t->string('id')->primary();
             $t->string('name')->unique();
-            $t->string('role_policy'); // enum(single, group, empty, custom)
             $t->text('description');
-            $t->text('allowed_relations')->nullable(); // list of allowed relations for every group
-            $t->json('data')->nullable();
+            $t->json('role_policy')->nullable(); // enum(single, group, empty, custom)
+            $t->json('allowed_relations')->nullable(); // list of allowed relations for every group
+            $t->json('schema')->nullable();
             $t->string('role_id')->nullable(); // role for the groups of this type
             $t->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
             $t->timestamps();
         });
-        $this->schema->create('groups', function($t) {
+        $this->schema->create('groups', function (Blueprint $t) {
             $t->engine = 'InnoDB';
             $t->increments('id');
             $t->string('name');
-            $t->string('acronym')->nullable();
-            $t->integer('founding_year')->nullable();
+            // $t->integer('founding_year')->nullable();
             $t->text('description');
-            $t->text('goals')->nullable();
+            // $t->text('goals')->nullable();
             $t->integer('quota')->unsigned()->nullable();
             $t->json('data')->nullable();
             $t->string('trace')->nullable();
+            $t->integer('city_id')->unsigned()->nullable();
+            $t->foreign('city_id')->references('id')->on('cities')->onDelete('set null');
             $t->integer('parent_id')->unsigned()->nullable();
             $t->foreign('parent_id')->references('id')->on('groups')->onDelete('set null');
-            $t->integer('group_type_id')->unsigned();
+            $t->string('group_type_id');
             $t->foreign('group_type_id')->references('id')->on('group_types')->onDelete('restrict');
             $t->timestamps();
         });
-        $this->schema->create('subjects', function($t) {
+        $this->schema->create('subjects', function (Blueprint $t) {
             $t->engine = 'InnoDB';
             $t->increments('id');
             $t->string('username')->unique();
@@ -147,7 +165,7 @@ class Release000Migration
             $t->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
             $t->timestamps();
         });
-        $this->schema->create('subject_group', function($t) {
+        $this->schema->create('subject_group', function (Blueprint $t) {
             $t->engine = 'InnoDB';
             $t->increments('id');
             $t->string('relation');
@@ -157,7 +175,7 @@ class Release000Migration
             $t->integer('group_id')->unsigned();
             $t->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
         });
-        $this->schema->create('subject_role', function($t) {
+        $this->schema->create('subject_role', function (Blueprint $t) {
             $t->engine = 'InnoDB';
             $t->increments('id');
             $t->timestamp('expiration')->nullable();
@@ -166,7 +184,7 @@ class Release000Migration
             $t->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
             $t->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
         });
-        $this->schema->create('tokens', function($t) {
+        $this->schema->create('tokens', function (Blueprint $t) {
             $t->engine = 'InnoDB';
             $t->increments('id');
             $t->string('token')->unique();
@@ -179,7 +197,7 @@ class Release000Migration
             $t->timestamps();
             $t->index('finder');
         });
-        $this->schema->create('nodes', function($t) {
+        $this->schema->create('nodes', function (Blueprint $t) {
             $t->engine = 'InnoDB';
             $t->increments('id');
             $t->string('title');
@@ -197,7 +215,7 @@ class Release000Migration
             $t->timestamps();
             $t->index('type');
         });
-        $this->schema->create('node_node', function($t) {
+        $this->schema->create('node_node', function (Blueprint $t) {
             $t->engine = 'InnoDB';
             $t->increments('id');
             $t->string('relation')->nullable();
@@ -206,7 +224,7 @@ class Release000Migration
             $t->integer('child_id')->unsigned();
             $t->foreign('child_id')->references('id')->on('nodes')->onDelete('cascade');
         });
-        $this->schema->create('node_subject', function($t) {
+        $this->schema->create('node_subject', function (Blueprint $t) {
             $t->engine = 'InnoDB';
             $t->increments('id');
             $t->string('relation');
@@ -216,7 +234,7 @@ class Release000Migration
             $t->integer('subject_id')->unsigned();
             $t->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
         });
-        $this->schema->create('comments', function($t) {
+        $this->schema->create('comments', function (Blueprint $t) {
             $t->engine = 'InnoDB';
             $t->increments('id');
             $t->text('content');
@@ -230,37 +248,37 @@ class Release000Migration
             $t->foreign('parent_id')->references('id')->on('comments')->onDelete('cascade');
             $t->timestamps();
         });
-        $this->schema->create('comment_votes', function($t) {
-            $t->engine = 'InnoDB';
-            $t->increments('id');
-            $t->integer('value');
-            $t->integer('subject_id')->unsigned();
-            $t->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
-            $t->integer('comment_id')->unsigned();
-            $t->foreign('comment_id')->references('id')->on('comments')->onDelete('cascade');
-            $t->timestamps();
-        });
-        $this->schema->create('terms', function($t) {
-            $t->engine = 'InnoDB';
-            $t->increments('id');
-            $t->string('name');
-            $t->string('slug');
-            $t->string('taxonomy');
-            $t->integer('count')->unsigned()->default(0);
-            $t->timestamps();
-            $t->unique(['slug', 'taxonomy']);
-        });
-        $this->schema->create('term_object', function($t) {
-            $t->engine = 'InnoDB';
-            $t->increments('id');
-            $t->integer('term_id')->unsigned();
-            $t->string('object_type');
-            $t->integer('object_id')->unsigned();
-            $t->json('data')->nullable();
-            $t->foreign('term_id')->references('id')->on('terms')->onDelete('cascade');
-            $t->index(['object_type', 'object_id']);
-        });
-        $this->schema->create('actions', function($t) {
+        // $this->schema->create('comment_votes', function (Blueprint $t) {
+        //     $t->engine = 'InnoDB';
+        //     $t->increments('id');
+        //     $t->integer('value');
+        //     $t->integer('subject_id')->unsigned();
+        //     $t->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
+        //     $t->integer('comment_id')->unsigned();
+        //     $t->foreign('comment_id')->references('id')->on('comments')->onDelete('cascade');
+        //     $t->timestamps();
+        // });
+        // $this->schema->create('terms', function (Blueprint $t) {
+        //     $t->engine = 'InnoDB';
+        //     $t->increments('id');
+        //     $t->string('name');
+        //     $t->string('slug');
+        //     $t->string('taxonomy');
+        //     $t->integer('count')->unsigned()->default(0);
+        //     $t->timestamps();
+        //     $t->unique(['slug', 'taxonomy']);
+        // });
+        // $this->schema->create('term_object', function (Blueprint $t) {
+        //     $t->engine = 'InnoDB';
+        //     $t->increments('id');
+        //     $t->integer('term_id')->unsigned();
+        //     $t->string('object_type');
+        //     $t->integer('object_id')->unsigned();
+        //     $t->json('data')->nullable();
+        //     $t->foreign('term_id')->references('id')->on('terms')->onDelete('cascade');
+        //     $t->index(['object_type', 'object_id']);
+        // });
+        $this->schema->create('actions', function (Blueprint $t) {
             $t->engine = 'InnoDB';
             $t->string('id')->primary();
             $t->string('group');
@@ -270,20 +288,20 @@ class Release000Migration
             $t->integer('points')->nullable();
             $t->timestamps();
         });
-        $this->schema->create('pages', function($t) {
-            $t->engine = 'InnoDB';
-            $t->increments('id');
-            $t->string('name');
-            $t->string('link')->nullable();
-            $t->json('data')->nullable();
-            $t->string('slug');
-            $t->integer('order')->default(0);
-            $t->integer('parent_id')->unsigned()->nullable();
-            $t->foreign('parent_id')->references('id')->on('pages')->onDelete('set null');
-            $t->integer('node_id')->unsigned()->nullable();
-            $t->foreign('node_id')->references('id')->on('nodes')->onDelete('cascade');
-        });
-        $this->schema->create('logs', function($t) {
+        // $this->schema->create('pages', function (Blueprint $t) {
+        //     $t->engine = 'InnoDB';
+        //     $t->increments('id');
+        //     $t->string('name');
+        //     $t->string('link')->nullable();
+        //     $t->json('data')->nullable();
+        //     $t->string('slug');
+        //     $t->integer('order')->default(0);
+        //     $t->integer('parent_id')->unsigned()->nullable();
+        //     $t->foreign('parent_id')->references('id')->on('pages')->onDelete('set null');
+        //     $t->integer('node_id')->unsigned()->nullable();
+        //     $t->foreign('node_id')->references('id')->on('nodes')->onDelete('cascade');
+        // });
+        $this->schema->create('logs', function (Blueprint $t) {
             $t->engine = 'InnoDB';
             $t->increments('id');
             $t->integer('subject_id')->unsigned();
@@ -298,19 +316,19 @@ class Release000Migration
             $t->index(['object_type', 'object_id']);
             $t->timestamps();
         });
-        $this->schema->create('notifications', function($t) {
-            $t->engine = 'InnoDB';
-            $t->increments('id');
-            $t->boolean('seen')->default(false);
-            $t->integer('log_id')->unsigned();
-            $t->foreign('log_id')->references('id')->on('logs')->onDelete('cascade');
-            $t->integer('subject_id')->unsigned();
-            $t->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
-        });
+        // $this->schema->create('notifications', function (Blueprint $t) {
+        //     $t->engine = 'InnoDB';
+        //     $t->increments('id');
+        //     $t->boolean('seen')->default(false);
+        //     $t->integer('log_id')->unsigned();
+        //     $t->foreign('log_id')->references('id')->on('logs')->onDelete('cascade');
+        //     $t->integer('subject_id')->unsigned();
+        //     $t->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
+        // });
 
         // --- Plugin content ballots ---
 
-        $this->schema->create('ballots', function($t) {
+        $this->schema->create('ballots', function (Blueprint $t) {
             $t->engine = 'InnoDB';
             $t->increments('id');
             $t->json('options');
@@ -333,38 +351,100 @@ class Release000Migration
         $this->db->table('roles')->insert([
             [
                 'id' => 'user',
-                'name' => 'Usuario',
+                'name' => 'User',
                 'show_badge' => false,
             ], [
                 'id' => 'verified',
-                'name' => 'Verificado',
+                'name' => 'Verified user',
                 'show_badge' => true,
             ], [
                 'id' => 'admin',
-                'name' => 'Admnistrador',
+                'name' => 'Admnistrator',
                 'show_badge' => true,
             ], [
-                'id' => 'group-staff',
-                'name' => 'Grupo de Staff',
+                'id' => 'group:staff',
+                'name' => 'Staff group',
                 'show_badge' => false,
             ], [
-                'id' => 'group-organization',
-                'name' => 'Grupo de Organizacion',
+                'id' => 'group:initiative',
+                'name' => 'Initiative group',
                 'show_badge' => false,
             ],
         ]);
 
-        $this->db->table('group_types')->insert([
-            [
-                'name' => 'Staff',
-                'description' => 'Equipo de trabajo',
-                'role_id' => 'group-staff',
-                'role_policy' => 'single'
-            ], [
-                'name' => 'Organization',
-                'description' => 'Organizaciones',
-                'role_id' => 'group-organization',
-                'role_policy' => 'single'
+        $this->db->createAndSave('App:GroupType', [
+            'id' => 'Staff',
+            'name' => 'Staff',
+            'description' => 'Administration teams',
+            'role_id' => 'group:staff',
+            'schema' => [
+                'type' => 'object',
+            ],
+        ]);
+        $this->db->createAndSave('App:GroupType', [
+            'id' => 'Initiative',
+            'name' => 'Initiative',
+            'description' => 'Youth initiatives',
+            'role_id' => 'group:initiative',
+            'schema' => [
+                'type' => 'object',
+                'properties' => [
+                    'founding_year' => [
+                        'type' => 'integer',
+                        'minimum' => 1,
+                        'maximum' => 2020,
+                    ],
+                    'goals' => [
+                        'type' => 'string',
+                        'minLength' => 1,
+                        'maxLength' => 500,
+                    ],
+                    'website' => [
+                        'type' => 'string',
+                        'minLength' => 10,
+                        'maxLength' => 100,
+                    ],
+                    'facebook' => [
+                        'type' => 'string',
+                        'minLength' => 10,
+                        'maxLength' => 100,
+                    ],
+                    'twitter' => [
+                        'type' => 'string',
+                        'minLength' => 10,
+                        'maxLength' => 100,
+                    ],
+                    'other_network' => [
+                        'type' => 'string',
+                        'minLength' => 10,
+                        'maxLength' => 100,
+                    ],
+                    'contact_email' => [
+                        'type' => 'string',
+                        'minLength' => 5,
+                        'maxLength' => 100,
+                        'format' => 'email',
+                    ],
+                    'contact_phone' => [
+                        'type' => 'string',
+                        'minLength' => 5,
+                        'maxLength' => 20,
+                    ],
+                    'role_of_youth' => [
+                        'type' => 'string',
+                        'enum' => [
+                            'Target Audience', 'Leadership', 'Membership'
+                        ],
+                    ],
+                    'interested_in_participate' => [
+                        'type' => 'boolean',
+                        'default' => false,
+                    ],
+                ],
+                'required' => [
+                    'founding_year', 'contact_email', 'goals', 'role_of_youth'
+                ],
+                'additionalProperties' => false,
             ],
         ]);
 

@@ -1,31 +1,39 @@
-<?php namespace App\Model;
+<?php
+
+namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Group extends Model
 {
-    use SoftDeletes;
-
     protected $table = 'groups';
     protected $visible = [
-        'id', 'name', 'acronym', 'description', 'quota',
-        'created_at', 'group_type', 'subject',
+        'id', 'name', 'description', 'quota', 'created_at', 'data',
     ];
-    protected $with = [
-        'group_type', 'subject',
+    protected $fillable = [
+        'name', 'description', 'quota', 'data',
     ];
     protected $casts = [
-        'deleted_at',
+        'data' => 'array',
     ];
 
     public function subject()
     {
-        return $this->belongsTo('App\Model\Subject');
+        return $this->hasOne('App\Model\Subject');
     }
 
-    public function users()
+    public function city()
     {
-        return $this->belongsToMany('App\Model\User', 'user_group')->withPivot('relation', 'title');
+        return $this->belongsTo('App\Model\City');
+    }
+
+    public function parent()
+    {
+        return $this->belongsTo('App\Model\Group');
+    }
+
+    public function members()
+    {
+        return $this->belongsToMany('App\Model\Subject', 'subject_group')->withPivot('relation', 'title');
     }
 }
