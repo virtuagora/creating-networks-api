@@ -15,9 +15,9 @@ class JWTSessionManager implements SessionManagerInterface
     {
         $this->jwt = $jwt;
         $this->options = array_merge([
-            "header" => "Authorization",
+            "header" => 'Authorization',
             "regexp" => "/Bearer\s+(.*)$/i",
-            "cookie" => "token",
+            "cookie" => 'token',
         ], $options);
     }
 
@@ -42,8 +42,8 @@ class JWTSessionManager implements SessionManagerInterface
         $claims = [
             'id' => $subject->id,
             'type' => $subject->type,
-            'name' => $subject->name,
-            'roles_list' => $subject->rolesList(),
+            'name' => $subject->display_name,
+            'roles' => $subject->rolesList(),
         ];
         $token = $this->jwt->createToken($claims);
         return [

@@ -87,6 +87,7 @@ class InitiativeResource extends Resource
         $initiative = $this->db->create('App:Initiative', $data);
         $initiative->city_id = $cityId;
         $initiative->save();
+        // TODO crear subject
         if ($options['set_owner']) {
             $initiative->members()->attach(
                 $subject->id, ['relation' => 'owner']

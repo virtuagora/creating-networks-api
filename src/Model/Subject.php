@@ -52,7 +52,7 @@ class Subject extends Model implements SubjectInterface, ObjectInterface
 
     public function rolesList()
     {
-        return $this->roles->pluck('id');
+        return $this->roles->pluck('id')->toArray();
     }
 
     public function relationsWith(SubjectInterface $subject)

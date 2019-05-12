@@ -9,6 +9,7 @@ class RegisteredCity extends Model
 {
     use SpatialTrait;
 
+    public $timestamps = false;
     protected $table = 'registered_cities';
     protected $visible = [
         'id', 'name', 'point', 'localization', 'trace',

@@ -11,7 +11,7 @@ class Region extends Model
         'id', 'name', 'data', 'space', 'localization',
     ];
     protected $fillable = [
-        'id', 'name', 'data', 'localization',
+        'id', 'name', 'data', 'localization', 'space_id',
     ];
     protected $with = [
         'space',

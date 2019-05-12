@@ -6,7 +6,7 @@ class DummySubject implements SubjectInterface, ObjectInterface
 {
     public $id;
     public $type;
-    public $name;
+    public $display_name;
     protected $roles;
     protected $extra;
 
@@ -14,7 +14,7 @@ class DummySubject implements SubjectInterface, ObjectInterface
     {
         $this->type = $type;
         $this->id = $id;
-        $this->name = $name;
+        $this->display_name = $name;
         $this->roles = $roles;
         $this->extra = $extra;
     }
@@ -29,7 +29,7 @@ class DummySubject implements SubjectInterface, ObjectInterface
         return array_merge($this->extra, [
             'id' => $this->id,
             'type' => $this->type,
-            'name' => $this->name,
+            'display_name' => $this->display_name,
             'roles_list' => $this->roles,
         ]);
     }

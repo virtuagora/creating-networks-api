@@ -63,7 +63,7 @@ class Release000Migration
             $t->string('name');
             $t->json('data')->nullable();
             $t->json('localization')->nullable();
-            $t->integer('initiatives_count')->unsigned();
+            $t->integer('initiatives_count')->unsigned()->default(0);
             $t->integer('country_id')->unsigned();
             $t->foreign('country_id')->references('id')->on('countries')->onDelete('restrict');
             $t->integer('space_id')->unsigned();

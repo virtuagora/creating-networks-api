@@ -12,7 +12,7 @@ class City extends Model
         'initiatives_count',
     ];
     protected $fillable = [
-        'name', 'data', 'country_id', 'localization',
+        'name', 'data', 'country_id', 'space_id', 'localization',
     ];
     protected $with = [
         'space',
