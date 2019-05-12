@@ -41,6 +41,10 @@ $app->group('/v1', function () {
     $this->post('/initiatives', 'initiativeApiGate:createInitiative')->setName('apiC1Initiative');
     $this->get('/initiatives/{ini}', 'initiativeApiGate:retrieveInitiative')->setName('apiR1Initiative');
 
+    $this->get('/regions', 'regionApiGate:retrieveRegions')->setName('apiRNRegion');
+    $this->get('/regions/{reg}', 'regionApiGate:retrieveRegion')->setName('apiR1Region');
+    $this->get('/countries', 'countryApiGate:retrieveCountries')->setName('apiRNCountry');
+    $this->get('/countries/{cou}', 'countryApiGate:retrieveCountry')->setName('apiR1Country');
     $this->get('/cities', 'cityApiGate:retrieveCities')->setName('apiRNCity');
     $this->get('/cities/{cit}', 'cityApiGate:retrieveCity')->setName('apiR1City');
 

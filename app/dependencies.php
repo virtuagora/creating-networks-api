@@ -71,6 +71,12 @@ $container['userApiGate'] = function ($c) {
 $container['initiativeApiGate'] = function ($c) {
     return new App\Gate\InitiativeApiGate($c);
 };
+$container['regionApiGate'] = function ($c) {
+    return new App\Gate\RegionApiGate($c);
+};
+$container['countryApiGate'] = function ($c) {
+    return new App\Gate\CountryApiGate($c);
+};
 $container['cityApiGate'] = function ($c) {
     return new App\Gate\CityApiGate($c);
 };

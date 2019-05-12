@@ -103,7 +103,7 @@ class LocalIdentityProvider implements IdentityProviderInterface
                 'username' => $pending->data['email'],
                 'password' => $data['password'],
                 'display_name' => $data['names'] . ' ' . $data['surnames'],
-                'img_type' => 0,
+                'img_type' => 1,
                 'img_hash' => md5($pending->data['email']),
             ],
             'person' => [

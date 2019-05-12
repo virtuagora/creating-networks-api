@@ -87,7 +87,16 @@ class InitiativeResource extends Resource
         $initiative = $this->db->create('App:Initiative', $data);
         $initiative->city_id = $cityId;
         $initiative->save();
-        // TODO crear subject
+        $iniSub = $this->db->create('App:Subject', [
+            'username' => 'group:' . $initiative->id,
+            'display_name' => $initiative->name,
+            'img_type' => 0,
+            'img_hash' => 'group',
+        ]);
+        $iniSub->type = 'Group';
+        $iniSub->group()->associate($initiative);
+        $iniSub->save();
+        $iniSub->roles()->attach('InitiativeGroup');
         if ($options['set_owner']) {
             $initiative->members()->attach(
                 $subject->id, ['relation' => 'owner']

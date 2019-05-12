@@ -79,5 +79,8 @@ class DataLoader
                 $inserts = [];
             }
         }
+        if (count($inserts) > 0) {
+            $this->db->table('registered_cities')->insert($inserts);
+        }
     }
 }

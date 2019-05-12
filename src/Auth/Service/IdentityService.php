@@ -71,7 +71,7 @@ class IdentityService
         $subject->person()->associate($person);
         $subject->save();
         $this->db->table('subject_role')->insert([
-            'role_id' => 'user',
+            'role_id' => 'User',
             'subject_id' => $subject->id,
         ]);
         return $subject;

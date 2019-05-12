@@ -48,6 +48,10 @@ class CityResource extends Resource
             'from' => [
                 'type' => 'string',
             ],
+            'country_id' => [
+                'type' => 'integer',
+                'minimum' => 1,
+            ],
         ]);
         $v = $this->validation->fromSchema($pagSch);
         $options = $this->validation->prepareData($pagSch, $options, true);
@@ -58,6 +62,9 @@ class CityResource extends Resource
                 list($a, $b) = explode(',', $options['from']);
                 $q->distance('point', new Point($a, $b), $options['distance']);
             });
+        }
+        if (isset($options['country_id'])) {
+            $query->where('country_id', $options['country_id']);
         }
         return new Paginator($query, $options);
     }
@@ -70,6 +77,10 @@ class CityResource extends Resource
             ],
             'from' => [
                 'type' => 'string',
+            ],
+            'country_id' => [
+                'type' => 'integer',
+                'minimum' => 1,
             ],
             's' => [
                 'type' => 'string',
@@ -86,6 +97,9 @@ class CityResource extends Resource
         if (isset($options['s'])) {
             $filter = Utils::traceStr($options['s']);
             $query->where('trace', 'LIKE', "%$filter%");
+        }
+        if (isset($options['country_id'])) {
+            $query->where('country_id', $options['country_id']);
         }
         return new Paginator($query, $options);
     }
