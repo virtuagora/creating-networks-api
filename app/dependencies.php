@@ -62,11 +62,17 @@ $container['helper'] = function ($c) {
 $container['resources'] = function ($c) {
     return new App\Service\ResourcesService($c);
 };
-$container['sessionGate'] = function ($c) {
+$container['sessionApiGate'] = function ($c) {
     return new App\Gate\SessionApiGate($c);
 };
 $container['userApiGate'] = function ($c) {
     return new App\Gate\UserApiGate($c);
+};
+$container['initiativeApiGate'] = function ($c) {
+    return new App\Gate\InitiativeApiGate($c);
+};
+$container['cityApiGate'] = function ($c) {
+    return new App\Gate\CityApiGate($c);
 };
 $container['errorHandler'] = function ($c) {
     return new App\Service\ErrorHandlerService(

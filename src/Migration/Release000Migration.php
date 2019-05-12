@@ -123,7 +123,8 @@ class Release000Migration
             $t->text('description');
             $t->json('role_policy')->nullable(); // enum(single, group, empty, custom)
             $t->json('allowed_relations')->nullable(); // list of allowed relations for every group
-            $t->json('schema')->nullable();
+            $t->json('public_schema');
+            $t->json('private_schema');
             $t->string('role_id')->nullable(); // role for the groups of this type
             $t->foreign('role_id')->references('id')->on('roles')->onDelete('cascade');
             $t->timestamps();
@@ -132,11 +133,10 @@ class Release000Migration
             $t->engine = 'InnoDB';
             $t->increments('id');
             $t->string('name');
-            // $t->integer('founding_year')->nullable();
             $t->text('description');
-            // $t->text('goals')->nullable();
             $t->integer('quota')->unsigned()->nullable();
-            $t->json('data')->nullable();
+            $t->json('public_data')->nullable();
+            $t->json('private_data')->nullable();
             $t->string('trace')->nullable();
             $t->integer('city_id')->unsigned()->nullable();
             $t->foreign('city_id')->references('id')->on('cities')->onDelete('set null');
@@ -378,8 +378,11 @@ class Release000Migration
             'name' => 'Staff',
             'description' => 'Administration teams',
             'role_id' => 'StaffGroup',
-            'schema' => [
-                'type' => 'object',
+            'public_schema' => [
+                'type' => 'null',
+            ],
+            'private_schema' => [
+                'type' => 'null',
             ],
         ]);
         $this->db->createAndSave('App:GroupType', [
@@ -387,7 +390,12 @@ class Release000Migration
             'name' => 'Initiative',
             'description' => 'Youth initiatives',
             'role_id' => 'InitiativeGroup',
-            'schema' => [
+            'allowed_relations' => [
+                'owner' => [
+                    'name' => 'Owner',
+                ],
+            ],
+            'public_schema' => [
                 'type' => 'object',
                 'properties' => [
                     'founding_year' => [
@@ -420,17 +428,6 @@ class Release000Migration
                         'minLength' => 10,
                         'maxLength' => 100,
                     ],
-                    'contact_email' => [
-                        'type' => 'string',
-                        'minLength' => 5,
-                        'maxLength' => 100,
-                        'format' => 'email',
-                    ],
-                    'contact_phone' => [
-                        'type' => 'string',
-                        'minLength' => 5,
-                        'maxLength' => 20,
-                    ],
                     'role_of_youth' => [
                         'type' => 'string',
                         'enum' => [
@@ -443,7 +440,27 @@ class Release000Migration
                     ],
                 ],
                 'required' => [
-                    'founding_year', 'contact_email', 'goals', 'role_of_youth'
+                    'founding_year', 'goals', 'role_of_youth',
+                ],
+                'additionalProperties' => false,
+            ],
+            'private_schema' => [
+                'type' => 'object',
+                'properties' => [
+                    'contact_email' => [
+                        'type' => 'string',
+                        'minLength' => 5,
+                        'maxLength' => 100,
+                        'format' => 'email',
+                    ],
+                    'contact_phone' => [
+                        'type' => 'string',
+                        'minLength' => 5,
+                        'maxLength' => 20,
+                    ],
+                ],
+                'required' => [
+                    'contact_email',
                 ],
                 'additionalProperties' => false,
             ],

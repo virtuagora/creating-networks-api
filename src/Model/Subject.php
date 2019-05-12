@@ -29,7 +29,9 @@ class Subject extends Model implements SubjectInterface, ObjectInterface
 
     public function groups()
     {
-        return $this->belongsToMany('App\Model\Group', 'subject_group')->withPivot('relation', 'title');
+        return $this->belongsToMany(
+            'App\Model\Group', 'subject_group', 'subject_id', 'group_id'
+        )->withPivot('relation', 'title');
     }
 
     public function roles()
@@ -37,7 +39,7 @@ class Subject extends Model implements SubjectInterface, ObjectInterface
         return $this->belongsToMany('App\Model\Role', 'subject_role');
     }
 
-    public function setPaswordAttribute($value)
+    public function setPasswordAttribute($value)
     {
         $this->attributes['password'] = password_hash($value, PASSWORD_DEFAULT);
     }
@@ -50,7 +52,7 @@ class Subject extends Model implements SubjectInterface, ObjectInterface
 
     public function rolesList()
     {
-        return $this->roles->pluck();
+        return $this->roles->pluck('id');
     }
 
     public function relationsWith(SubjectInterface $subject)

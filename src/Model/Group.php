@@ -8,13 +8,14 @@ class Group extends Model
 {
     protected $table = 'groups';
     protected $visible = [
-        'id', 'name', 'description', 'quota', 'created_at', 'data',
+        'id', 'name', 'description', 'quota', 'created_at', 'public_data',
     ];
     protected $fillable = [
-        'name', 'description', 'quota', 'data',
+        'name', 'description', 'quota', 'public_data', 'private_data',
     ];
     protected $casts = [
-        'data' => 'array',
+        'public_data' => 'array',
+        'private_data' => 'array',
     ];
 
     public function subject()
@@ -34,6 +35,8 @@ class Group extends Model
 
     public function members()
     {
-        return $this->belongsToMany('App\Model\Subject', 'subject_group')->withPivot('relation', 'title');
+        return $this->belongsToMany(
+            'App\Model\Subject', 'subject_group', 'group_id', 'subject_id'
+        )->withPivot('relation', 'title');
     }
 }

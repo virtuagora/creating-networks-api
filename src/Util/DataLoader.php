@@ -66,13 +66,18 @@ class DataLoader
         $csv = Reader::createFromPath(__DIR__ . '/../../data/cities.csv', 'r');
         $csv->setHeaderOffset(0);
         $records = $csv->getRecords();
+        $inserts = [];
         foreach ($records as $o => $r) {
-            $this->db->table('registered_cities')->insert([
+            $inserts[] = [
                 'name' => $r['name'],
-                'trace' => $r['trace'],
+                'trace' => Utils::traceStr($r['trace']),
                 'point' => $this->db->getConnection()->raw('Point('.$r['lat'].','.$r['lng'].')'),
                 'country_id' => $r['country_id'],
-            ]);
+            ];
+            if (count($inserts) > 99) {
+                $this->db->table('registered_cities')->insert($inserts);
+                $inserts = [];
+            }
         }
     }
 }

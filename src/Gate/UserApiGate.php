@@ -25,14 +25,11 @@ class UserApiGate extends AbstractApiGate
     // POST /users
     public function createUser($request, $response, $params)
     {
-        $subject = $request->getAttribute('subject');
-        $token = $this->helper->getFieldFromRequest($request, 'token', [
-            'type' => 'string',
-            'minLength' => 10,
-            'maxLength' => 100,
-        ]);
-        $data = $this->helper->getDataFromRequest($request);
-        $user = $this->resources['user']->createUser($subject, $data, $token);
+        $user = $this->resources['user']->createUser(
+            $request->getAttribute('subject'),
+            $this->helper->getDataFromRequest($request),
+            $this->helper->getOptionsFromRequest($request)
+        );
         return $this->sendCreatedResponse($response, $user);
     }
 

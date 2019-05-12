@@ -40,6 +40,11 @@ $app->group('/v1', function () {
 
     $this->post('/initiatives', 'initiativeApiGate:createInitiative')->setName('apiC1Initiative');
     $this->get('/initiatives/{ini}', 'initiativeApiGate:retrieveInitiative')->setName('apiR1Initiative');
+
+    $this->get('/cities', 'cityApiGate:retrieveCities')->setName('apiRNCity');
+    $this->get('/cities/{cit}', 'cityApiGate:retrieveCity')->setName('apiR1City');
+
+    $this->get('/registered-cities', 'cityApiGate:retrieveRegisteredCities')->setName('apiRNRegisteredCity');
 });
 
 //$app->get('/send-mail', 'App\ExampleController:sendMail');

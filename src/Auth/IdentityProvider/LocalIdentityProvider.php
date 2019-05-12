@@ -18,7 +18,7 @@ class LocalIdentityProvider implements IdentityProviderInterface
     public function getSignInFields(array $data)
     {
         $v = $this->validation->fromSchema([
-            'email' => [
+            'username' => [
                 'type' => 'string',
                 'format' => 'email',
             ],
@@ -30,7 +30,7 @@ class LocalIdentityProvider implements IdentityProviderInterface
         ]);
         $v->assert($data);
         return [
-            'email' => $data['email'],
+            'username' => $data['username'],
             'password' => $data['password'],
         ];
     }
@@ -38,12 +38,12 @@ class LocalIdentityProvider implements IdentityProviderInterface
     public function retrieveSubject(array $data)
     {
         $subject = $this->db->query('App:Subject')
-            ->where('email', $data['email'])
+            ->where('username', $data['username'])
             ->first();
         if (isset($subject)) {
             $pass = $data['password'];
             $hash = $subject->password;
-            if (password_verify($password, $hash)) {
+            if (password_verify($pass, $hash)) {
                 if (password_needs_rehash($hash, PASSWORD_DEFAULT)) {
                     $subject->password = $pass;
                     $subject->save();

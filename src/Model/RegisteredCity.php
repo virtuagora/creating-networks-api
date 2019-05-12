@@ -3,9 +3,12 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
 
 class RegisteredCity extends Model
 {
+    use SpatialTrait;
+
     protected $table = 'registered_cities';
     protected $visible = [
         'id', 'name', 'point', 'localization', 'trace',

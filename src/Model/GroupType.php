@@ -10,14 +10,15 @@ class GroupType extends Model
     protected $table = 'group_types';
     protected $visible = [
         'id', 'name', 'description', 'role_policy',
-        'schema', 'allowed_relations',
+        'public_schema', 'private_schema', 'allowed_relations',
     ];
     protected $fillable = [
         'id', 'name', 'description', 'role_policy', 'role_id',
-        'schema', 'allowed_relations',
+        'public_schema', 'private_schema', 'allowed_relations',
     ];
     protected $casts = [
-        'schema' => 'array',
+        'public_schema' => 'array',
+        'private_schema' => 'array',
         'allowed_relations' => 'array',
     ];
 

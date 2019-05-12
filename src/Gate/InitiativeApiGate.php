@@ -16,9 +16,11 @@ class InitiativeApiGate extends AbstractApiGate
     // POST /initiatives
     public function createInitiative($request, $response, $params)
     {
-        $subject = $request->getAttribute('subject');
-        $data = $this->helper->getDataFromRequest($request);
-        $init = $this->resources['initiative']->createInitiative($subject, $data);
+        $init = $this->resources['initiative']->createInitiative(
+            $request->getAttribute('subject'),
+            $this->helper->getDataFromRequest($request),
+            $this->helper->getOptionsFromRequest($request)
+        );
         return $this->sendCreatedResponse($response, $init);
     }
 

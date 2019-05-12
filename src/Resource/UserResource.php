@@ -44,11 +44,28 @@ class UserResource extends Resource
         return $schema;
     }
 
-    public function createUser($subject, $data, $token)
+    public function createUser($subject, $data, $options = [], $flags = 0)
     {
-        $v = $this->validation->fromSchema($this->retrieveSchema());
+        $datSch = $this->retrieveSchema();
+        $v = $this->validation->fromSchema($datSch);
+        $data = $this->validation->prepareData($datSch, $data, true);
         $v->assert($data);
-        $user = $this->identity->signUp('local', $token, $data);
+        $optSch = [
+            'type' => 'object',
+            'properties' => [
+                'token' => [
+                    'type' => 'string',
+                    'minLength' => 10,
+                    'maxLength' => 100,
+                ],
+            ],
+            'required' => ['token'],
+            'additionalProperties' => false,
+        ];
+        $v = $this->validation->fromSchema($optSch);
+        $options = $this->validation->prepareData($optSch, $options, true);
+        $v->assert($options);
+        $user = $this->identity->signUp('local', $options['token'], $data);
         return $user;
     }
 
@@ -73,7 +90,8 @@ class UserResource extends Resource
             'additionalProperties' => false,
         ];
         $v = $this->validation->fromSchema($schema);
-        $v->assert($this->validation->prepareData($schema, $data, true));
+        $data = $this->validation->prepareData($schema, $data, true);
+        $v->assert($data);
         $dupFields = $this->db->findDuplicatedFields('App:Person', [
             'email' => $data['email']
         ]);

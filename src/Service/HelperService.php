@@ -53,6 +53,21 @@ class HelperService
         }
     }
 
+    public function getOptionsFromRequest($request)
+    {
+        $data = $request->getParsedBody();
+        if (isset($data['options'])) {
+            $mediaType = $request->getMediaType();
+            if ($mediaType == 'application/json') {
+                return $data['options'];
+            } elseif ($mediaType == 'application/x-www-form-urlencoded') {
+                $options = json_decode($data['options'], true);
+                return is_array($options) ? $options : [];
+            }
+        }
+        return [];
+    }
+
     public function getFieldFromRequest($request, $field, $schema)
     {
         $data = $request->getParsedBody();
@@ -86,13 +101,5 @@ class HelperService
             'properties' => $properties,
         ];
         return $schema;
-    }
-
-    public function initializeOptions(array $options)
-    {
-        return array_merge([
-            'auth' => true,
-            'log' => true,
-        ], $options);
     }
 }

@@ -7,7 +7,7 @@ use App\Util\Exception\AppException;
 
 class SessionApiGate extends ContainerClient
 {
-    // POST /token
+    // POST /tokens
     public function createSession($request, $response, $params)
     {
         $credentialsSupplied = isset($_SERVER['PHP_AUTH_USER']) && isset($_SERVER['PHP_AUTH_PW']);
@@ -15,20 +15,20 @@ class SessionApiGate extends ContainerClient
             throw new AppException('Credenciales de acceso no ingresadas');
         }
         $result = $this->identity->signIn('local', [
-            'email' => $_SERVER['PHP_AUTH_USER'],
+            'username' => $_SERVER['PHP_AUTH_USER'],
             'password' => $_SERVER['PHP_AUTH_PW'],
         ]);
         if ($result['status'] == 'success') {
-            $user = $result['user'];
-            $session = $this->session->signIn($user->subject->toDummy());
+            $subject = $result['subject'];
+            $session = $this->session->signIn($subject);
             return $response->withJSON([
                 'token_type' => 'bearer',
                 'access_token' => $session['token'],
                 'expiration' => $this->jwt->getClaim($session['token'], 'exp'),
-                'user' => $user->toArray(),
+                'user' => $subject->toArray(),
             ]);
         } else {
-            throw new AppException($result['status'].'Credenciales de acceso incorrectas');
+            throw new AppException($result['status'].' Credenciales de acceso incorrectas');
         }
     }
 }

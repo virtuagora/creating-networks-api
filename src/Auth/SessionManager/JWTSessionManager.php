@@ -39,7 +39,12 @@ class JWTSessionManager implements SessionManagerInterface
 
     public function signIn(Subject $subject)
     {
-        $claims = $subject->toArray();
+        $claims = [
+            'id' => $subject->id,
+            'type' => $subject->type,
+            'name' => $subject->name,
+            'roles_list' => $subject->rolesList(),
+        ];
         $token = $this->jwt->createToken($claims);
         return [
             'type' => 'jwt-session',
