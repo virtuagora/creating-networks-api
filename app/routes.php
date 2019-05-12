@@ -22,6 +22,10 @@ $app->get('/install', function($request, $response, $params) {
 });
 
 $app->get('/test', function ($req, $res, $arg) {
+    $loader = new \App\Util\DataLoader($this->db);
+    //$loader->createRegions();
+    //$loader->createCountries();
+    $loader->createRegisteredCities();
     return $res->withJSON([
         'sub' => $this->session->authenticate($req)->toArray()
     ]);
@@ -33,8 +37,9 @@ $app->group('/v1', function () {
     $this->post('/pending-users', 'userApiGate:createPendingUser')->setName('apiC1PendingUser');
     $this->post('/users', 'userApiGate:createUser')->setName('apiC1User');
     $this->get('/users/{usr}', 'userApiGate:retrieveUser')->setName('apiR1User');
-    // $this->get('/place', 'placeApiGate:getMultiPlace')->setName('apiGetMultiPlace');
-    // $this->post('/place/{pla}/vote', 'placeApiGate:postOneVote');
+
+    $this->post('/initiatives', 'initiativeApiGate:createInitiative')->setName('apiC1Initiative');
+    $this->get('/initiatives/{ini}', 'initiativeApiGate:retrieveInitiative')->setName('apiR1Initiative');
 });
 
 //$app->get('/send-mail', 'App\ExampleController:sendMail');

@@ -1,0 +1,243 @@
+id,name,code_2,code_3,region_id,latitude,longitude,localization_fr_name,localization_ar_name,localization_es_name,localization_cn_name,localization_ru_name,data_ldc,data_lldc,data_sids,data_developed,data_independent
+20,Andorra,AD,AND,39,42.546245,1.601554,Andorre,أندورا,Andorra,安道尔,Андорра,0,0,0,1,1
+784,United Arab Emirates,AE,ARE,145,23.424076,53.847818,Émirats arabes unis,الإمارات العربية المتحدة,Emiratos Árabes Unidos,阿拉伯联合酋长国,Объединенные Арабские Эмираты,0,0,0,0,1
+4,Afghanistan,AF,AFG,34,33.93911,67.709953,Afghanistan,أفغانستان,Afganistán,阿富汗,Афганистан,1,1,0,0,1
+28,Antigua & Barbuda,AG,ATG,419,17.060816,-61.796428,Antigua-et-Barbuda,أنتيغوا وبربودا,Antigua y Barbuda,安提瓜和巴布达,Антигуа и Барбуда,0,0,1,0,1
+660,Anguilla,AI,AIA,419,18.220554,-63.068615,Anguilla,أنغيلا,Anguila,安圭拉,Ангилья,0,0,1,0,0
+8,Albania,AL,ALB,39,41.153332,20.168331,Albanie,ألبانيا,Albania,阿尔巴尼亚,Албания,0,0,0,1,1
+51,Armenia,AM,ARM,145,40.069099,45.038189,Arménie,أرمينيا,Armenia,亚美尼亚,Армения,0,1,0,0,1
+24,Angola,AO,AGO,202,-11.202692,17.873887,Angola,أنغولا,Angola,安哥拉,Ангола,1,0,0,0,1
+10,Antarctica,AQ,ATA,10,-75.250973,-0.071389,Antarctique,أنتاركتيكا,Antártida,南极洲,Антарктике,0,0,0,0,0
+32,Argentina,AR,ARG,419,-38.416097,-63.616672,Argentine,الأرجنتين,Argentina,阿根廷,Аргентина,0,0,0,0,1
+16,American Samoa,AS,ASM,61,-14.270972,-170.132217,Samoa américaines,ساموا الأمريكية,Samoa Americana,美属萨摩亚,Американское Самоа,0,0,1,0,0
+40,Austria,AT,AUT,155,47.516231,14.550072,Autriche,النمسا,Austria,奥地利,Австрия,0,0,0,1,1
+36,Australia,AU,AUS,53,-25.274398,133.775136,Australie,أستراليا,Australia,澳大利亚,Австралия,0,0,0,1,1
+533,Aruba,AW,ABW,419,12.52111,-69.968338,Aruba,أروبا,Aruba,阿鲁巴,Аруба,0,0,1,0,0
+31,Azerbaijan,AZ,AZE,145,40.143105,47.576927,Azerbaïdjan,أذربيجان,Azerbaiyán,阿塞拜疆,Азербайджан,0,1,0,0,1
+70,Bosnia,BA,BIH,39,43.915886,17.679076,Bosnie-Herzégovine,البوسنة والهرسك,Bosnia y Herzegovina,波斯尼亚和黑塞哥维那,Босния и Герцеговина,0,0,0,1,1
+52,Barbados,BB,BRB,419,13.193887,-59.543198,Barbade,بربادوس,Barbados,巴巴多斯,Барбадос,0,0,1,0,1
+50,Bangladesh,BD,BGD,34,23.684994,90.356331,Bangladesh,بنغلاديش,Bangladesh,孟加拉国,Бангладеш,1,0,0,0,1
+56,Belgium,BE,BEL,155,50.503887,4.469936,Belgique,بلجيكا,Bélgica,比利时,Бельгия,0,0,0,1,1
+854,Burkina Faso,BF,BFA,202,12.238333,-1.561593,Burkina Faso,بوركينا فاسو,Burkina Faso,布基纳法索,Буркина-Фасо,1,1,0,0,1
+100,Bulgaria,BG,BGR,151,42.733883,25.48583,Bulgarie,بلغاريا,Bulgaria,保加利亚,Болгария,0,0,0,1,1
+48,Bahrain,BH,BHR,145,25.930414,50.637772,Bahreïn,البحرين,Bahrein,巴林,Бахрейн,0,0,0,0,1
+108,Burundi,BI,BDI,202,-3.373056,29.918886,Burundi,بوروندي,Burundi,布隆迪,Бурунди,1,1,0,0,1
+204,Benin,BJ,BEN,202,9.30769,2.315834,Bénin,بنن,Benin,贝宁,Бенин,1,0,0,0,1
+60,Bermuda,BM,BMU,21,32.321384,-64.75737,Bermudes,برمودا,Bermuda,百慕大,Бермудские острова,0,0,0,1,0
+96,Brunei,BN,BRN,35,4.535277,114.727669,Brunéi Darussalam,بروني دار السلام,Brunei Darussalam,文莱达鲁萨兰国,Бруней-Даруссалам,0,0,0,0,1
+68,Bolivia,BO,BOL,419,-16.290154,-63.588653,Bolivie,بوليفيا (دولة - المتعددة القوميات),Bolivia,玻利维亚,Боливия,0,1,0,0,1
+76,Brazil,BR,BRA,419,-14.235004,-51.92528,Brésil,البرازيل,Brasil,巴西,Бразилия,0,0,0,0,1
+44,Bahamas,BS,BHS,419,25.03428,-77.39628,Bahamas,جزر البهاما,Bahamas,巴哈马,Багамские Острова,0,0,1,0,1
+64,Bhutan,BT,BTN,34,27.514162,90.433601,Bhoutan,بوتان,Bhután,不丹,Бутан,1,1,0,0,1
+74,Bouvet Island,BV,BVT,419,-54.423199,3.413194,Île Bouvet,جزيرة بوفيت,Isla Bouvet,布维岛,Остров Буве,0,0,0,0,0
+72,Botswana,BW,BWA,202,-22.328474,24.684866,Botswana,بوتسوانا,Botswana,博茨瓦纳,Ботсвана,0,1,0,0,1
+112,Belarus,BY,BLR,151,53.709807,27.953389,Bélarus,بيلاروس,Belarús,白俄罗斯,Беларусь,0,0,0,1,1
+84,Belize,BZ,BLZ,419,17.189877,-88.49765,Belize,بليز,Belice,伯利兹,Белиз,0,0,1,0,1
+124,Canada,CA,CAN,21,56.130366,-106.346771,Canada,كندا,Canadá,加拿大,Канада,0,0,0,1,1
+166,Cocos (Keeling) Islands,CC,CCK,53,-12.164165,96.870956,Îles des Cocos (Keeling),جزر كوكوس (كيلينغ),Islas Cocos (Keeling),科科斯(基林)群岛,Кокосовых (Килинг) островов,0,0,0,1,0
+180,Congo - Kinshasa,CD,COD,202,-4.038333,21.758664,République démocratique du Congo,جمهورية الكونغو الديمقراطية,República Democrática del Congo,刚果民主共和国,Демократическая Республика Конго,1,0,0,0,1
+140,Central African Republic,CF,CAF,202,6.611111,20.939444,République centrafricaine,جمهورية أفريقيا الوسطى,República Centroafricana,中非共和国,Центральноафриканская Республика,1,1,0,0,1
+178,Congo - Brazzaville,CG,COG,202,-0.228021,15.827659,Congo,الكونغو,Congo,刚果,Конго,0,0,0,0,1
+756,Switzerland,CH,CHE,155,46.818188,8.227512,Suisse,سويسرا,Suiza,瑞士,Швейцария,0,0,0,1,1
+384,Côte d’Ivoire,CI,CIV,202,7.539989,-5.54708,Côte d'Ivoire,كوت ديفوار,Côte d'Ivoire,科特迪瓦,Кот-д'Ивуар,0,0,0,0,1
+184,Cook Islands,CK,COK,61,-21.236736,-159.777671,Îles Cook,جزر كوك,Islas Cook,库克群岛,Острова Кука,0,0,1,0,0
+152,Chile,CL,CHL,419,-35.675147,-71.542969,Chili,شيلي,Chile,智利,Чили,0,0,0,0,1
+120,Cameroon,CM,CMR,202,7.369722,12.354722,Cameroun,الكاميرون,Camerún,喀麦隆,Камерун,0,0,0,0,1
+156,China,CN,CHN,30,35.86166,104.195397,Chine,الصين,China,中国,Китай,0,0,0,0,1
+170,Colombia,CO,COL,419,4.570868,-74.297333,Colombie,كولومبيا,Colombia,哥伦比亚,Колумбия,0,0,0,0,1
+188,Costa Rica,CR,CRI,419,9.748917,-83.753428,Costa Rica,كوستاريكا,Costa Rica,哥斯达黎加,Коста-Рика,0,0,0,0,1
+192,Cuba,CU,CUB,419,21.521757,-77.781167,Cuba,كوبا,Cuba,古巴,Куба,0,0,1,0,1
+132,Cape Verde,CV,CPV,202,16.002082,-24.013197,Cabo Verde,كابو فيردي,Cabo Verde,佛得角,Кабо-Верде,0,0,1,0,1
+162,Christmas Island,CX,CXR,53,-10.447525,105.690449,Île Christmas,جزيرة كريسماس,Isla de Navidad,圣诞岛,остров Рождества,0,0,0,1,0
+196,Cyprus,CY,CYP,145,35.126413,33.429859,Chypre,قبرص,Chipre,塞浦路斯,Кипр,0,0,0,1,1
+203,Czechia,CZ,CZE,151,49.817492,15.472962,Tchéquie,تشيكيا,Chequia,捷克,Чехия,0,0,0,1,1
+276,Germany,DE,DEU,155,51.165691,10.451526,Allemagne,ألمانيا,Alemania,德国,Германия,0,0,0,1,1
+262,Djibouti,DJ,DJI,202,11.825138,42.590275,Djibouti,جيبوتي,Djibouti,吉布提,Джибути,1,0,0,0,1
+208,Denmark,DK,DNK,154,56.26392,9.501785,Danemark,الدانمرك,Dinamarca,丹麦,Дания,0,0,0,1,1
+212,Dominica,DM,DMA,419,15.414999,-61.370976,Dominique,دومينيكا,Dominica,多米尼克,Доминика,0,0,1,0,1
+214,Dominican Republic,DO,DOM,419,18.735693,-70.162651,République dominicaine,الجمهورية الدومينيكية,República Dominicana,多米尼加,Доминиканская Республика,0,0,1,0,1
+12,Algeria,DZ,DZA,15,28.033886,1.659626,Algérie,الجزائر,Argelia,阿尔及利亚,Алжир,0,0,0,0,1
+218,Ecuador,EC,ECU,419,-1.831239,-78.183406,Équateur,إكوادور,Ecuador,厄瓜多尔,Эквадор,0,0,0,0,1
+233,Estonia,EE,EST,154,58.595272,25.013607,Estonie,إستونيا,Estonia,爱沙尼亚,Эстония,0,0,0,1,1
+818,Egypt,EG,EGY,15,26.820553,30.802498,Égypte,مصر,Egipto,埃及,Египет,0,0,0,0,1
+732,Western Sahara,EH,ESH,15,24.215527,-12.885834,Sahara occidental,الصحراء الغربية,Sáhara Occidental,西撒哈拉,Западная Сахара,0,0,0,0,0
+232,Eritrea,ER,ERI,202,15.179384,39.782334,Érythrée,إريتريا,Eritrea,厄立特里亚,Эритрея,1,0,0,0,1
+724,Spain,ES,ESP,39,40.463667,-3.74922,Espagne,إسبانيا,España,西班牙,Испания,0,0,0,1,1
+231,Ethiopia,ET,ETH,202,9.145,40.489673,Éthiopie,إثيوبيا,Etiopía,埃塞俄比亚,Эфиопия,1,1,0,0,1
+246,Finland,FI,FIN,154,61.92411,25.748151,Finlande,فنلندا,Finlandia,芬兰,Финляндия,0,0,0,1,1
+242,Fiji,FJ,FJI,54,-16.578193,179.414413,Fidji,فيجي,Fiji,斐济,Фиджи,0,0,1,0,1
+238,Falkland Islands,FK,FLK,419,-51.796253,-59.523613,Îles Falkland (Malvinas),جزر فوكلاند (مالفيناس),Islas Malvinas (Falkland),福克兰群岛(马尔维纳斯),Фолклендские (Мальвинские) острова,0,0,0,0,0
+583,Micronesia,FM,FSM,57,7.425554,150.550812,Micronésie (États fédérés de),ميكرونيزيا (ولايات - الموحدة),Micronesia (Estados Federados de),密克罗尼西亚(联邦),Микронезия (Федеративные Штаты),0,0,1,0,1
+234,Faroe Islands,FO,FRO,154,61.892635,-6.911806,Îles Féroé,جزر فايرو,Islas Feroe,法罗群岛,Фарерские острова,0,0,0,1,0
+250,France,FR,FRA,155,46.227638,2.213749,France,فرنسا,Francia,法国,Франция,0,0,0,1,1
+266,Gabon,GA,GAB,202,-0.803689,11.609444,Gabon,غابون,Gabón,加蓬,Габон,0,0,0,0,1
+826,UK,GB,GBR,154,55.378051,-3.435973,Royaume-Uni de Grande-Bretagne et d'Irlande du Nord,المملكة المتحدة لبريطانيا العظمى وآيرلندا الشمالية,Reino Unido de Gran Bretaña e Irlanda del Norte,大不列颠及北爱尔兰联合王国,Соединенное Королевство Великобритании и Северной Ирландии,0,0,0,1,1
+308,Grenada,GD,GRD,419,12.262776,-61.604171,Grenade,غرينادا,Granada,格林纳达,Гренада,0,0,1,0,1
+268,Georgia,GE,GEO,145,42.315407,43.356892,Géorgie,جورجيا,Georgia,格鲁吉亚,Грузия,0,0,0,0,1
+254,French Guiana,GF,GUF,419,3.933889,-53.125782,Guyane française,غيانا الفرنسية,Guayana Francesa,法属圭亚那,Французская Гвиана,0,0,0,0,0
+831,Guernsey,GG,GGY,154,49.465691,-2.585278,Guernesey,غيرنزي,Guernsey,根西,Гернси,0,0,0,1,0
+288,Ghana,GH,GHA,202,7.946527,-1.023194,Ghana,غانا,Ghana,加纳,Гана,0,0,0,0,1
+292,Gibraltar,GI,GIB,39,36.137741,-5.345374,Gibraltar,جبل طارق,Gibraltar,直布罗陀,Гибралтар,0,0,0,1,0
+304,Greenland,GL,GRL,21,71.706936,-42.604303,Groenland,غرينلند,Groenlandia,格陵兰,Гренландия,0,0,0,1,0
+270,Gambia,GM,GMB,202,13.443182,-15.310139,Gambie,غامبيا,Gambia,冈比亚,Гамбия,1,0,0,0,1
+324,Guinea,GN,GIN,202,9.945587,-9.696645,Guinée,غينيا,Guinea,几内亚,Гвинея,1,0,0,0,1
+312,Guadeloupe,GP,GLP,419,16.995971,-62.067641,Guadeloupe,غواديلوب,Guadalupe,瓜德罗普,Гваделупа,0,0,0,0,0
+226,Equatorial Guinea,GQ,GNQ,202,1.650801,10.267895,Guinée équatoriale,غينيا الاستوائية,Guinea Ecuatorial,赤道几内亚,Экваториальная Гвинея,0,0,0,0,1
+300,Greece,GR,GRC,39,39.074208,21.824312,Grèce,اليونان,Grecia,希腊,Греция,0,0,0,1,1
+239,South Georgia & South Sandwich Islands,GS,SGS,419,-54.429579,-36.587909,Géorgie du Sud-et-les Îles Sandwich du Sud,جورجيا الجنوبية وجزر ساندويتش الجنوبية,Georgia del Sur y las Islas Sandwich del Sur,南乔治亚岛和南桑德韦奇岛,Южная Джорджия и Южные Сандвичевы острова,0,0,0,0,0
+320,Guatemala,GT,GTM,419,15.783471,-90.230759,Guatemala,غواتيمالا,Guatemala,危地马拉,Гватемала,0,0,0,0,1
+316,Guam,GU,GUM,57,13.444304,144.793731,Guam,غوام,Guam,关岛,Гуам,0,0,1,0,0
+624,Guinea-Bissau,GW,GNB,202,11.803749,-15.180413,Guinée-Bissau,غينيا - بيساو,Guinea-Bissau,几内亚比绍,Гвинея-Бисау,1,0,1,0,1
+328,Guyana,GY,GUY,419,4.860416,-58.93018,Guyana,غيانا,Guyana,圭亚那,Гайана,0,0,1,0,1
+344,Hong Kong,HK,HKG,30,22.396428,114.109497,Hong Kong,منطقة هونغ كونغ الصينية الإدارية الخاصة,Hong Kong,中国香港特别行政区,"Китай, Специальный административный район Гонконг",0,0,0,0,0
+334,Heard & McDonald Islands,HM,HMD,53,-53.08181,73.504158,Île Heard-et-Îles MacDonald,جزيرة هيرد وجزر ماكدونالد,Islas Heard y McDonald,赫德岛和麦克唐纳岛,Остров Херд и острова Макдональд,0,0,0,1,0
+340,Honduras,HN,HND,419,15.199999,-86.241905,Honduras,هندوراس,Honduras,洪都拉斯,Гондурас,0,0,0,0,1
+191,Croatia,HR,HRV,39,45.1,15.2,Croatie,كرواتيا,Croacia,克罗地亚,Хорватия,0,0,0,1,1
+332,Haiti,HT,HTI,419,18.971187,-72.285215,Haïti,هايتي,Haití,海地,Гаити,1,0,1,0,1
+348,Hungary,HU,HUN,151,47.162494,19.503304,Hongrie,هنغاريا,Hungría,匈牙利,Венгрия,0,0,0,1,1
+360,Indonesia,ID,IDN,35,-0.789275,113.921327,Indonésie,إندونيسيا,Indonesia,印度尼西亚,Индонезия,0,0,0,0,1
+372,Ireland,IE,IRL,154,53.41291,-8.24389,Irlande,آيرلندا,Irlanda,爱尔兰,Ирландия,0,0,0,1,1
+376,Israel,IL,ISR,145,31.046051,34.851612,Israël,إسرائيل,Israel,以色列,Израиль,0,0,0,1,1
+833,Isle of Man,IM,IMN,154,54.236107,-4.548056,Île de Man,جزيرة مان,Isla de Man,马恩岛,Остров Мэн,0,0,0,1,0
+356,India,IN,IND,34,20.593684,78.96288,Inde,الهند,India,印度,Индия,0,0,0,0,1
+86,British Indian Ocean Territory,IO,IOT,202,-6.343194,71.876519,Territoire britannique de l'océan Indien,المحيط الهندي الإقليم البريطاني في,Territorio Británico del Océano Índico,英属印度洋领土,Британская территория в Индийском океане,0,0,0,0,0
+368,Iraq,IQ,IRQ,145,33.223191,43.679291,Iraq,العراق,Iraq,伊拉克,Ирак,0,0,0,0,1
+364,Iran,IR,IRN,34,32.427908,53.688046,Iran (République islamique d'),إيران (جمهورية - الإسلامية),Irán (República Islámica del),伊朗(伊斯兰共和国),Иран (Исламская Республика),0,0,0,0,1
+352,Iceland,IS,ISL,154,64.963051,-19.020835,Islande,آيسلندا,Islandia,冰岛,Исландия,0,0,0,1,1
+380,Italy,IT,ITA,39,41.87194,12.56738,Italie,إيطاليا,Italia,意大利,Италия,0,0,0,1,1
+832,Jersey,JE,JEY,154,49.214439,-2.13125,Jersey,جيرزي,Jersey,泽西,Джерси,0,0,0,1,0
+388,Jamaica,JM,JAM,419,18.109581,-77.297508,Jamaïque,جامايكا,Jamaica,牙买加,Ямайка,0,0,1,0,1
+400,Jordan,JO,JOR,145,30.585164,36.238414,Jordanie,الأردن,Jordania,约旦,Иордания,0,0,0,0,1
+392,Japan,JP,JPN,30,36.204824,138.252924,Japon,اليابان,Japón,日本,Япония,0,0,0,1,1
+404,Kenya,KE,KEN,202,-0.023559,37.906193,Kenya,كينيا,Kenya,肯尼亚,Кения,0,0,0,0,1
+417,Kyrgyzstan,KG,KGZ,143,41.20438,74.766098,Kirghizistan,قيرغيزستان,Kirguistán,吉尔吉斯斯坦,Кыргызстан,0,1,0,0,1
+116,Cambodia,KH,KHM,35,12.565679,104.990963,Cambodge,كمبوديا,Camboya,柬埔寨,Камбоджа,1,0,0,0,1
+296,Kiribati,KI,KIR,57,-3.370417,-168.734039,Kiribati,كيريباس,Kiribati,基里巴斯,Кирибати,1,0,1,0,1
+174,Comoros,KM,COM,202,-11.875001,43.872219,Comores,جزر القمر,Comoras,科摩罗,Коморские Острова,1,0,1,0,1
+659,St. Kitts & Nevis,KN,KNA,419,17.357822,-62.782998,Saint-Kitts-et-Nevis,سانت كيتس ونيفس,Saint Kitts y Nevis,圣基茨和尼维斯,Сент-Китс и Невис,0,0,1,0,1
+408,North Korea,KP,PRK,30,40.339852,127.510093,République populaire démocratique de Corée,جمهورية كوريا الشعبية الديمقراطية,República Popular Democrática de Corea,朝鲜民主主义人民共和国,Корейская Народно-Демократическая Республика,0,0,0,0,1
+410,South Korea,KR,KOR,30,35.907757,127.766922,République de Corée,جمهورية كوريا,República de Corea,大韩民国,Республика Корея,0,0,0,0,1
+414,Kuwait,KW,KWT,145,29.31166,47.481766,Koweït,الكويت,Kuwait,科威特,Кувейт,0,0,0,0,1
+136,Cayman Islands,KY,CYM,419,19.513469,-80.566956,Îles Caïmanes,جزر كايمان,Islas Caimán,开曼群岛,Кайман острова,0,0,0,0,0
+398,Kazakhstan,KZ,KAZ,143,48.019573,66.923684,Kazakhstan,كازاخستان,Kazajstán,哈萨克斯坦,Казахстан,0,1,0,0,1
+418,Laos,LA,LAO,35,19.85627,102.495496,République démocratique populaire lao,جمهورية لاو الديمقراطية الشعبية,República Democrática Popular Lao,老挝人民民主共和国,Лаосская Народно-Демократическая Республика,1,1,0,0,1
+422,Lebanon,LB,LBN,145,33.854721,35.862285,Liban,لبنان,Líbano,黎巴嫩,Ливан,0,0,0,0,1
+662,St. Lucia,LC,LCA,419,13.909444,-60.978893,Sainte-Lucie,سانت لوسيا,Santa Lucía,圣卢西亚,Сент-Люсия,0,0,1,0,1
+438,Liechtenstein,LI,LIE,155,47.166,9.555373,Liechtenstein,ليختنشتاين,Liechtenstein,列支敦士登,Лихтенштейн,0,0,0,1,1
+144,Sri Lanka,LK,LKA,34,7.873054,80.771797,Sri Lanka,سري لانكا,Sri Lanka,斯里兰卡,Шри-Ланка,0,0,0,0,1
+430,Liberia,LR,LBR,202,6.428055,-9.429499,Libéria,ليبريا,Liberia,利比里亚,Либерия,1,0,0,0,1
+426,Lesotho,LS,LSO,202,-29.609988,28.233608,Lesotho,ليسوتو,Lesotho,莱索托,Лесото,1,1,0,0,1
+440,Lithuania,LT,LTU,154,55.169438,23.881275,Lituanie,ليتوانيا,Lituania,立陶宛,Литва,0,0,0,1,1
+442,Luxembourg,LU,LUX,155,49.815273,6.129583,Luxembourg,لكسمبرغ,Luxemburgo,卢森堡,Люксембург,0,0,0,1,1
+428,Latvia,LV,LVA,154,56.879635,24.603189,Lettonie,لاتفيا,Letonia,拉脱维亚,Латвия,0,0,0,1,1
+434,Libya,LY,LBY,15,26.3351,17.228331,Libye,ليبيا,Libia,利比亚,Ливия,0,0,0,0,1
+504,Morocco,MA,MAR,15,31.791702,-7.09262,Maroc,المغرب,Marruecos,摩洛哥,Марокко,0,0,0,0,1
+492,Monaco,MC,MCO,155,43.750298,7.412841,Monaco,موناكو,Mónaco,摩纳哥,Монако,0,0,0,1,1
+498,Moldova,MD,MDA,151,47.411631,28.369885,République de Moldova,جمهورية مولدوفا,República de Moldova,摩尔多瓦共和国,Республика Молдова,0,1,0,1,1
+499,Montenegro,ME,MNE,39,42.708678,19.37439,Monténégro,الجبل الأسود,Montenegro,黑山,Черногория,0,0,0,1,1
+450,Madagascar,MG,MDG,202,-18.766947,46.869107,Madagascar,مدغشقر,Madagascar,马达加斯加,Мадагаскар,1,0,0,0,1
+584,Marshall Islands,MH,MHL,57,7.131474,171.184478,Îles Marshall,جزر مارشال,Islas Marshall,马绍尔群岛,Маршалловы Острова,0,0,1,0,1
+807,North Macedonia,MK,MKD,39,41.608635,21.745275,ex-République yougoslave de Macédoine,جمهورية مقدونيا اليوغوسلافية سابقاً,ex República Yugoslava de Macedonia,前南斯拉夫的马其顿共和国,бывшая югославская Республика Македония,0,1,0,1,1
+466,Mali,ML,MLI,202,17.570692,-3.996166,Mali,مالي,Malí,马里,Мали,1,1,0,0,1
+104,Myanmar,MM,MMR,35,21.913965,95.956223,Myanmar,ميانمار,Myanmar,缅甸,Мьянма,1,0,0,0,1
+496,Mongolia,MN,MNG,30,46.862496,103.846656,Mongolie,منغوليا,Mongolia,蒙古,Монголия,0,1,0,0,1
+446,Macau,MO,MAC,30,22.198745,113.543873,"Chine, région administrative spéciale de Macao",منطقة ماكاو الإدارية الخاصة التابعة للصين,"China, región administrativa especial de Macao",中国澳门特别行政区,"Китай, Специальный административный район Макао",0,0,0,0,0
+580,Northern Mariana Islands,MP,MNP,57,17.33083,145.38469,Îles Mariannes du Nord,جزر ماريانا الشمالية,Islas Marianas Septentrionales,北马里亚纳群岛,Северные Марианские острова,0,0,1,0,0
+474,Martinique,MQ,MTQ,419,14.641528,-61.024174,Martinique,مارتينيك,Martinica,马提尼克,Мартиника,0,0,0,0,0
+478,Mauritania,MR,MRT,202,21.00789,-10.940835,Mauritanie,موريتانيا,Mauritania,毛里塔尼亚,Мавритания,1,0,0,0,1
+500,Montserrat,MS,MSR,419,16.742498,-62.187366,Montserrat,مونتسيرات,Montserrat,蒙特塞拉特,Монтсеррат,0,0,1,0,0
+470,Malta,MT,MLT,39,35.937496,14.375416,Malte,مالطة,Malta,马耳他,Мальта,0,0,0,1,1
+480,Mauritius,MU,MUS,202,-20.348404,57.552152,Maurice,موريشيوس,Mauricio,毛里求斯,Маврикий,0,0,1,0,1
+462,Maldives,MV,MDV,34,3.202778,73.22068,Maldives,ملديف,Maldivas,马尔代夫,Мальдивские Острова,0,0,1,0,1
+454,Malawi,MW,MWI,202,-13.254308,34.301525,Malawi,ملاوي,Malawi,马拉维,Малави,1,1,0,0,1
+484,Mexico,MX,MEX,419,23.634501,-102.552784,Mexique,المكسيك,México,墨西哥,Мексика,0,0,0,0,1
+458,Malaysia,MY,MYS,35,4.210484,101.975766,Malaisie,ماليزيا,Malasia,马来西亚,Малайзия,0,0,0,0,1
+508,Mozambique,MZ,MOZ,202,-18.665695,35.529562,Mozambique,موزامبيق,Mozambique,莫桑比克,Мозамбик,1,0,0,0,1
+540,New Caledonia,NC,NCL,54,-20.904305,165.618042,Nouvelle-Calédonie,كاليدونيا الجديدة,Nueva Caledonia,新喀里多尼亚,Новая Каледония,0,0,1,0,0
+562,Niger,NE,NER,202,17.607789,8.081666,Niger,النيجر,Níger,尼日尔,Нигер,1,1,0,0,1
+574,Norfolk Island,NF,NFK,53,-29.040835,167.954712,Île Norfolk,جزيرة نورفلك,Islas Norfolk,诺福克岛,Остров Норфолк,0,0,0,1,0
+566,Nigeria,NG,NGA,202,9.081999,8.675277,Nigéria,نيجيريا,Nigeria,尼日利亚,Нигерия,0,0,0,0,1
+558,Nicaragua,NI,NIC,419,12.865416,-85.207229,Nicaragua,نيكاراغوا,Nicaragua,尼加拉瓜,Никарагуа,0,0,0,0,1
+528,Netherlands,NL,NLD,155,52.132633,5.291266,Pays-Bas,هولندا,Países Bajos,荷兰,Нидерланды,0,0,0,1,1
+578,Norway,NO,NOR,154,60.472024,8.468946,Norvège,النرويج,Noruega,挪威,Норвегия,0,0,0,1,1
+524,Nepal,NP,NPL,34,28.394857,84.124008,Népal,نيبال,Nepal,尼泊尔,Непал,1,1,0,0,1
+520,Nauru,NR,NRU,57,-0.522778,166.931503,Nauru,ناورو,Nauru,瑙鲁,Науру,0,0,1,0,1
+570,Niue,NU,NIU,61,-19.054445,-169.867233,Nioué,نيوي,Niue,纽埃,Ниуэ,0,0,1,0,0
+554,New Zealand,NZ,NZL,53,-40.900557,174.885971,Nouvelle-Zélande,نيوزيلندا,Nueva Zelandia,新西兰,Новая Зеландия,0,0,0,1,1
+512,Oman,OM,OMN,145,21.512583,55.923255,Oman,عمان,Omán,阿曼,Оман,0,0,0,0,1
+591,Panama,PA,PAN,419,8.537981,-80.782127,Panama,بنما,Panamá,巴拿马,Панама,0,0,0,0,1
+604,Peru,PE,PER,419,-9.189967,-75.015152,Pérou,بيرو,Perú,秘鲁,Перу,0,0,0,0,1
+258,French Polynesia,PF,PYF,61,-17.679742,-149.406843,Polynésie française,بولينيزيا الفرنسية,Polinesia Francesa,法属波利尼西亚,Французская Полинезия,0,0,1,0,0
+598,Papua New Guinea,PG,PNG,54,-6.314993,143.95555,Papouasie-Nouvelle-Guinée,بابوا غينيا الجديدة,Papua Nueva Guinea,巴布亚新几内亚,Папуа-Новая Гвинея,0,0,1,0,1
+608,Philippines,PH,PHL,35,12.879721,121.774017,Philippines,الفلبين,Filipinas,菲律宾,Филиппины,0,0,0,0,1
+586,Pakistan,PK,PAK,34,30.375321,69.345116,Pakistan,باكستان,Pakistán,巴基斯坦,Пакистан,0,0,0,0,1
+616,Poland,PL,POL,151,51.919438,19.145136,Pologne,بولندا,Polonia,波兰,Польша,0,0,0,1,1
+666,St. Pierre & Miquelon,PM,SPM,21,46.941936,-56.27111,Saint-Pierre-et-Miquelon,سان بيار وميكلون,Saint Pierre y Miquelon,圣皮埃尔和密克隆,Сен-Пьер и Микелон,0,0,0,1,0
+612,Pitcairn Islands,PN,PCN,61,-24.703615,-127.439308,Pitcairn,بيتكيرن,Pitcairn,皮特凯恩,Питкэрн,0,0,0,0,0
+630,Puerto Rico,PR,PRI,419,18.220833,-66.590149,Porto Rico,بورتوريكو,Puerto Rico,波多黎各,Пуэрто-Рико,0,0,1,0,0
+275,Palestine,PS,PSE,145,31.952162,35.233154,État de Palestine,دولة فلسطين,Estado de Palestina,巴勒斯坦国,Государство Палестина,0,0,0,0,0
+620,Portugal,PT,PRT,39,39.399872,-8.224454,Portugal,البرتغال,Portugal,葡萄牙,Португалия,0,0,0,1,1
+585,Palau,PW,PLW,57,7.51498,134.58252,Palaos,بالاو,Palau,帕劳,Палау,0,0,1,0,1
+600,Paraguay,PY,PRY,419,-23.442503,-58.443832,Paraguay,باراغواي,Paraguay,巴拉圭,Парагвай,0,1,0,0,1
+634,Qatar,QA,QAT,145,25.354826,51.183884,Qatar,قطر,Qatar,卡塔尔,Катар,0,0,0,0,1
+638,Réunion,RE,REU,202,-21.115141,55.536384,Réunion,ريونيون,Reunión,留尼汪,Реюньон,0,0,0,0,0
+642,Romania,RO,ROU,151,45.943161,24.96676,Roumanie,رومانيا,Rumania,罗马尼亚,Румыния,0,0,0,1,1
+688,Serbia,RS,SRB,39,44.016521,21.005859,Serbie,صربيا,Serbia,塞尔维亚,Сербия,0,0,0,1,1
+643,Russia,RU,RUS,151,61.52401,105.318756,Fédération de Russie,الاتحاد الروسي,Federación de Rusia,俄罗斯联邦,Российская Федерация,0,0,0,1,1
+646,Rwanda,RW,RWA,202,-1.940278,29.873888,Rwanda,رواندا,Rwanda,卢旺达,Руанда,1,1,0,0,1
+682,Saudi Arabia,SA,SAU,145,23.885942,45.079162,Arabie saoudite,المملكة العربية السعودية,Arabia Saudita,沙特阿拉伯,Саудовская Аравия,0,0,0,0,1
+90,Solomon Islands,SB,SLB,54,-9.64571,160.156194,Îles Salomon,جزر سليمان,Islas Salomón,所罗门群岛,Соломоновы Острова,1,0,1,0,1
+690,Seychelles,SC,SYC,202,-4.679574,55.491977,Seychelles,سيشيل,Seychelles,塞舌尔,Сейшельские Острова,0,0,1,0,1
+729,Sudan,SD,SDN,15,12.862807,30.217636,Soudan,السودان,Sudán,苏丹,Судан,1,0,0,0,1
+752,Sweden,SE,SWE,154,60.128161,18.643501,Suède,السويد,Suecia,瑞典,Швеция,0,0,0,1,1
+702,Singapore,SG,SGP,35,1.352083,103.819836,Singapour,سنغافورة,Singapur,新加坡,Сингапур,0,0,1,0,1
+654,St. Helena,SH,SHN,202,-24.143474,-10.030696,Sainte-Hélène,سانت هيلانة,Santa Elena,圣赫勒拿,Остров Святой Елены,0,0,0,0,0
+705,Slovenia,SI,SVN,39,46.151241,14.995463,Slovénie,سلوفينيا,Eslovenia,斯洛文尼亚,Словения,0,0,0,1,1
+744,Svalbard & Jan Mayen,SJ,SJM,154,77.553604,23.670272,Îles Svalbard-et-Jan Mayen,جزر سفالبارد وجان ماين,Islas Svalbard y Jan Mayen,斯瓦尔巴岛和扬马延岛,Острова Свальбард и Ян-Майен,0,0,0,1,0
+703,Slovakia,SK,SVK,151,48.669026,19.699024,Slovaquie,سلوفاكيا,Eslovaquia,斯洛伐克,Словакия,0,0,0,1,1
+694,Sierra Leone,SL,SLE,202,8.460555,-11.779889,Sierra Leone,سيراليون,Sierra Leona,塞拉利昂,Сьерра-Леоне,1,0,0,0,1
+674,San Marino,SM,SMR,39,43.94236,12.457777,Saint-Marin,سان مارينو,San Marino,圣马力诺,Сан-Марино,0,0,0,1,1
+686,Senegal,SN,SEN,202,14.497401,-14.452362,Sénégal,السنغال,Senegal,塞内加尔,Сенегал,1,0,0,0,1
+706,Somalia,SO,SOM,202,5.152149,46.199616,Somalie,الصومال,Somalia,索马里,Сомали,1,0,0,0,1
+740,Suriname,SR,SUR,419,3.919305,-56.027783,Suriname,سورينام,Suriname,苏里南,Суринам,0,0,1,0,1
+678,São Tomé & Príncipe,ST,STP,202,0.18636,6.613081,Sao Tomé-et-Principe,سان تومي وبرينسيبي,Santo Tomé y Príncipe,圣多美和普林西比,Сан-Томе и Принсипи,1,0,1,0,1
+222,El Salvador,SV,SLV,419,13.794185,-88.89653,El Salvador,السلفادور,El Salvador,萨尔瓦多,Сальвадор,0,0,0,0,1
+760,Syria,SY,SYR,145,34.802075,38.996815,République arabe syrienne,الجمهورية العربية السورية,República Árabe Siria,阿拉伯叙利亚共和国,Сирийская Арабская Республика,0,0,0,0,1
+748,Eswatini,SZ,SWZ,202,-26.522503,31.465866,Eswatini,إسواتيني,Suazilandia,斯威士兰,Эсватини,0,1,0,0,1
+796,Turks & Caicos Islands,TC,TCA,419,21.694025,-71.797928,Îles Turques-et-Caïques,جزر تركس وكايكوس,Islas Turcas y Caicos,特克斯和凯科斯群岛,Острова Тёркс и Кайкос,0,0,0,0,0
+148,Chad,TD,TCD,202,15.454166,18.732207,Tchad,تشاد,Chad,乍得,Чад,1,1,0,0,1
+260,French Southern Territories,TF,ATF,202,-49.280366,69.348557,Terres australes françaises,الأراضي الفرنسية الجنوبية الجنوبية,Territorio de las Tierras Australes Francesas,法属南方领地,Южные земли (французская заморская территория),0,0,0,0,0
+768,Togo,TG,TGO,202,8.619543,0.824782,Togo,توغو,Togo,多哥,Того,1,0,0,0,1
+764,Thailand,TH,THA,35,15.870032,100.992541,Thaïlande,تايلند,Tailandia,泰国,Таиланд,0,0,0,0,1
+762,Tajikistan,TJ,TJK,143,38.861034,71.276093,Tadjikistan,طاجيكستان,Tayikistán,塔吉克斯坦,Таджикистан,0,1,0,0,1
+772,Tokelau,TK,TKL,61,-8.967363,-171.855881,Tokélaou,توكيلاو,Tokelau,托克劳,Токелау,0,0,0,0,0
+626,Timor-Leste,TL,TLS,35,-8.874217,125.727539,Timor-Leste,تيمور- ليشتي,Timor-Leste,东帝汶,Тимор-Лешти,1,0,1,0,1
+795,Turkmenistan,TM,TKM,143,38.969719,59.556278,Turkménistan,تركمانستان,Turkmenistán,土库曼斯坦,Туркменистан,0,1,0,0,1
+788,Tunisia,TN,TUN,15,33.886917,9.537499,Tunisie,تونس,Túnez,突尼斯,Тунис,0,0,0,0,1
+776,Tonga,TO,TON,61,-21.178986,-175.198242,Tonga,تونغا,Tonga,汤加,Тонга,0,0,1,0,1
+792,Turkey,TR,TUR,145,38.963745,35.243322,Turquie,تركيا,Turquía,土耳其,Турция,0,0,0,0,1
+780,Trinidad & Tobago,TT,TTO,419,10.691803,-61.222503,Trinité-et-Tobago,ترينيداد وتوباغو,Trinidad y Tabago,特立尼达和多巴哥,Тринидад и Тобаго,0,0,1,0,1
+798,Tuvalu,TV,TUV,61,-7.109535,177.64933,Tuvalu,توفالو,Tuvalu,图瓦卢,Тувалу,1,0,1,0,1
+158,Taiwan,TW,TWN,30,23.69781,120.960515,NA,العربية,Taiwán,NA,NA,0,0,0,0,1
+834,Tanzania,TZ,TZA,202,-6.369028,34.888822,République-Unie de Tanzanie,جمهورية تنزانيا المتحدة,República Unida de Tanzanía,坦桑尼亚联合共和国,Объединенная Республика Танзания,1,0,0,0,1
+804,Ukraine,UA,UKR,151,48.379433,31.16558,Ukraine,أوكرانيا,Ucrania,乌克兰,Украина,0,0,0,1,1
+800,Uganda,UG,UGA,202,1.373333,32.290275,Ouganda,أوغندا,Uganda,乌干达,Уганда,1,1,0,0,1
+581,U.S. Outlying Islands,UM,UMI,57,NA,NA,Îles mineures éloignées des États-Unis,نائية التابعة للولايات المتحدة,Islas menores alejadas de Estados Unidos,美国本土外小岛屿,Внешние малые острова Coeдинeнныx Штaтoв,0,0,0,0,0
+840,US,US,USA,21,37.09024,-95.712891,États-Unis d'Amérique,الولايات المتحدة الأمريكية,Estados Unidos de América,美利坚合众国,Соединенные Штаты Америки,0,0,0,1,1
+858,Uruguay,UY,URY,419,-32.522779,-55.765835,Uruguay,أوروغواي,Uruguay,乌拉圭,Уругвай,0,0,0,0,1
+860,Uzbekistan,UZ,UZB,143,41.377491,64.585262,Ouzbékistan,أوزبكستان,Uzbekistán,乌兹别克斯坦,Узбекистан,0,1,0,0,1
+336,Vatican City,VA,VAT,39,41.902916,12.453389,Saint-Siège,الكرسي الرسولي,Santa Sede,教廷,Святой Престол,0,0,0,1,1
+670,St. Vincent & Grenadines,VC,VCT,419,12.984305,-61.287228,Saint-Vincent-et-les Grenadines,سانت فنسنت وجزر غرينادين,San Vicente y las Granadinas,圣文森特和格林纳丁斯,Сент-Винсент и Гренадины,0,0,1,0,1
+862,Venezuela,VE,VEN,419,6.42375,-66.58973,Venezuela (République bolivarienne du),فنزويلا (جمهورية - البوليفارية),Venezuela (República Bolivariana de),委内瑞拉(玻利瓦尔共和国),Венесуэла (Боливарианская Республика),0,0,0,0,1
+92,British Virgin Islands,VG,VGB,419,18.420695,-64.639968,Îles Vierges britanniques,جزر فرجن البريطانية,Islas Vírgenes Británicas,英属维尔京群岛,Британские Виргинские острова,0,0,1,0,0
+850,U.S. Virgin Islands,VI,VIR,419,18.335765,-64.896335,Îles Vierges américaines,جزر فرجن التابعة للولايات المتحدة,Islas Vírgenes de los Estados Unidos,美属维尔京群岛,Виргинские oстрова Coeдинeнныx Штaтoв,0,0,1,0,0
+704,Vietnam,VN,VNM,35,14.058324,108.277199,Viet Nam,فييت نام,Viet Nam,越南,Вьетнам,0,0,0,0,1
+548,Vanuatu,VU,VUT,54,-15.376706,166.959158,Vanuatu,فانواتو,Vanuatu,瓦努阿图,Вануату,1,0,1,0,1
+876,Wallis & Futuna,WF,WLF,61,-13.768752,-177.156097,Îles Wallis-et-Futuna,جزر واليس وفوتونا,Islas Wallis y Futuna,瓦利斯群岛和富图纳群岛,Острова Уоллис и Футуна,0,0,0,0,0
+882,Samoa,WS,WSM,61,-13.759029,-172.104629,Samoa,ساموا,Samoa,萨摩亚,Самоа,0,0,1,0,1
+887,Yemen,YE,YEM,145,15.552727,48.516388,Yémen,اليمن,Yemen,也门,Йемен,1,0,0,0,1
+175,Mayotte,YT,MYT,202,-12.8275,45.166244,Mayotte,جزيرة مايوت,Mayotte,马约特,Острове Майотта,0,0,0,0,0
+710,South Africa,ZA,ZAF,202,-30.559482,22.937506,Afrique du Sud,جنوب أفريقيا,Sudáfrica,南非,Южная Африка,0,0,0,0,1
+894,Zambia,ZM,ZMB,202,-13.133897,27.849332,Zambie,زامبيا,Zambia,赞比亚,Замбия,1,1,0,0,1
+716,Zimbabwe,ZW,ZWE,202,-19.015438,29.154857,Zimbabwe,زمبابوي,Zimbabwe,津巴布韦,Зимбабве,0,1,0,0,1
+516,Namibia,NA,NAM,202,-22.95764,18.49041,Namibie,ناميبيا,Namibia,纳米比亚,Намибия,0,0,0,0,1

@@ -39,15 +39,16 @@ class Release000Migration
             $t->string('name');
             $t->json('data')->nullable();
             $t->json('localization')->nullable();
-            $t->integer('space_id')->unsigned();
-            $t->foreign('space_id')->references('id')->on('spaces')->onDelete('cascade');
+            $t->integer('space_id')->unsigned()->nullable();
+            $t->foreign('space_id')->references('id')->on('spaces')->onDelete('set null');
             $t->timestamps();
         });
         $this->schema->create('countries', function (Blueprint $t) {
             $t->engine = 'InnoDB';
             $t->increments('id');
             $t->string('name');
-            $t->string('code');
+            $t->string('code_2');
+            $t->string('code_3');
             $t->json('data')->nullable();
             $t->json('localization')->nullable();
             $t->integer('region_id')->unsigned();
@@ -350,23 +351,23 @@ class Release000Migration
 
         $this->db->table('roles')->insert([
             [
-                'id' => 'user',
+                'id' => 'User',
                 'name' => 'User',
                 'show_badge' => false,
             ], [
-                'id' => 'verified',
+                'id' => 'Verified',
                 'name' => 'Verified user',
                 'show_badge' => true,
             ], [
-                'id' => 'admin',
+                'id' => 'Admin',
                 'name' => 'Admnistrator',
                 'show_badge' => true,
             ], [
-                'id' => 'group:staff',
+                'id' => 'StaffGroup',
                 'name' => 'Staff group',
                 'show_badge' => false,
             ], [
-                'id' => 'group:initiative',
+                'id' => 'InitiativeGroup',
                 'name' => 'Initiative group',
                 'show_badge' => false,
             ],
@@ -376,7 +377,7 @@ class Release000Migration
             'id' => 'Staff',
             'name' => 'Staff',
             'description' => 'Administration teams',
-            'role_id' => 'group:staff',
+            'role_id' => 'StaffGroup',
             'schema' => [
                 'type' => 'object',
             ],
@@ -385,7 +386,7 @@ class Release000Migration
             'id' => 'Initiative',
             'name' => 'Initiative',
             'description' => 'Youth initiatives',
-            'role_id' => 'group:initiative',
+            'role_id' => 'InitiativeGroup',
             'schema' => [
                 'type' => 'object',
                 'properties' => [
@@ -487,9 +488,7 @@ class Release000Migration
     public function updateActions()
     {
         $this->db->table('actions')->insert([
-            ['id' => 'hasAdminRole', 'group' => 'hasRole', 'allowed_roles' => '["admin"]', 'allowed_relations' => '[]', 'allowed_proxies' => '[]'],
-            ['id' => 'createPlace', 'group' => 'place', 'allowed_roles' => '["user"]', 'allowed_relations' => '[]', 'allowed_proxies' => '[]'],
-            ['id' => 'votePlace', 'group' => 'place', 'allowed_roles' => '["user"]', 'allowed_relations' => '[]', 'allowed_proxies' => '[]'],
+            ['id' => 'createInitiative', 'group' => 'initiative', 'allowed_roles' => '["User"]', 'allowed_relations' => '[]', 'allowed_proxies' => '[]'],
         ]);
     }
 }

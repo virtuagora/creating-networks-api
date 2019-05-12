@@ -13,6 +13,9 @@ class Space extends Model
     protected $visible = [
         'id', 'point', 'polygon', 'line',
     ];
+    protected $fillable = [
+        'point',
+    ];
     protected $spatialFields = [
         'point', 'polygon', 'line',
     ];

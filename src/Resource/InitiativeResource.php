@@ -2,7 +2,6 @@
 
 namespace App\Resource;
 
-use App\Mail\SignUpEmail;
 use App\Util\Exception\AppException;
 use App\Util\Utils;
 
@@ -10,93 +9,40 @@ class InitiativeResource extends Resource
 {
     public function retrieveSchema($options = [])
     {
+        $type = $this->db->query('App:GroupType')->findOrFail('Initiative');
         $schema = [
             'type' => 'object',
             'properties' => [
-                'names' => [
+                'name' => [
                     'type' => 'string',
                     'minLength' => 1,
-                    'maxLength' => 25,
+                    'maxLength' => 50,
                 ],
-                'surnames' => [
+                'description' => [
                     'type' => 'string',
                     'minLength' => 1,
-                    'maxLength' => 25,
+                    'maxLength' => 500,
                 ],
-                'password' => [
-                    'type' => 'string',
-                    'minLength' => 4,
-                    'maxLength' => 250,
-                ],
-                // 'email' => [
-                //     'type' => 'string',
-                //     'format' => 'email',
-                // ],
-                // 'token' => [
-                //     'type' => 'string',
-                //     'minLength' => 10,
-                //     'maxLength' => 100,
-                // ],
+                'data' => $type->schema,
             ],
-            'required' => ['names', 'surnames', 'password'],
+            'required' => ['name', 'description', 'data'],
             'additionalProperties' => false,
         ];
         return $schema;
     }
 
-    public function createUser($subject, $data, $token)
+    public function retrieveInitiative($subject, $id, $options = [])
     {
-        $v = $this->validation->fromSchema($this->retrieveSchema());
-        $v->assert($data);
-        $user = $this->identity->signUp('local', $token, $data);
-        return $user;
-    }
-
-    public function retrieveUser($subject, $id, $options = [])
-    {
-        return $this->db->query('App:Subject')
-            ->where('type', 'User')
+        return $this->db->query('App:Initiative')
             ->findOrFail($id);
     }
 
-    public function createPendingUser($subject, $data)
+    public function createInitiative($subject, $data)
     {
-        $schema = [
-            'type' => 'object',
-            'properties' => [
-                'email' => [
-                    'type' => 'string',
-                    'format' => 'email',
-                ],
-            ],
-            'required' => ['email'],
-            'additionalProperties' => false,
-        ];
-        $v = $this->validation->fromSchema($schema);
+        $v = $this->validation->fromSchema($this->retrieveSchema());
         $v->assert($this->validation->prepareData($schema, $data, true));
-        $dupFields = $this->db->findDuplicatedFields('App:Person', [
-            'email' => $data['email']
-        ]);
-        if (count($dupFields) > 0) {
-            throw new AppException(
-                'Email already registered', 'registeredEmail'
-            );
-        }
-        $pending = $this->db->query('App:Token')->firstOrNew([
-            'type' => 'signUp',
-            'finder' => $data['email'],
-        ]);
-        $pending->token = Utils::randomStr(50);
-        $pending->data = [
-            'email' => $data['email'],
-        ];
-        $pending->save();
-        $mailArg = [
-            'acceso' => $pending->finder,
-            'token' => $pending->token,
-        ];
-        $mail = new SignUpEmail($mailArg);
-        $this->mailer->to($pending->finder)->send($mail);
-        return $pending;
+        $initiative = $this->db->create('App:Initiative', $data);
+        $initiative->save();
+        return $initiative;
     }
 }

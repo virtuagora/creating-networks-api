@@ -11,10 +11,13 @@ class RegisteredCity extends Model
         'id', 'name', 'point', 'localization', 'trace',
     ];
     protected $fillable = [
-        'name', 'point', 'localization', 'country_id',
+        'name', 'trace', 'point', 'localization', 'country_id',
     ];
     protected $casts = [
         'localization' => 'array',
+    ];
+    protected $spatialFields = [
+        'point',
     ];
 
     public function country()

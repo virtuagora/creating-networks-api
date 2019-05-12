@@ -8,10 +8,12 @@ class Country extends Model
 {
     protected $table = 'countries';
     protected $visible = [
-        'id', 'name', 'code', 'data', 'region', 'space', 'localization',
+        'id', 'name', 'code_2', 'code_3', 'data', 'region', 'space',
+        'localization',
     ];
     protected $fillable = [
-        'id', 'name', 'data', 'code', 'region_id', 'localization',
+        'id', 'name', 'code_2', 'code_3', 'region_id', 'space_id', 'data',
+        'localization',
     ];
     protected $with = [
         'space',
