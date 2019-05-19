@@ -24,7 +24,7 @@ class ErrorHandlerService
             );
         }
         $errorData = [
-            'mesage' => 'Internal error',
+            'message' => 'Internal error',
             'code' => 'error',
             'status' => 500,
         ];

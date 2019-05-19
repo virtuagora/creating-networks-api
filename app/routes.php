@@ -23,8 +23,8 @@ $app->get('/install', function($request, $response, $params) {
 
 $app->get('/test', function ($req, $res, $arg) {
     $loader = new \App\Util\DataLoader($this->db);
-    //$loader->createRegions();
-    //$loader->createCountries();
+    $loader->createRegions();
+    $loader->createCountries();
     $loader->createRegisteredCities();
     return $res->withJSON([
         'sub' => $this->session->authenticate($req)->toArray()
@@ -34,7 +34,8 @@ $app->get('/test', function ($req, $res, $arg) {
 
 $app->group('/v1', function () {
     $this->post('/tokens', 'sessionApiGate:createSession');
-    $this->post('/pending-users', 'userApiGate:createPendingUser')->setName('apiC1PendingUser');
+    $this->post('/pending-users', 'userApiGate:createPendingUser')->setName('apiC1PendingUser')
+        ->add(new \App\Middleware\RecaptchaMiddleware($this->getContainer()));
     $this->post('/users', 'userApiGate:createUser')->setName('apiC1User');
     $this->get('/users/{usr}', 'userApiGate:retrieveUser')->setName('apiR1User');
 

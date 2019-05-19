@@ -26,7 +26,7 @@ return [
             'secret' => '12345678',
             'storedKey' => false,
             'alg' => 'HS256',
-            'iss' => 'ruta-trans',
+            'iss' => 'YouthSIG',
             'ttl' => 8640000,
         ],
         'monolog' => [
