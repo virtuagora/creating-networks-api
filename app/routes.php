@@ -21,7 +21,7 @@ $app->get('/install', function($request, $response, $params) {
     return $response->withJSON(['message' => 'instalación exitosa']);
 });
 
-$app->get('/test', function ($req, $res, $arg) {
+$app->get('/install-cities', function ($req, $res, $arg) {
     $loader = new \App\Util\DataLoader($this->db);
     $loader->createRegions();
     $loader->createCountries();
