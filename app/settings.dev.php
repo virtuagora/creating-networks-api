@@ -51,7 +51,7 @@ return [
         'cors' => [
             'origin' => ['http://localhost:8080'],
             'methods' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
-            'headers.allow' => ['Authorization', 'Content-Type'],
+            'headers.allow' => ['X-Requested-With', 'Content-Type', 'Accept', 'Origin', 'Authorization'],
             'headers.expose' => [],
             'credentials' => true,
             'cache' => 0,

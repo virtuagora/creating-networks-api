@@ -7,16 +7,21 @@ class ErrorHandlerService
     protected $logger;
     protected $exceptions;
     protected $env;
+    protected $response;
     
     public function __construct(array $exceptions, $env = 'pro', $logger = null)
     {
         $this->env = $env;
         $this->logger = $logger;
         $this->exceptions = $exceptions;
+        $this->response = null;
     }
 
     public function __invoke($request, $response, $exception)
     {
+        if (isset($this->response)) {
+            $response = $this->response;
+        }
         if (isset($this->logger)) {
             $this->logger->error(
                 $exception->getMessage().
@@ -38,5 +43,10 @@ class ErrorHandlerService
             $errorData['trace'] = $exception->getTraceAsString();
         }
         return $response->withStatus($errorData['status'])->withJSON($errorData);
+    }
+
+    public function setResponse($response)
+    {
+        $this->response = $response;
     }
 }
