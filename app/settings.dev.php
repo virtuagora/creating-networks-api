@@ -43,5 +43,18 @@ return [
             'collation' => 'utf8_general_ci',
             'prefix' => '',
         ],
+        'recaptcha' => [
+            'fieldname' => 'recaptcha',
+            'secret' => '__SECRET__',
+            'hostname' => null,
+        ],
+        'cors' => [
+            'origin' => ['http://localhost:8080'],
+            'methods' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+            'headers.allow' => ['Authorization'],
+            'headers.expose' => [],
+            'credentials' => true,
+            'cache' => 0,
+        ],
     ],
 ];
