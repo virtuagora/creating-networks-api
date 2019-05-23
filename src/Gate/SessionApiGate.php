@@ -25,7 +25,7 @@ class SessionApiGate extends ContainerClient
                 'token_type' => 'bearer',
                 'access_token' => $session['token'],
                 'expiration' => $this->jwt->getClaim($session['token'], 'exp'),
-                'user' => $subject->toArray(),
+                'subject' => $subject->append('roles_list')->toArray(),
             ]);
         } else {
             throw new AppException($result['status'].' Credenciales de acceso incorrectas');

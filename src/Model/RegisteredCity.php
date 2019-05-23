@@ -12,11 +12,12 @@ class RegisteredCity extends Model
     public $timestamps = false;
     protected $table = 'registered_cities';
     protected $visible = [
-        'id', 'name', 'point', 'localization', 'trace',
+        'id', 'name', 'point', 'localization', 'trace', 'country',
     ];
     protected $fillable = [
         'name', 'trace', 'point', 'localization', 'country_id',
     ];
+    protected $with = ['country'];
     protected $casts = [
         'localization' => 'array',
     ];

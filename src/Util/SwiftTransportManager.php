@@ -12,6 +12,9 @@ use Illuminate\Mail\Transport\MandrillTransport;
 use Illuminate\Mail\Transport\SparkPostTransport;
 use Swift_SendmailTransport as SendmailTransport;
 use Swift_NullTransport as NullTransport;
+use Monolog\Logger;
+use Monolog\Processor\UidProcessor;
+use Monolog\Handler\StreamHandler;
 
 class SwiftTransportManager
 {
@@ -91,10 +94,13 @@ class SwiftTransportManager
         );
     }
 
-    // public function createLogDriver($config)
-    // {
-    //     return new LogTransport($this->app->make(LoggerInterface::class));
-    // }
+    public function createLogDriver($config)
+    {
+        $logger = new Logger($config['name']);
+        $logger->pushProcessor(new UidProcessor());
+        $logger->pushHandler(new StreamHandler($config['path'], Logger::DEBUG));
+        return new LogTransport($logger);
+    }
 
     public function createArrayDriver($config)
     {

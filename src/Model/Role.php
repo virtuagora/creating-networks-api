@@ -13,5 +13,6 @@ class Role extends Model
     ];
     protected $casts = [
         'data' => 'array',
+        'show_badge' => 'boolean',
     ];
 }

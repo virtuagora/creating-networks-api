@@ -12,6 +12,7 @@ class Subject extends Model implements SubjectInterface, ObjectInterface
     protected $table = 'subjects';
     protected $visible = [
         'id', 'display_name', 'img_type', 'img_hash', 'type', 'points',
+        'roles', 'roles_list',
     ];
     protected $fillable = [
         'username', 'password', 'display_name', 'img_type', 'img_hash', 'type',
@@ -53,6 +54,11 @@ class Subject extends Model implements SubjectInterface, ObjectInterface
     public function rolesList()
     {
         return $this->roles->pluck('id')->toArray();
+    }
+
+    public function getRolesListAttribute()
+    {
+        return $this->rolesList();
     }
 
     public function relationsWith(SubjectInterface $subject)
