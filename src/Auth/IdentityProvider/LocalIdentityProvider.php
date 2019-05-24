@@ -96,7 +96,7 @@ class LocalIdentityProvider implements IdentityProviderInterface
             ->first();
         if (is_null($pending)) {
             // TODO revisar
-            throw new AppException('Invalid token', 400);
+            throw new AppException('Invalid token', 'pendigUserNotFound', 400);
         }
         $result = [
             'subject' => [

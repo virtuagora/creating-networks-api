@@ -1,0 +1,13 @@
+{
+    "fatalError": "Ocurrió un error crítico, por favor contacte un administrador",
+    "error": "Ocurrió un error, por favor intente nuevamente más tarde",
+    "recaptchaError": "CAPTCHA inválido",
+    "recaptchaNotFound": "Debe enviar un CAPTCHA en esta solicitud",
+    "entityAlreadyExists": "Esa entidad ya existe",
+    "pendigUserNotFound": "El enlace ya expiró o el usuario ya fue registrado",
+    "notFound": "No se encuentra el recurso que está buscando",
+    "invalidData": "Los datos ingresados en el formulario presentan errores",
+    "signInError": "Datos de ingreso incorrectos",
+    "bannedAccount": "Su cuenta se encuentra suspendida",
+    "emailAlreadyExists": "Esa cuenta de correo ya se encuntra registrada"
+}

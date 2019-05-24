@@ -99,6 +99,14 @@ $container['errorHandler'] = function ($c) {
                     'code' => 'notFound',
                 ];
             },
+            '\App\Util\Exception\RecaptchaException' => function($e) {
+                return [
+                    'message' => $e->getMessage(),
+                    'status' => $e->getCode(),
+                    'code' => $e->getType(),
+                    'errors' => $e->getErrors(),
+                ];
+            },
             '\App\Util\Exception\AppException' => function($e) {
                 return [
                     'message' => $e->getMessage(),

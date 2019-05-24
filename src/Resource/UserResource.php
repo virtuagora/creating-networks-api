@@ -97,7 +97,7 @@ class UserResource extends Resource
         ]);
         if (count($dupFields) > 0) {
             throw new AppException(
-                'Email already registered', 'registeredEmail'
+                'Email already registered', 'emailAlreadyExists'
             );
         }
         $pending = $this->db->query('App:Token')->firstOrNew([

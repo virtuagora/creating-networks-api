@@ -259,26 +259,39 @@ class Release000Migration
         //     $t->foreign('comment_id')->references('id')->on('comments')->onDelete('cascade');
         //     $t->timestamps();
         // });
-        // $this->schema->create('terms', function (Blueprint $t) {
-        //     $t->engine = 'InnoDB';
-        //     $t->increments('id');
-        //     $t->string('name');
-        //     $t->string('slug');
-        //     $t->string('taxonomy');
-        //     $t->integer('count')->unsigned()->default(0);
-        //     $t->timestamps();
-        //     $t->unique(['slug', 'taxonomy']);
-        // });
-        // $this->schema->create('term_object', function (Blueprint $t) {
-        //     $t->engine = 'InnoDB';
-        //     $t->increments('id');
-        //     $t->integer('term_id')->unsigned();
-        //     $t->string('object_type');
-        //     $t->integer('object_id')->unsigned();
-        //     $t->json('data')->nullable();
-        //     $t->foreign('term_id')->references('id')->on('terms')->onDelete('cascade');
-        //     $t->index(['object_type', 'object_id']);
-        // });
+        $this->schema->create('taxonomies', function (Blueprint $t) {
+            $t->engine = 'InnoDB';
+            $t->string('id')->primary();;
+            $t->string('name');
+            $t->text('description');
+            $t->json('schema');
+            $t->json('rules');
+            $t->json('localization')->nullable();
+            $t->timestamps();
+        });
+        $this->schema->create('terms', function (Blueprint $t) {
+            $t->engine = 'InnoDB';
+            $t->string('id')->primary();
+            $t->string('name');
+            $t->string('trace');
+            $t->json('data')->nullable();
+            $t->json('localization')->nullable();
+            $t->integer('count')->unsigned()->default(0);
+            $t->string('taxonomy_id');
+            $t->foreign('taxonomy_id')->references('id')->on('taxonomies')->onDelete('cascade');
+            $t->timestamps();
+        });
+        $this->schema->create('term_object', function (Blueprint $t) {
+            $t->engine = 'InnoDB';
+            $t->increments('id');
+            $t->string('term_id')->unsigned();
+            $t->string('object_type');
+            $t->integer('object_id')->unsigned();
+            $t->json('data')->nullable();
+            $t->foreign('term_id')->references('id')->on('terms')->onDelete('cascade');
+            $t->index(['object_type', 'object_id']);
+            $t->timestamps();
+        });
         $this->schema->create('actions', function (Blueprint $t) {
             $t->engine = 'InnoDB';
             $t->string('id')->primary();
@@ -463,6 +476,18 @@ class Release000Migration
                     'contact_email',
                 ],
                 'additionalProperties' => false,
+            ],
+        ]);
+
+        $this->db->createAndSave('App:Taxonomy', [
+            'id' => 'Topic',
+            'name' => 'Topics',
+            'description' => 'ICT and Internet related topics which are of interest or concern',
+            'rules' => [
+                'habtm' => true, // HasAndBelongsToMany
+            ],
+            'schema' => [
+                'type' => 'null',
             ],
         ]);
 

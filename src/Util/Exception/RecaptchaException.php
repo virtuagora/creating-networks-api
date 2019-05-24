@@ -10,7 +10,7 @@ class RecaptchaException extends AppException
     {
         parent::__construct(
             'There was an error with the captcha',
-            isset($errors) ? 'recaptchaError' : 'recaptchaInvalid',
+            isset($errors) ? 'recaptchaError' : 'recaptchaNotFound',
             400
         );
         $this->errors = $errors;

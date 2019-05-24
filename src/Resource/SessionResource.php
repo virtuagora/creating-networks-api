@@ -21,13 +21,13 @@ class SessionResource
         $result = $this->userProvider->getUser($data, $type);
         if (!isset($result['user'])) {
             // TODO enviar exception especial sobre login
-            throw new AppException($result['message'], 400);
+            throw new AppException($result['message'], 'signInError', 400);
         }
         $user = $result['user'];
         if (isset($user->banExpiration)) {
             if (Carbon::now()->lt($user->banExpiration)) {
                 // TODO enviar exception especial sobre login
-                throw new AppException('Su cuenta se encuentra suspendida', 400);
+                throw new AppException('Su cuenta se encuentra suspendida', 'bannedAccount', 400);
             } else {
                 $user->banExpiration = null;
                 $user->save();

@@ -39,4 +39,9 @@ class Group extends Model
             'App\Model\Subject', 'subject_group', 'group_id', 'subject_id'
         )->withPivot('relation', 'title');
     }
+
+    public function terms()
+    {
+        return $this->morphToMany('App\Model\Term', 'object', 'term_object')->withTimestamps();
+    }
 }

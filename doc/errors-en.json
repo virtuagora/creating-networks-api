@@ -1,0 +1,13 @@
+{
+    "fatalError": "Fatal error, please contact a system administrator",
+    "error": "An error has occurred, please come back later",
+    "recaptchaError": "invalid CAPTCHA",
+    "recaptchaNotFound": "You must send a CAPTCHA in this request",
+    "entityAlreadyExists": "That entity already exists",
+    "pendigUserNotFound": "This link has expired or has been already used",
+    "notFound": "The resource you're looking for was not found",
+    "invalidData": "The form you've sent is incomplete or invalid",
+    "signInError": "Invalid sign in data",
+    "bannedAccount": "Your account is suspended",
+    "emailAlreadyExists": "Your email account has been already registered"
+}
