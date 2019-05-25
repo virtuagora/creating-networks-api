@@ -34,4 +34,14 @@ class InitiativeApiGate extends AbstractApiGate
         );
         return $this->sendEntityResponse($response, $init);
     }
+
+    // GET /initiatives
+    public function retrieveInitiatives($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $inits = $this->resources['initiative']->retrieveInitiatives(
+            $subject, $request->getQueryParams()
+        );
+        return $this->sendPaginatedResponse($request, $response, $inits);
+    }
 }

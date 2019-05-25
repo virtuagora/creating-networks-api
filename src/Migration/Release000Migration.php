@@ -531,6 +531,7 @@ class Release000Migration
     {
         $this->db->table('actions')->insert([
             ['id' => 'createInitiative', 'group' => 'initiative', 'allowed_roles' => '["User"]', 'allowed_relations' => '[]', 'allowed_proxies' => '[]'],
+            ['id' => 'createRegisteredCity', 'group' => 'initiative', 'allowed_roles' => '["Admin"]', 'allowed_relations' => '[]', 'allowed_proxies' => '[]'],
         ]);
     }
 }

@@ -103,4 +103,58 @@ class CityResource extends Resource
         }
         return new Paginator($query, $options);
     }
+
+    public function createRegisteredCity($subject, $data, $options = [], $flags = 3)
+    {
+        if ($flags & Utils::AUTHFLAG) {
+            $this->authorization->checkOrFail($subject, 'createRegisteredCity');
+        }
+        $schema = [
+            'type' => 'object',
+            'properties' => [
+                'name' => [
+                    'type' => 'string',
+                ],
+                'country_id' => [
+                    'type' => 'integer',
+                    'minimum' => 1,
+                ],
+                'point' => [
+                    'type' => 'object',
+                    'properties' => [
+                        'type' => [
+                            'type' => 'string',
+                            'const' => 'Point',
+                        ],
+                        'coordinates' => [
+                            'type' => 'array',
+                            'items' => [
+                                'type' => 'number',
+                            ],
+                            'minItems' => 2,
+                            'maxItems' => 2,
+                        ],
+                    ],
+                    'required' => ['type', 'coordinates'],
+                    'additionalProperties' => false,
+                ],
+            ],
+            'required' => ['name', 'contry_id', 'point'],
+            'additionalProperties' => false,
+        ];
+        $v = $this->validation->fromSchema($schema);
+        $data = $this->validation->prepareData($schema, $data, true);
+        $v->assert($data);
+        // TODO check if country_id exists
+        $regCity = $this->db->create('App:RegisteredCity', $data);
+        $regCity->trace = Utils::traceStr($data['name']);
+        $regCity->save();
+        if ($flags & Utils::LOGFLAG) {
+            $this->resources['log']->createLog($subject, [
+                'action' => 'createRegisteredCity',
+                'object' => $regCity,
+            ]);
+        }
+        return $regCity;
+    }
 }

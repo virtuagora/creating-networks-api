@@ -41,6 +41,35 @@ class InitiativeResource extends Resource
             ->findOrFail($id);
     }
 
+    public function retrieveInitiatives($subject, $options = [])
+    {
+        $pagSch = $this->helper->getPaginatedQuerySchema([
+            'city_id' => [
+                'type' => 'integer',
+                'minimum' => -1,
+            ],
+            's' => [
+                'type' => 'string',
+            ],
+        ]);
+        $v = $this->validation->fromSchema($pagSch);
+        $options = $this->validation->prepareData($pagSch, $options, true);
+        $v->assert($options);
+        $query = $this->db->query('App:Initiative');
+        if (isset($options['city_id'])) {
+            if ($options['city_id'] == -1) {
+                $query->whereNull('city_id');
+            } else {
+                $query->where('city_id', $options['country_id']);
+            }
+        }
+        if (isset($options['s'])) {
+            $filter = Utils::traceStr($options['s']);
+            $query->where('trace', 'LIKE', "%$filter%");
+        }
+        return new Paginator($query, $options);
+    }
+
     public function createInitiative($subject, $data, $options = [], $flags = 3)
     {
         if ($flags & Utils::AUTHFLAG) {

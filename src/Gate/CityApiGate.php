@@ -40,4 +40,14 @@ class CityApiGate extends AbstractApiGate
         );
         return $this->sendPaginatedResponse($request, $response, $cities);
     }
+
+    // POST /registered-cities
+    public function createRegisteredCity($request, $response, $params)
+    {
+        $city = $this->resources['city']->createRegisteredCity(
+            $request->getAttribute('subject'),
+            $this->helper->getDataFromRequest($request)
+        );
+        return $this->sendSimpleResponse($response, 'Registered city created');
+    }
 }
