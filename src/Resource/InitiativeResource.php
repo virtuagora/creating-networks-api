@@ -140,6 +140,67 @@ class InitiativeResource extends Resource
         return $initiative;
     }
 
+    public function attachTerms($subject, $iniId, $data, $flags = 3)
+    {
+        $init = $this->db->query('App:Initiative')->findOrFail($iniId);
+        if ($flags & Utils::AUTHFLAG) {
+            $this->authorization->checkOrFail(
+                $subject, 'associateInitiativeTerm', $init
+            );
+        }
+        $schema = [
+            'type' => 'object',
+            'properties' => [
+                'terms' => [
+                    'type' => 'array',
+                    'items' => [
+                        'type' => 'integer',
+                        'minimum' => 1,
+                    ],
+                ],
+            ],
+            'additionalProperties' => false,
+            'required' => ['terms'],
+        ];
+        $v = $this->validation->fromSchema($schema);
+        $data = $this->validation->prepareData($schema, $data);
+        $terms = $this->db->query('App:Term')
+            ->whereIn('id', $data['terms'])
+            ->get();
+        $changes = $init->terms()->syncWithoutDetaching(
+            $terms->pluck('id')->toArray()
+        );
+        foreach ($terms as $term) {
+            if (in_array($term->id, $changes['attached'])) {
+                $term->increment('count');
+            }
+        }
+        if ($flags & Utils::LOGFLAG) {
+            $this->resources['log']->createLog($subject, [
+                'action' => 'associateInitiativeTerm',
+                'object' => $init,
+            ]);
+        }
+        return $changes['attached'];
+    }
+
+    public function detachTerm($subject, $iniId, $trmId, $flags = 3)
+    {
+        $init = $this->db->query('App:Initiative')->findOrFail($iniId);
+        $term = $this->db->query('App:Term')->findOrFail($trmId);
+        if ($flags & Utils::AUTHFLAG) {
+            $this->authorization->checkOrFail(
+                $subject, 'associateInitiativeTerm', $init
+            );
+        }
+        $changes = $init->terms()->detach($trmId);
+        if ($changes >= 1) {
+            $term->decrement('count');
+            return true;
+        }
+        return false;
+    }
+
     private function createCityFromRegistered($registered)
     {
         $s = $this->db->createAndSave('App:Space', [

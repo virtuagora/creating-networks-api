@@ -44,4 +44,30 @@ class InitiativeApiGate extends AbstractApiGate
         );
         return $this->sendPaginatedResponse($request, $response, $inits);
     }
+
+    // POST /initiatives/{ini}/terms
+    public function attachTerms($request, $response, $params)
+    {
+        $attached = $this->resources['initiative']->attachTerms(
+            $request->getAttribute('subject'),
+            Utils::sanitizedIdParam('ini', $params),
+            $this->helper->getDataFromRequest($request)
+        );
+        return $this->sendSimpleResponse($response, 'Terms attached', 200, [
+            'attached_terms' => $attached
+        ]);
+    }
+
+    // DELETE /initiatives/{ini}/terms/{trm}
+    public function detachTerm($request, $response, $params)
+    {
+        $detached = $this->resources['initiative']->detachTerm(
+            $request->getAttribute('subject'),
+            Utils::sanitizedIdParam('ini', $params),
+            Utils::sanitizedIdParam('trm', $params)
+        );
+        return $this->sendSimpleResponse($response, 'Term detached', 200, [
+            'detached' => $detached
+        ]);
+    }
 }

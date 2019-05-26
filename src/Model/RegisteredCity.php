@@ -15,7 +15,7 @@ class RegisteredCity extends Model
         'id', 'name', 'point', 'localization', 'trace', 'country',
     ];
     protected $fillable = [
-        'name', 'trace', 'point', 'localization', 'country_id',
+        'name', 'trace', 'localization', 'country_id',
     ];
     protected $with = ['country'];
     protected $casts = [

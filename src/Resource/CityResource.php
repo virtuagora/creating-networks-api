@@ -6,6 +6,7 @@ use App\Util\Exception\AppException;
 use App\Util\Paginator;
 use App\Util\Utils;
 use Grimzy\LaravelMysqlSpatial\Types\Point;
+use GeoJson\GeoJson;
 
 class CityResource extends Resource
 {
@@ -147,6 +148,9 @@ class CityResource extends Resource
         $v->assert($data);
         // TODO check if country_id exists
         $regCity = $this->db->create('App:RegisteredCity', $data);
+        $regCity->point = Point::fromJson(
+            GeoJson::jsonUnserialize($data['point'])
+        );
         $regCity->trace = Utils::traceStr($data['name']);
         $regCity->save();
         if ($flags & Utils::LOGFLAG) {

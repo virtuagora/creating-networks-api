@@ -71,6 +71,9 @@ $container['userApiGate'] = function ($c) {
 $container['initiativeApiGate'] = function ($c) {
     return new App\Gate\InitiativeApiGate($c);
 };
+$container['termApiGate'] = function ($c) {
+    return new App\Gate\TermApiGate($c);
+};
 $container['regionApiGate'] = function ($c) {
     return new App\Gate\RegionApiGate($c);
 };
@@ -92,7 +95,8 @@ $container['errorHandler'] = function ($c) {
                 ];
             },
             '\Illuminate\Database\Eloquent\ModelNotFoundException' => function($e) {
-                $m = end(explode('\\', $e->getModel()));
+                $mfull = explode('\\', $e->getModel());
+                $m = end($mfull);
                 return [
                     'message' => $m . ' not found',
                     'status' => 404,

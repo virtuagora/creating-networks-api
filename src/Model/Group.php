@@ -3,8 +3,10 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Auth\ObjectInterface;
+use App\Auth\SubjectInterface;
 
-class Group extends Model
+class Group extends Model implements ObjectInterface
 {
     protected $table = 'groups';
     protected $visible = [
@@ -43,5 +45,11 @@ class Group extends Model
     public function terms()
     {
         return $this->morphToMany('App\Model\Term', 'object', 'term_object')->withTimestamps();
+    }
+
+    public function relationsWith(SubjectInterface $subject)
+    {
+        $user = $this->members()->where('subject_id', $subject->id)->first();
+        return isset($user) ? [$user->pivot->relation] : [];
     }
 }

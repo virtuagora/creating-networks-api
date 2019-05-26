@@ -8,10 +8,10 @@ class Term extends Model
 {
     protected $table = 'terms';
     protected $visible = [
-        'id', 'name', 'data', 'localization', 'count',
+        'id', 'name', 'data', 'localization', 'count', 'taxonomy_id',
     ];
     protected $fillable = [
-        'id', 'name', 'data', 'localization',
+        'id', 'name', 'data', 'localization', 'taxonomy_id',
     ];
     protected $casts = [
         'data' => 'array',

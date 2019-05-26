@@ -271,7 +271,7 @@ class Release000Migration
         });
         $this->schema->create('terms', function (Blueprint $t) {
             $t->engine = 'InnoDB';
-            $t->string('id')->primary();
+            $t->increments('id');
             $t->string('name');
             $t->string('trace');
             $t->json('data')->nullable();
@@ -284,7 +284,7 @@ class Release000Migration
         $this->schema->create('term_object', function (Blueprint $t) {
             $t->engine = 'InnoDB';
             $t->increments('id');
-            $t->string('term_id');
+            $t->integer('term_id')->unsigned();
             $t->string('object_type');
             $t->integer('object_id')->unsigned();
             $t->json('data')->nullable();
@@ -480,7 +480,7 @@ class Release000Migration
         ]);
 
         $this->db->createAndSave('App:Taxonomy', [
-            'id' => 'Topic',
+            'id' => 'topics',
             'name' => 'Topics',
             'description' => 'ICT and Internet related topics which are of interest or concern',
             'rules' => [
@@ -532,6 +532,8 @@ class Release000Migration
         $this->db->table('actions')->insert([
             ['id' => 'createInitiative', 'group' => 'initiative', 'allowed_roles' => '["User"]', 'allowed_relations' => '[]', 'allowed_proxies' => '[]'],
             ['id' => 'createRegisteredCity', 'group' => 'initiative', 'allowed_roles' => '["Admin"]', 'allowed_relations' => '[]', 'allowed_proxies' => '[]'],
+            ['id' => 'createTerm', 'group' => 'initiative', 'allowed_roles' => '["Admin"]', 'allowed_relations' => '[]', 'allowed_proxies' => '[]'],
+            ['id' => 'associateInitiativeTerm', 'group' => 'initiative', 'allowed_roles' => '["Admin"]', 'allowed_relations' => '["owner"]', 'allowed_proxies' => '[]'],
         ]);
     }
 }
