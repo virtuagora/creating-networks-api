@@ -284,7 +284,7 @@ class Release000Migration
         $this->schema->create('term_object', function (Blueprint $t) {
             $t->engine = 'InnoDB';
             $t->increments('id');
-            $t->string('term_id')->unsigned();
+            $t->string('term_id');
             $t->string('object_type');
             $t->integer('object_id')->unsigned();
             $t->json('data')->nullable();
