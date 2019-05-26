@@ -37,7 +37,7 @@ class InitiativeResource extends Resource
 
     public function retrieveInitiative($subject, $id, $options = [])
     {
-        return $this->db->query('App:Initiative')
+        return $this->db->query('App:Initiative', ['terms'])
             ->findOrFail($id);
     }
 

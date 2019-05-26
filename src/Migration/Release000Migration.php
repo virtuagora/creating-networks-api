@@ -491,6 +491,29 @@ class Release000Migration
             ],
         ]);
 
+        $this->db->table('terms')->insert([
+            ['name' => 'Access for people with disabilities', 'trace' => 'Accessforpeoplewithdisabilities', 'taxonomy_id' => 'topics', 'created_at' => $today, 'updated_at' => $today],
+            ['name' => 'Access to Information', 'trace' => 'AccesstoInformation', 'taxonomy_id' => 'topics', 'created_at' => $today, 'updated_at' => $today],
+            ['name' => 'Cybersecurity and Data Protection', 'trace' => 'CybersecurityandDataProtection', 'taxonomy_id' => 'topics', 'created_at' => $today, 'updated_at' => $today],
+            ['name' => 'LGBT+ Community', 'trace' => 'LGBTCommunity', 'taxonomy_id' => 'topics', 'created_at' => $today, 'updated_at' => $today],
+            ['name' => 'Entrepreneurship', 'trace' => 'Entrepreneurship', 'taxonomy_id' => 'topics', 'created_at' => $today, 'updated_at' => $today],
+            ['name' => 'Arts and Culture', 'trace' => 'ArtsandCulture', 'taxonomy_id' => 'topics', 'created_at' => $today, 'updated_at' => $today],
+            ['name' => 'Democracy', 'trace' => 'Democracy', 'taxonomy_id' => 'topics', 'created_at' => $today, 'updated_at' => $today],
+            ['name' => 'Human Rights', 'trace' => 'HumanRights', 'taxonomy_id' => 'topics', 'created_at' => $today, 'updated_at' => $today],
+            ['name' => 'Gender Equality', 'trace' => 'GenderEquality', 'taxonomy_id' => 'topics', 'created_at' => $today, 'updated_at' => $today],
+            ['name' => 'Social Inclusion and Inequality', 'trace' => 'SocialInclusionandInequality', 'taxonomy_id' => 'topics', 'created_at' => $today, 'updated_at' => $today],
+            ['name' => 'Technological Innovation', 'trace' => 'TechnologicalInnovation', 'taxonomy_id' => 'topics', 'created_at' => $today, 'updated_at' => $today],
+            ['name' => 'Internet of Things', 'trace' => 'InternetofThings', 'taxonomy_id' => 'topics', 'created_at' => $today, 'updated_at' => $today],
+            ['name' => 'Freedom of Expression', 'trace' => 'FreedomofExpression', 'taxonomy_id' => 'topics', 'created_at' => $today, 'updated_at' => $today],
+            ['name' => 'Religious Freedom', 'trace' => 'ReligiousFreedom', 'taxonomy_id' => 'topics', 'created_at' => $today, 'updated_at' => $today],
+            ['name' => 'Fight Against Racism', 'trace' => 'FightAgainstRacism', 'taxonomy_id' => 'topics', 'created_at' => $today, 'updated_at' => $today],
+            ['name' => 'Net Neutrality', 'trace' => 'NetNeutrality', 'taxonomy_id' => 'topics', 'created_at' => $today, 'updated_at' => $today],
+            ['name' => 'Academic Research', 'trace' => 'AcademicResearch', 'taxonomy_id' => 'topics', 'created_at' => $today, 'updated_at' => $today],
+            ['name' => 'Community Networks', 'trace' => 'CommunityNetworks', 'taxonomy_id' => 'topics', 'created_at' => $today, 'updated_at' => $today],
+            ['name' => 'Health', 'trace' => 'Health', 'taxonomy_id' => 'topics', 'created_at' => $today, 'updated_at' => $today],
+            ['name' => 'Transparency and Government Accountability', 'trace' => 'TransparencyandGovernmentAccountability', 'taxonomy_id' => 'topics', 'created_at' => $today, 'updated_at' => $today],
+        ]);
+
     //     $this->db->table('users')->insert([
     //         [
     //             'email' => 'admin@rutatrans.org',
