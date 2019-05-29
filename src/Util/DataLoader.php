@@ -37,7 +37,7 @@ class DataLoader
         $records = $csv->getRecords();
         foreach ($records as $o => $r) {
             $s = $this->db->createAndSave('App:Space', [
-                'point' => new Point($r['latitude'], $r['longitude']),
+                'point' => new Point($r['longitude'], $r['latitude']),
             ]);
             $this->db->createAndSave('App:Country', [
                 'id' => $r['id'],
@@ -71,7 +71,7 @@ class DataLoader
             $inserts[] = [
                 'name' => $r['name'],
                 'trace' => Utils::traceStr($r['trace']),
-                'point' => $this->db->getConnection()->raw('Point('.$r['lat'].','.$r['lng'].')'),
+                'point' => $this->db->getConnection()->raw('Point('.$r['lng'].','.$r['lat'].')'),
                 'country_id' => $r['country_id'],
             ];
             if (count($inserts) > 99) {
