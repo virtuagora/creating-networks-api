@@ -444,7 +444,7 @@ class Release000Migration
                     'role_of_youth' => [
                         'type' => 'string',
                         'enum' => [
-                            'Target Audience', 'Leadership', 'Membership'
+                            'targetAudience', 'leadership', 'membership'
                         ],
                     ],
                     'interested_in_participate' => [
