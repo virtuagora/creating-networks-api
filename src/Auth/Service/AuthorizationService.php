@@ -4,7 +4,7 @@ namespace App\Auth\Service;
 
 use App\Util\Exception\UnauthorizedException;
 use App\Auth\SubjectInterface as Subject;
-use App\Auth\ObjectInterface as Object;
+use App\Auth\ObjectInterface;
 
 class AuthorizationService
 {
@@ -25,7 +25,7 @@ class AuthorizationService
         return array_intersect($subRoles, $roles);
     }
 
-    public function check(Subject $subject, string $actName, Object $object = null, $proxy = null)
+    public function check(Subject $subject, string $actName, ObjectInterface $object = null, $proxy = null)
     {
         $action = $this->db->query('App:Action')->find($actName);
         if (is_null($action)) {
@@ -45,7 +45,7 @@ class AuthorizationService
         return false;
     }
 
-    public function checkOrFail(Subject $subject, string $action, Object $object = null, $proxy = null)
+    public function checkOrFail(Subject $subject, string $action, ObjectInterface $object = null, $proxy = null)
     {
         if (!$this->check($subject, $action, $object, $proxy)) {
             throw new UnauthorizedException();
