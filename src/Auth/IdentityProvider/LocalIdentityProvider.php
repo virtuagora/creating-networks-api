@@ -101,6 +101,7 @@ class LocalIdentityProvider implements IdentityProviderInterface
         $result = [
             'subject' => [
                 'username' => $pending->data['email'],
+                'locale' => $pending->data['locale'],
                 'password' => $data['password'],
                 'display_name' => $data['names'] . ' ' . $data['surnames'],
                 'img_type' => 1,

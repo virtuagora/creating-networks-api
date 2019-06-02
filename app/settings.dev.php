@@ -6,6 +6,7 @@ return [
         'determineRouteBeforeAppMiddleware' => true,
         'displayErrorDetails' => true,
         'timezone' => 'America/Argentina/Buenos_Aires',
+        'spaUrl' => 'http://localhost:8080',
         'swiftmailer' => [
             'transport' => 'smtp',
             'transportOptions' => [

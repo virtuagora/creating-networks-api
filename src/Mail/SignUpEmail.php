@@ -7,17 +7,29 @@ use Illuminate\Mail\Mailable;
 class SignUpEmail extends Mailable
 {
     protected $data;
+    protected $locale;
  
-    public function __construct($data)
+    public function __construct(array $data)
     {
         $this->data = $data;
+        $this->locale = 'en';
+    }
+
+    public function setLocale(string $locale)
+    {
+        $this->locale = $locale;
     }
  
     public function build()
     {
+        $template = $this->locale . '/welcome-email.php';
+        $subjects = [
+            'en' => 'Creating Networks registration',
+            'es' => 'Registro en Creando Redes',
+        ];
         return $this
-            ->view('registro-exitoso.php')
+            ->view($template)
             ->with($this->data)
-            ->subject('Registro');
+            ->subject($subjects[$this->locale] ?? $subjects['en']);
     }
 }

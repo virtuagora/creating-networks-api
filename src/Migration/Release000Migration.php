@@ -160,6 +160,7 @@ class Release000Migration
             $t->integer('points')->default(0);
             $t->string('trace')->nullable();
             $t->string('type');
+            $t->string('locale')->default('en');
             $t->integer('person_id')->unsigned()->nullable();
             $t->foreign('person_id')->references('id')->on('people')->onDelete('cascade');
             $t->integer('group_id')->unsigned()->nullable();

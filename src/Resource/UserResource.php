@@ -85,6 +85,11 @@ class UserResource extends Resource
                     'type' => 'string',
                     'format' => 'email',
                 ],
+                'locale' => [
+                    'type' => 'string',
+                    'enum' => ['en', 'es'],
+                    'default' => 'en',
+                ],
             ],
             'required' => ['email'],
             'additionalProperties' => false,
@@ -107,13 +112,20 @@ class UserResource extends Resource
         $pending->token = Utils::randomStr(50);
         $pending->data = [
             'email' => $data['email'],
+            'locale' => $data['locale'],
         ];
         $pending->save();
+        $link = $this->settings['spaUrl'];
+        if ($data['locale'] != 'en') {
+            $link .= '/' . $data['locale'];
+        }
+        $link .= '/#/auth/complete-signup/' . $pending->token;
         $mailArg = [
             'acceso' => $pending->finder,
-            'token' => $pending->token,
+            'link' => $link,
         ];
         $mail = new SignUpEmail($mailArg);
+        $mail->setLocale($data['locale']);
         $this->mailer->to($pending->finder)->send($mail);
         return $pending;
     }
