@@ -3,7 +3,7 @@
 return [
     'settings' => [
         'env' => 'dev',
-        'determineRouteBeforeAppMiddleware' => true,
+        'installerKey' => null,
         'displayErrorDetails' => true,
         'timezone' => 'America/Argentina/Buenos_Aires',
         'spaUrl' => 'http://localhost:8080',

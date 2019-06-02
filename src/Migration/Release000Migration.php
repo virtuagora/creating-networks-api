@@ -559,6 +559,8 @@ class Release000Migration
             ['id' => 'createRegisteredCity', 'group' => 'initiative', 'allowed_roles' => '["Admin"]', 'allowed_relations' => '[]', 'allowed_proxies' => '[]'],
             ['id' => 'createTerm', 'group' => 'initiative', 'allowed_roles' => '["Admin"]', 'allowed_relations' => '[]', 'allowed_proxies' => '[]'],
             ['id' => 'associateInitiativeTerm', 'group' => 'initiative', 'allowed_roles' => '["Admin"]', 'allowed_relations' => '["owner"]', 'allowed_proxies' => '[]'],
+            ['id' => 'deleteInitiative', 'group' => 'initiative', 'allowed_roles' => '["Admin"]', 'allowed_relations' => '["owner"]', 'allowed_proxies' => '[]'],
+            ['id' => 'associateSubjectRole', 'group' => 'user', 'allowed_roles' => '["Admin"]', 'allowed_relations' => '[]', 'allowed_proxies' => '[]'],
         ]);
     }
 }

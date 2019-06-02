@@ -8,28 +8,38 @@ $app->get('/', function ($request, $response, $args) {
     ]);
 })->setName('showHome');
 
-$app->get('/install', function($request, $response, $params) {
+$app->get('/install', function($request, $response, $args) {
     $env = $this->settings['env'] ?? 'pro';
+    $ctrolKey = $this->settings['installerKey'] ?? null;
+    $queryKey = $request->getQueryParams()['key'] ?? null;
+    if ($ctrolKey != $queryKey) {
+        return $response->withJSON(['message' => 'Fail']);
+    }
     $installer = new \App\Migration\Release000Migration($this->db);
     if ($installer->isInstalled() && $env == 'pro') {
-        return $response->withJSON(['mensaje' => 'La instalación ha fallado']);
+        return $response->withJSON(['message' => 'Fail']);
     }
     $installer->down();
     $installer->up();
     $installer->populate();
     $installer->updateActions();
-    return $response->withJSON(['message' => 'instalación exitosa']);
+    return $response->withJSON(['message' => 'Success']);
 });
 
-$app->get('/install-cities', function ($req, $res, $arg) {
+$app->get('/install-cities', function ($request, $response, $arg) {
+    $ctrolKey = $this->settings['installerKey'] ?? null;
+    $queryKey = $request->getQueryParams()['key'] ?? null;
+    if ($ctrolKey != $queryKey) {
+        return $response->withJSON(['message' => 'Fail']);
+    }
     $loader = new \App\Util\DataLoader($this->db);
+    if ($loader->dataAlreadyLoaded()) {
+        return $response->withJSON(['message' => 'Fail']);
+    }
     $loader->createRegions();
     $loader->createCountries();
     $loader->createRegisteredCities();
-    return $res->withJSON([
-        'sub' => $this->session->authenticate($req)->toArray()
-    ]);
-    //return $res->withJSON($this->session->get('user'));
+    return $response->withJSON(['message' => 'Success']);
 });
 
 // $app->post('/upload', function ($request, $response, $args) {
@@ -63,6 +73,7 @@ $app->group('/v1', function () {
     $this->get('/initiatives', 'initiativeApiGate:retrieveInitiatives')->setName('apiRNInitiative');
     $this->post('/initiatives', 'initiativeApiGate:createInitiative')->setName('apiC1Initiative');
     $this->get('/initiatives/{ini}', 'initiativeApiGate:retrieveInitiative')->setName('apiR1Initiative');
+    $this->delete('/initiatives/{ini}', 'initiativeApiGate:deleteInitiative')->setName('apiD1Initiative');
 
     $this->get('/terms', 'termApiGate:retrieveTerms')->setName('apiRNTerm');
     $this->post('/terms', 'termApiGate:createTerm')->setName('apiC1Term');

@@ -14,6 +14,11 @@ class DataLoader
         $this->db = $db;
     }
 
+    public function dataAlreadyLoaded()
+    {
+        return !is_null($this->db->query('App:Region')->first());
+    }
+
     public function createRegions()
     {
         $csv = Reader::createFromPath(__DIR__ . '/../../data/regions.csv', 'r');

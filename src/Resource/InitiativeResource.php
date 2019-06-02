@@ -140,6 +140,30 @@ class InitiativeResource extends Resource
         return $initiative;
     }
 
+    public function deleteInitiative($subject, $iniId, $options = [], $flags = 3)
+    {
+        $init = $this->db->query('App:Initiative', ['terms', 'city'])
+            ->findOrFail($iniId);
+        if ($flags & Utils::AUTHFLAG) {
+            $this->authorization->checkOrFail(
+                $subject, 'deleteInitiative', $init
+            );
+        }
+        $city = $init->city;
+        $deleted = $init->delete();
+        if ($deleted) {
+            // TODO maybe delete city if it hasn't more initiatives left?
+            $city->decrement('initiatives_count');
+        }
+        if ($flags & Utils::LOGFLAG) {
+            $this->resources['log']->createLog($subject, [
+                'action' => 'deleteInitiative',
+                'object' => $init,
+            ]);
+        }
+        return $deleted;
+    }
+
     public function attachTerms($subject, $iniId, $data, $flags = 3)
     {
         $init = $this->db->query('App:Initiative')->findOrFail($iniId);

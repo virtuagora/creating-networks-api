@@ -45,6 +45,18 @@ class InitiativeApiGate extends AbstractApiGate
         return $this->sendPaginatedResponse($request, $response, $inits);
     }
 
+    // DELETE /initiatives/{ini}
+    public function deleteInitiative($request, $response, $params)
+    {
+        $deleted = $this->resources['initiative']->deleteInitiative(
+            $request->getAttribute('subject'),
+            Utils::sanitizedIdParam('ini', $params)
+        );
+        return $this->sendSimpleResponse(
+            $response,'Initiative deleted', 200, ['deleted' => $deleted]
+        );
+    }
+
     // POST /initiatives/{ini}/terms
     public function attachTerms($request, $response, $params)
     {
