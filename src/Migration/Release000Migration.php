@@ -319,7 +319,7 @@ class Release000Migration
         $this->schema->create('logs', function (Blueprint $t) {
             $t->engine = 'InnoDB';
             $t->increments('id');
-            $t->integer('subject_id')->unsigned();
+            $t->integer('subject_id')->unsigned()->nullable();
             $t->integer('proxy_id')->unsigned()->nullable();
             $t->string('action_id');
             $t->string('object_type');
@@ -554,6 +554,7 @@ class Release000Migration
     public function updateActions()
     {
         $this->db->table('actions')->insert([
+            ['id' => 'updateUserPassword', 'group' => 'user', 'allowed_roles' => '["Admin"]', 'allowed_relations' => '["self"]', 'allowed_proxies' => '[]'],
             ['id' => 'createInitiative', 'group' => 'initiative', 'allowed_roles' => '["User"]', 'allowed_relations' => '[]', 'allowed_proxies' => '[]'],
             ['id' => 'createRegisteredCity', 'group' => 'initiative', 'allowed_roles' => '["Admin"]', 'allowed_relations' => '[]', 'allowed_proxies' => '[]'],
             ['id' => 'createTerm', 'group' => 'initiative', 'allowed_roles' => '["Admin"]', 'allowed_relations' => '[]', 'allowed_proxies' => '[]'],

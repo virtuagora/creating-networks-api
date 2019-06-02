@@ -10,7 +10,7 @@ class Token extends Model
         'id', 'type', 'finder', 'token', 'data', 'expires_at',
     ];
     protected $fillable = [
-        'type', 'finder', 'token', 'data', 'expires_at',
+        'type', 'finder', 'token', 'data', 'expires_at', 'subject_id',
     ];
     protected $casts = [
         'data' => 'array',

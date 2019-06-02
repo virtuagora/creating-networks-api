@@ -32,12 +32,33 @@ $app->get('/install-cities', function ($req, $res, $arg) {
     //return $res->withJSON($this->session->get('user'));
 });
 
+// $app->post('/upload', function ($request, $response, $args) {
+//     $id = bin2hex(random_bytes(16)); // generate a unique id
+
+//     // optionally send the content type in the header
+//     $contentType = $request->getHeader('Content-Type') ?? 'application/octet-stream';
+
+//     // the request body is the content of the file
+//     $data = $request->getBody()->getContents();
+//     file_put_contents($id, $data);
+
+//     // return some information on the file we just stored
+//     return $response->withJson([
+//         'id' => $id,
+//         'content-type' => $contentType,
+//         'content-length' => strlen($data)
+//     ]);
+// });
+
 $app->group('/v1', function () {
     $this->post('/tokens', 'sessionApiGate:createSession');
     $this->post('/pending-users', 'userApiGate:createPendingUser')->setName('apiC1PendingUser')
         ->add(new \App\Middleware\RecaptchaMiddleware($this->getContainer()));
+    $this->post('/reset-tokens', 'userApiGate:createResetToken')->setName('apiC1ResetToken')
+        ->add(new \App\Middleware\RecaptchaMiddleware($this->getContainer()));
     $this->post('/users', 'userApiGate:createUser')->setName('apiC1User');
     $this->get('/users/{usr}', 'userApiGate:retrieveUser')->setName('apiR1User');
+    $this->put('/users/{usr}/password', 'userApiGate:updateUserPassword')->setName('apiU1UserPassword');
 
     $this->get('/initiatives', 'initiativeApiGate:retrieveInitiatives')->setName('apiRNInitiative');
     $this->post('/initiatives', 'initiativeApiGate:createInitiative')->setName('apiC1Initiative');

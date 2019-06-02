@@ -43,4 +43,26 @@ class UserApiGate extends AbstractApiGate
         );
         return $this->sendEntityResponse($response, $user);
     }
+
+    // POST /reset-tokens
+    public function createResetToken($request, $response, $params)
+    {
+        $user = $this->resources['user']->createResetToken(
+            $request->getAttribute('subject'),
+            $this->helper->getDataFromRequest($request)
+        );
+        return $this->sendSimpleResponse($response, 'Reset token created');
+    }
+
+    // PUT /users/{usr}/password
+    public function updateUserPassword($request, $response, $params)
+    {
+        $user = $this->resources['user']->updateUserPassword(
+            $request->getAttribute('subject'),
+            Utils::sanitizedIdParam('usr', $params),
+            $this->helper->getDataFromRequest($request),
+            $this->helper->getOptionsFromRequest($request)
+        );
+        return $this->sendSimpleResponse($response, 'Password updated');
+    }
 }
