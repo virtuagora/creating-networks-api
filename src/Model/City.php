@@ -9,7 +9,7 @@ class City extends Model
     protected $table = 'cities';
     protected $visible = [
         'id', 'name', 'data', 'country', 'space', 'localization',
-        'initiatives_count',
+        'initiatives_count', 'initiatives',
     ];
     protected $fillable = [
         'name', 'data', 'country_id', 'space_id', 'localization',

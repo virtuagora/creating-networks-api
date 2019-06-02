@@ -36,7 +36,7 @@ class CityResource extends Resource
 
     public function retrieveCity($subject, $id, $options = [])
     {
-        return $this->db->query('App:City')
+        return $this->db->query('App:City', ['initiatives'])
             ->findOrFail($id);
     }
 
