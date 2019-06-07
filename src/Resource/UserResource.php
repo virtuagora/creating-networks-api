@@ -155,7 +155,7 @@ class UserResource extends Resource
         $subject = $person->subject;
         $token = $this->db->create('App:Token', [
             'type' => 'resetPassword',
-            'expires_at' => Carbon::now()->addDay(),
+            'expires_on' => Carbon::now()->addDay(),
             'subject_id' => $subject->id,
             'token' => 'resetTkn' . Utils::randomStr(42),
         ]);
@@ -174,7 +174,7 @@ class UserResource extends Resource
         return $token;
     }
 
-    public function updateUserPassword($subject, $usrId, $data, $options = [], $flags = 3)
+    public function updatePassword($subject, $usrId, $data, $options = [], $flags = 3)
     {
         // TODO limitar a solo users;
         $user = $this->db->query('App:Subject')->findOrFail($usrId);
@@ -227,7 +227,7 @@ class UserResource extends Resource
                     'Invalid token', 'invalidToken'
                 );
             }
-            if ($token->expires_at->lt(Carbon::now())) {
+            if ($token->expires_on->lt(Carbon::now())) {
                 $token->delete();
                 throw new AppException(
                     'Expired token', 'expiredToken'
@@ -251,5 +251,40 @@ class UserResource extends Resource
                 'object' => $user,
             ]);
         }
+    }
+
+    public function attachRole($subject, $subId, $rolId, $data, $flags = 3)
+    {
+        $subj = $this->db->query('App:Subject')->findOrFail($subId);
+        $role = $this->db->query('App:Term')->findOrFail($rolId);
+        if ($flags & Utils::AUTHFLAG) {
+            $this->authorization->checkOrFail(
+                $subject, 'associateSubjectRole', $subj
+            );
+        }
+        $schema = [
+            'type' => 'object',
+            'properties' => [
+                'expires_on' => [
+                    'type' => 'string',
+                    'format' => 'date',
+                ],
+            ],
+            'additionalProperties' => false,
+        ];
+        $v = $this->validation->fromSchema($schema);
+        $data = $this->validation->prepareData($schema, $data, true);
+        $v->assert($data);
+        $exp = isset($data['expires_on']) ? new Carbon($data['expires_on']) : null;
+        $changes = $subj->roles()->syncWithoutDetaching([
+            $role => ['expires_on' => $exp],
+        ]);
+        if ($flags & Utils::LOGFLAG) {
+            $this->resources['log']->createLog($subject, [
+                'action' => 'associateSubjectRole',
+                'object' => $subj,
+            ]);
+        }
+        return count($changes['attached']);
     }
 }

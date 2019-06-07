@@ -180,7 +180,7 @@ class Release000Migration
         $this->schema->create('subject_role', function (Blueprint $t) {
             $t->engine = 'InnoDB';
             $t->increments('id');
-            $t->timestamp('expiration')->nullable();
+            $t->timestamp('expires_on')->nullable();
             $t->integer('subject_id')->unsigned();
             $t->string('role_id');
             $t->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
@@ -195,9 +195,19 @@ class Release000Migration
             $t->string('finder')->nullable();
             $t->integer('subject_id')->unsigned()->nullable();
             $t->foreign('subject_id')->references('id')->on('subjects')->onDelete('cascade');
-            $t->timestamp('expires_at')->nullable();
+            $t->timestamp('expires_on')->nullable();
             $t->timestamps();
             $t->index('finder');
+        });
+        $this->schema->create('node_types', function (Blueprint $t) {
+            $t->engine = 'InnoDB';
+            $t->string('id')->primary();
+            $t->string('name');
+            $t->text('description');
+            $t->json('subtypes')->nullable(); // with list of allowed relations for every subtype
+            $t->json('public_schema');
+            $t->json('private_schema');
+            $t->timestamps();
         });
         $this->schema->create('nodes', function (Blueprint $t) {
             $t->engine = 'InnoDB';

@@ -55,14 +55,28 @@ class UserApiGate extends AbstractApiGate
     }
 
     // PUT /users/{usr}/password
-    public function updateUserPassword($request, $response, $params)
+    public function updatePassword($request, $response, $params)
     {
-        $user = $this->resources['user']->updateUserPassword(
+        $user = $this->resources['user']->updatePassword(
             $request->getAttribute('subject'),
             Utils::sanitizedIdParam('usr', $params),
             $this->helper->getDataFromRequest($request),
             $this->helper->getOptionsFromRequest($request)
         );
         return $this->sendSimpleResponse($response, 'Password updated');
+    }
+
+    // POST /subjects/{sub}/role/{rol}
+    public function attachRole($request, $response, $params)
+    {
+        $attached = $this->resources['user']->attachTerms(
+            $request->getAttribute('subject'),
+            Utils::sanitizedIdParam('sub', $params),
+            Utils::sanitizedStrParam('rol', $params),
+            $this->helper->getDataFromRequest($request)
+        );
+        return $this->sendSimpleResponse($response, 'Role attached', 200, [
+            'attached' => $attached
+        ]);
     }
 }

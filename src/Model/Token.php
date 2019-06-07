@@ -7,13 +7,13 @@ class Token extends Model
 {
     protected $table = 'tokens';
     protected $visible = [
-        'id', 'type', 'finder', 'token', 'data', 'expires_at',
+        'id', 'type', 'finder', 'token', 'data', 'expires_on',
     ];
     protected $fillable = [
-        'type', 'finder', 'token', 'data', 'expires_at', 'subject_id',
+        'type', 'finder', 'token', 'data', 'expires_on', 'subject_id',
     ];
     protected $casts = [
         'data' => 'array',
-        'expires_at' => 'datetime',
+        'expires_on' => 'datetime',
     ];
 }
