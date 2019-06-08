@@ -7,6 +7,7 @@ return [
         'displayErrorDetails' => true,
         'timezone' => 'America/Argentina/Buenos_Aires',
         'spaUrl' => 'https://creatingnetworks.youthsig.org',
+        'adminEmails' => [],
         'swiftmailer' => [
             'transport' => 'sparkpost',
             'transportOptions' => [

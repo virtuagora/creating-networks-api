@@ -69,6 +69,10 @@ class UserResource extends Resource
         $options = $this->validation->prepareData($optSch, $options, true);
         $v->assert($options);
         $user = $this->identity->signUp('local', $options['token'], $data);
+        $adminEmails = $this->settings['adminEmails'] ?? [];
+        if (in_array($user->username, $adminEmails)) {
+            $user->roles()->attach('Admin');
+        }
         return $user;
     }
 
