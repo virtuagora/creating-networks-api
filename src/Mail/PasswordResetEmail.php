@@ -22,7 +22,7 @@ class PasswordResetEmail extends Mailable
  
     public function build()
     {
-        $template = $this->locale . '/welcome-email.php';
+        $template = $this->locale . '/password-reset-email.php';
         $subjects = [
             'en' => 'Creating Networks - Password reset',
             'es' => 'Recupera tu clave en Creando Redes',
