@@ -218,7 +218,7 @@ class UserResource extends Resource
         $user = $this->db->query('App:Subject')->findOrFail($usrId);
         if (!isset($options['token']) && $flags & Utils::AUTHFLAG) {
             $this->authorization->checkOrFail(
-                $subject, 'updatePassword', $user
+                $subject, 'updateUserPassword', $user
             );
         }
         $schema = [
@@ -271,6 +271,7 @@ class UserResource extends Resource
                     'Expired token', 'expiredToken'
                 );
             }
+            $token->delete();
         } elseif (isset($options['current_password'])) {
             if (!password_verify($options['current_password'], $user->password)) {
                 throw new AppException(
@@ -282,7 +283,6 @@ class UserResource extends Resource
         }
         $user->password = $data['password'];
         $user->save();
-        $token->delete();
         if ($flags & Utils::LOGFLAG) {
             $this->resources['log']->createLog($subject, [
                 'action' => 'updateUserPassword',

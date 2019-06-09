@@ -37,7 +37,7 @@ class AuthorizationService
             return true;
         }
         if (isset($object)) {
-            // $this->logger->info(json_encode([$object->relationsWith($subject), $action->allowed_relations]));
+            //$this->logger->info(json_encode([$object->relationsWith($subject), $action->allowed_relations]));
             $objRelations = $object->relationsWith($subject);
             return array_intersect($objRelations, $action->allowed_relations);
         }
