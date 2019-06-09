@@ -79,4 +79,14 @@ class UserApiGate extends AbstractApiGate
             'attached' => $attached
         ]);
     }
+
+    // GET /subjects
+    public function retrieveSubjects($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $subjs = $this->resources['user']->retrieveSubjects(
+            $subject, $request->getQueryParams()
+        );
+        return $this->sendPaginatedResponse($request, $response, $subjs);
+    }
 }

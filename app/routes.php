@@ -71,6 +71,7 @@ $app->group('/v1', function () {
     $this->put('/users/{usr}/password', 'userApiGate:updatePassword')->setName('apiU1UserPassword');
 
     $this->post('/subjects/{sub}/roles/{rol}', 'userApiGate:attachRole')->setName('api1SubjectAtc1Role');
+    $this->get('/subjects', 'userApiGate:retrieveSubjects')->setName('apiRNSubject');
 
     $this->get('/initiatives', 'initiativeApiGate:retrieveInitiatives')->setName('apiRNInitiative');
     $this->post('/initiatives', 'initiativeApiGate:createInitiative')->setName('apiC1Initiative');

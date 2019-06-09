@@ -7,6 +7,7 @@ use App\Mail\PasswordResetEmail;
 use App\Util\Exception\AppException;
 use App\Util\Exception\UnauthorizedException;
 use App\Util\Utils;
+use App\Util\Paginator;
 use Carbon\Carbon;
 
 class UserResource extends Resource
@@ -81,6 +82,39 @@ class UserResource extends Resource
         return $this->db->query('App:Subject')
             ->where('type', 'User')
             ->findOrFail($id);
+    }
+
+    public function retrieveSubjects($subject, $options = [])
+    {
+        $pagSch = $this->helper->getPaginatedQuerySchema([
+            'username' => [
+                'type' => 'string',
+            ],
+            'role' => [
+                'type' => 'string',
+                'enum' => ['Admin', 'User'],
+            ],
+            's' => [
+                'type' => 'string',
+            ],
+        ]);
+        $v = $this->validation->fromSchema($pagSch);
+        $options = $this->validation->prepareData($pagSch, $options, true);
+        $v->assert($options);
+        $query = $this->db->query('App:Subject');
+        if (isset($options['username'])) {
+            $query->where('username', $options['username']);
+        }
+        if (isset($options['role'])) {
+            $query->whereHas('roles', function ($q) use ($options) {
+                $q->where('role_id', $options['role']);
+            });
+        }
+        if (isset($options['s'])) {
+            $filter = Utils::traceStr($options['s']);
+            $query->where('trace', 'LIKE', "%$filter%");
+        }
+        return new Paginator($query, $options);
     }
 
     public function createPendingUser($subject, $data)
