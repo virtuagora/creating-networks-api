@@ -294,7 +294,7 @@ class UserResource extends Resource
     public function attachRole($subject, $subId, $rolId, $data, $flags = 3)
     {
         $subj = $this->db->query('App:Subject')->findOrFail($subId);
-        $role = $this->db->query('App:Term')->findOrFail($rolId);
+        $role = $this->db->query('App:Role')->findOrFail($rolId);
         if ($flags & Utils::AUTHFLAG) {
             $this->authorization->checkOrFail(
                 $subject, 'associateSubjectRole', $subj
@@ -315,7 +315,7 @@ class UserResource extends Resource
         $v->assert($data);
         $exp = isset($data['expires_on']) ? new Carbon($data['expires_on']) : null;
         $changes = $subj->roles()->syncWithoutDetaching([
-            $role => ['expires_on' => $exp],
+            $rolId => ['expires_on' => $exp],
         ]);
         if ($flags & Utils::LOGFLAG) {
             $this->resources['log']->createLog($subject, [

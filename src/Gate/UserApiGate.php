@@ -66,10 +66,10 @@ class UserApiGate extends AbstractApiGate
         return $this->sendSimpleResponse($response, 'Password updated');
     }
 
-    // POST /subjects/{sub}/role/{rol}
+    // POST /subjects/{sub}/roles/{rol}
     public function attachRole($request, $response, $params)
     {
-        $attached = $this->resources['user']->attachTerms(
+        $attached = $this->resources['user']->attachRole(
             $request->getAttribute('subject'),
             Utils::sanitizedIdParam('sub', $params),
             Utils::sanitizedStrParam('rol', $params),
