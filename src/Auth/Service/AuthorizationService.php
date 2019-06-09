@@ -31,7 +31,7 @@ class AuthorizationService
         if (is_null($action)) {
             return false;
         }
-        $this->logger->info(json_encode([$subject->toArray(), $action->allowed_roles]));
+        //$this->logger->info(json_encode([$subject->toArray(), $action->allowed_roles]));
         $subRoles = $subject->rolesList();
         if (array_intersect($subRoles, $action->allowed_roles)) {
             return true;
