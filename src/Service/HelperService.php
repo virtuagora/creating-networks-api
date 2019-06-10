@@ -87,13 +87,13 @@ class HelperService
         $properties['offset'] = [
             'type' => 'integer',
             'minimum' => 0,
-            'maximum' => 10000,
+            'maximum' => 100000,
             'default' => 0,
         ];
         $properties['size'] = [
             'type' => 'integer',
             'minimum' => 1,
-            'maximum' => 100,
+            'maximum' => max(1000, $size),
             'default' => $size,
         ];
         $schema = [
