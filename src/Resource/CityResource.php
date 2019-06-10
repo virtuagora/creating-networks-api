@@ -53,7 +53,7 @@ class CityResource extends Resource
                 'type' => 'integer',
                 'minimum' => 1,
             ],
-        ]);
+        ], 150);
         $v = $this->validation->fromSchema($pagSch);
         $options = $this->validation->prepareData($pagSch, $options, true);
         $v->assert($options);
