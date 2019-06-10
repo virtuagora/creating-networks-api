@@ -82,7 +82,7 @@ class HelperService
         return $data[$field];
     }
 
-    public function getPaginatedQuerySchema(array $properties = [])
+    public function getPaginatedQuerySchema(array $properties = [], $size = 25)
     {
         $properties['offset'] = [
             'type' => 'integer',
@@ -94,7 +94,7 @@ class HelperService
             'type' => 'integer',
             'minimum' => 1,
             'maximum' => 100,
-            'default' => 20,
+            'default' => $size,
         ];
         $schema = [
             'type' => 'object',

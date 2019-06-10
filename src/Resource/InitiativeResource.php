@@ -51,7 +51,7 @@ class InitiativeResource extends Resource
             's' => [
                 'type' => 'string',
             ],
-        ]);
+        ], 100);
         $v = $this->validation->fromSchema($pagSch);
         $options = $this->validation->prepareData($pagSch, $options, true);
         $v->assert($options);
