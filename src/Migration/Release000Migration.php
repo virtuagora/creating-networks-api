@@ -430,7 +430,7 @@ class Release000Migration
                     'goals' => [
                         'type' => 'string',
                         'minLength' => 1,
-                        'maxLength' => 500,
+                        'maxLength' => 750,
                     ],
                     'website' => [
                         'type' => 'string',

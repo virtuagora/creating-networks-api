@@ -22,7 +22,7 @@ class InitiativeResource extends Resource
                 'description' => [
                     'type' => 'string',
                     'minLength' => 1,
-                    'maxLength' => 500,
+                    'maxLength' => 750,
                 ],
                 'public_data' => $type->public_schema,
                 'private_data' => $type->private_schema,
