@@ -152,8 +152,10 @@ class InitiativeResource extends Resource
         $city = $init->city;
         $deleted = $init->delete();
         if ($deleted) {
-            // TODO maybe delete city if it hasn't more initiatives left?
             $city->decrement('initiatives_count');
+            if ($city->initiatives_count == 0) {
+                $city->delete();
+            }
         }
         if ($flags & Utils::LOGFLAG) {
             $this->resources['log']->createLog($subject, [
