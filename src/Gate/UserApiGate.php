@@ -44,6 +44,17 @@ class UserApiGate extends AbstractApiGate
         return $this->sendEntityResponse($response, $user);
     }
 
+    // GET /users/{usr}/groups
+    public function retrieveGroups($request, $response, $params)
+    {
+        $groups = $this->resources['user']->retrieveGroups(
+            $request->getAttribute('subject'),
+            Utils::sanitizedIdParam('usr', $params),
+            $request->getQueryParams()
+        );
+        return $this->sendPaginatedResponse($request, $response, $groups);
+    }
+
     // POST /reset-tokens
     public function createResetToken($request, $response, $params)
     {

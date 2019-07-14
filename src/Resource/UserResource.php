@@ -325,4 +325,33 @@ class UserResource extends Resource
         }
         return count($changes['attached']);
     }
+
+    public function retrieveGroups($subject, $id, $options = [])
+    {
+        $user = $this->db->query('App:Subject')
+            ->where('type', 'User')
+            ->findOrFail($id);
+
+        $pagSch = $this->helper->getPaginatedQuerySchema([
+            'type' => [
+                'type' => 'string',
+                'enum' => ['Initiative'],
+            ],
+            'relation' => [
+                'type' => 'string',
+                'enum' => ['owner'],
+            ],
+        ]);
+        $v = $this->validation->fromSchema($pagSch);
+        $options = $this->validation->prepareData($pagSch, $options, true);
+        $v->assert($options);
+        $query = $user->groups();
+        if (isset($options['type'])) {
+            $query->where('group_type_id', $options['type']);
+        }
+        if (isset($options['relation'])) {
+            $query->wherePivot('relation', $options['relation']);
+        }
+        return new Paginator($query, $options);
+    }
 }

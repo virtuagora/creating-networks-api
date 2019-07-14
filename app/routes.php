@@ -68,6 +68,7 @@ $app->group('/v1', function () {
         ->add(new \App\Middleware\RecaptchaMiddleware($this->getContainer()));
     $this->post('/users', 'userApiGate:createUser')->setName('apiC1User');
     $this->get('/users/{usr}', 'userApiGate:retrieveUser')->setName('apiR1User');
+    $this->get('/users/{usr}/groups', 'userApiGate:retrieveGroups')->setName('apiRNUserGroup');
     $this->put('/users/{usr}/password', 'userApiGate:updatePassword')->setName('apiU1UserPassword');
 
     $this->post('/subjects/{sub}/roles/{rol}', 'userApiGate:attachRole')->setName('api1SubjectAtc1Role');
