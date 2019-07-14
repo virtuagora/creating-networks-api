@@ -25,7 +25,7 @@ class Country extends Model
 
     public function region()
     {
-        return $this->belongsTo('App\Model\Country');
+        return $this->belongsTo('App\Model\Region');
     }
 
     public function Space()

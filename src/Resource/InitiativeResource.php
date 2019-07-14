@@ -37,8 +37,14 @@ class InitiativeResource extends Resource
 
     public function retrieveInitiative($subject, $id, $options = [])
     {
-        return $this->db->query('App:Initiative', ['terms'])
-            ->findOrFail($id);
+        $init = $this->db->query(
+            'App:Initiative', ['terms', 'city.country.region']
+        )->findOrFail($id);
+        // TODO change to updateInitiative or something
+        if ($this->authorization->check($subject, 'deleteInitiative', $init)) {
+            $init->addVisible('private_data');
+        }
+        return $init;
     }
 
     public function retrieveInitiatives($subject, $options = [])
