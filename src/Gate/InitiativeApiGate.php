@@ -35,6 +35,30 @@ class InitiativeApiGate extends AbstractApiGate
         return $this->sendEntityResponse($response, $init);
     }
 
+    // GET /initiatives/{ini}/members
+    public function retrieveMembers($request, $response, $params)
+    {
+        $users = $this->resources['initiative']->retrieveMembers(
+            $request->getAttribute('subject'),
+            Utils::sanitizedIdParam('ini', $params),
+            $request->getQueryParams()
+        );
+        return $this->sendPaginatedResponse($request, $response, $users);
+    }
+
+    // PATCH /initiatives/{ini}
+    public function updateInitiative($request, $response, $params)
+    {
+        $init = $this->resources['initiative']->updateInitiative(
+            $request->getAttribute('subject'),
+            Utils::sanitizedIdParam('ini', $params),
+            $this->helper->getDataFromRequest($request)
+        );
+        return $this->sendSimpleResponse(
+            $response,'Initiative updated', 200
+        );
+    }
+
     // GET /initiatives
     public function retrieveInitiatives($request, $response, $params)
     {
@@ -55,6 +79,31 @@ class InitiativeApiGate extends AbstractApiGate
         return $this->sendSimpleResponse(
             $response,'Initiative deleted', 200, ['deleted' => $deleted]
         );
+    }
+
+    // POST /initiatives/{ini}/city
+    public function attachCity($request, $response, $params)
+    {
+        $attached = $this->resources['initiative']->attachCity(
+            $request->getAttribute('subject'),
+            Utils::sanitizedIdParam('ini', $params),
+            $this->helper->getDataFromRequest($request)
+        );
+        return $this->sendSimpleResponse($response, 'City attached', 200, [
+            'city' => $attached
+        ]);
+    }
+
+    // DELETE /initiatives/{ini}/city
+    public function detachCity($request, $response, $params)
+    {
+        $detached = $this->resources['initiative']->detachCity(
+            $request->getAttribute('subject'),
+            Utils::sanitizedIdParam('ini', $params)
+        );
+        return $this->sendSimpleResponse($response, 'City detached', 200, [
+            'detached' => $detached
+        ]);
     }
 
     // POST /initiatives/{ini}/terms

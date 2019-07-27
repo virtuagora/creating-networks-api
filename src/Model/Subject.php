@@ -12,7 +12,7 @@ class Subject extends Model implements SubjectInterface, ObjectInterface
     protected $table = 'subjects';
     protected $visible = [
         'id', 'display_name', 'img_type', 'img_hash', 'type', 'points',
-        'roles', 'roles_list', 'locale',
+        'roles', 'roles_list', 'locale', 'pivot',
     ];
     protected $fillable = [
         'username', 'password', 'display_name', 'img_type', 'img_hash',

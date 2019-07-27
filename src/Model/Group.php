@@ -26,6 +26,11 @@ class Group extends Model implements ObjectInterface
         return $this->hasOne('App\Model\Subject');
     }
 
+    public function group_type()
+    {
+        return $this->belongsTo('App\Model\GroupType');
+    }
+
     public function city()
     {
         return $this->belongsTo('App\Model\City');

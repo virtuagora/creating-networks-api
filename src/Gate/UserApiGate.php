@@ -100,4 +100,18 @@ class UserApiGate extends AbstractApiGate
         );
         return $this->sendPaginatedResponse($request, $response, $subjs);
     }
+
+    // POST /users/{usr}/groups/{gro}
+    public function attachGroup($request, $response, $params)
+    {
+        $attached = $this->resources['user']->attachGroup(
+            $request->getAttribute('subject'),
+            Utils::sanitizedIdParam('usr', $params),
+            Utils::sanitizedStrParam('gro', $params),
+            $this->helper->getDataFromRequest($request)
+        );
+        return $this->sendSimpleResponse($response, 'Group attached', 200, [
+            'attached' => $attached
+        ]);
+    }
 }

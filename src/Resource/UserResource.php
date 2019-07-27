@@ -354,4 +354,41 @@ class UserResource extends Resource
         }
         return new Paginator($query, $options);
     }
+
+    public function attachGroup($subject, $subId, $groId, $data, $flags = 3)
+    {
+        $subj = $this->db->query('App:Subject')->findOrFail($subId);
+        $grou = $this->db->query('App:Group', ['group_type'])
+            ->findOrFail($groId);
+        $grTy = $group->group_type;
+        if ($flags & Utils::AUTHFLAG) {
+            $this->authorization->checkOrFail(
+                $subject, 'associateSubjectGroup', $grou
+            );
+        }
+        $schema = [
+            'type' => 'object',
+            'properties' => [
+                'relation' => [
+                    'type' => 'string',
+                    'enum' => array_keys($grTy->allowed_relations),
+                ],
+            ],
+            'required' => ['relation'],
+            'additionalProperties' => false,
+        ];
+        $v = $this->validation->fromSchema($schema);
+        $data = $this->validation->prepareData($schema, $data);
+        $v->assert($data);
+        $changes = $subj->groups()->syncWithoutDetaching([
+            $groId => $data,
+        ]);
+        if ($flags & Utils::LOGFLAG) {
+            $this->resources['log']->createLog($subject, [
+                'action' => 'associateSubjectGroup',
+                'object' => $subj,
+            ]);
+        }
+        return count($changes['attached']);
+    }
 }

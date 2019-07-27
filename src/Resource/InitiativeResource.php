@@ -32,6 +32,20 @@ class InitiativeResource extends Resource
             ],
             'additionalProperties' => false,
         ];
+        if (isset($options['edit'])) {
+            $keys = $schema['properties'];
+            foreach ($keys as $k => $v) {
+                if (!in_array($k, $schema['required'])) {
+                    $schema[$k] = [
+                        'oneOf' => [
+                            ['type' => 'null'],
+                            $v,
+                        ],
+                    ];
+                }
+            }
+            $schema['required'] = [];
+        }
         return $schema;
     }
 
@@ -72,6 +86,26 @@ class InitiativeResource extends Resource
         if (isset($options['s'])) {
             $filter = Utils::traceStr($options['s']);
             $query->where('trace', 'LIKE', "%$filter%");
+        }
+        return new Paginator($query, $options);
+    }
+
+    public function retrieveMembers($subject, $id, $options = [])
+    {
+        $init = $this->db->query('App:Initiative')
+            ->findOrFail($id);
+        $pagSch = $this->helper->getPaginatedQuerySchema([
+            'relation' => [
+                'type' => 'string',
+                'enum' => ['owner'],
+            ],
+        ]);
+        $v = $this->validation->fromSchema($pagSch);
+        $options = $this->validation->prepareData($pagSch, $options, true);
+        $v->assert($options);
+        $query = $init->members();
+        if (isset($options['relation'])) {
+            $query->wherePivot('relation', $options['relation']);
         }
         return new Paginator($query, $options);
     }
@@ -146,6 +180,29 @@ class InitiativeResource extends Resource
         return $initiative;
     }
 
+    public function editInitiative($subject, $iniId, $data, $options = [], $flags = 3)
+    {
+        $init = $this->db->query('App:Initiative')
+            ->findOrFail($iniId);
+        if ($flags & Utils::AUTHFLAG) {
+            $this->authorization->checkOrFail(
+                $subject, 'updateInitiative', $init
+            );
+        }
+        $schema = $this->retrieveSchema(['edit' => true]);
+        $v = $this->validation->fromSchema($schema);
+        $v->assert($data);
+        $init->fill($data);
+        $init->save();
+        if ($flags & Utils::LOGFLAG) {
+            $this->resources['log']->createLog($subject, [
+                'action' => 'editInitiative',
+                'object' => $init,
+            ]);
+        }
+        return $init;
+    }
+
     public function deleteInitiative($subject, $iniId, $options = [], $flags = 3)
     {
         $init = $this->db->query('App:Initiative', ['terms', 'city'])
@@ -170,6 +227,70 @@ class InitiativeResource extends Resource
             ]);
         }
         return $deleted;
+    }
+
+    public function attachCity($subject, $iniId, $data, $flags = 3)
+    {
+        $init = $this->db->query('App:Initiative')->findOrFail($iniId);
+        if ($flags & Utils::AUTHFLAG) {
+            $this->authorization->checkOrFail(
+                $subject, 'updateInitiative', $init
+            );
+        }
+        $schema = [
+            'type' => 'object',
+            'properties' => [
+                'registered_city_id' => [
+                    'type' => 'integer',
+                    'minimum' => 1,
+                ],
+            ],
+            'additionalProperties' => false,
+            'required' => ['registered_city_id'],
+        ];
+        $v = $this->validation->fromSchema($schema);
+        $data = $this->validation->prepareData($schema, $data);
+        $regCity = $this->db->query('App:RegisteredCity')
+            ->findOrFail($data['registered_city_id']);
+        if (is_null($regCity->city_id)) {
+            $mapCity = $this->createCityFromRegistered($regCity);
+            $mapCity->increment('initiatives_count');
+            $regCity->city()->associate($mapCity);
+            $regCity->save();
+            $cityId = $mapCity->id;
+        } else {
+            $cityId = $regCity->city_id;
+            $mapCity = $this->db->query('App:City')->find($cityId);
+            $mapCity->increment('initiatives_count');
+        }
+        if ($flags & Utils::LOGFLAG) {
+            $this->resources['log']->createLog($subject, [
+                'action' => 'updateInitiative',
+                'object' => $init,
+            ]);
+        }
+        return $mapCity;
+    }
+
+    public function detachCity($subject, $iniId, $flags = 3)
+    {
+        $init = $this->db->query('App:Initiative', ['city'])
+            ->findOrFail($iniId);
+        if ($flags & Utils::AUTHFLAG) {
+            $this->authorization->checkOrFail(
+                $subject, 'updateInitiative', $init
+            );
+        }
+        $city = $init->city;
+        if (isset($city)) {
+            $init->city()->dissociate();
+            $city->decrement('initiatives_count');
+            if ($city->initiatives_count == 0) {
+                $city->delete();
+            }
+            return true;
+        }
+        return false;
     }
 
     public function attachTerms($subject, $iniId, $data, $flags = 3)

@@ -26,6 +26,24 @@ $app->get('/install', function($request, $response, $args) {
     return $response->withJSON(['message' => 'Success']);
 });
 
+$app->get('/update', function ($request, $response, $params) {
+    $env = $this->settings['env'] ?? 'pro';
+    $ctrolKey = $this->settings['installerKey'] ?? null;
+    $queryKey = $request->getQueryParams()['key'] ?? null;
+    if ($ctrolKey != $queryKey) {
+        return $response->withJSON(['mensaje' => 'La actualización ha fallado']);
+    }
+    $mig1 = new \App\Migration\Release001Migration($this->db);
+    if ($mig1->isInstalled() && $mig1 == 'pro') {
+        return $response->withJSON(['mensaje' => 'La actualización ha fallado']);
+    }
+    $mig1->down();
+    $mig1->up();
+    $mig1->populate();
+    $mig1->updateActions();
+    return $response->withJSON(['mensaje' => 'Actualización exitosa']);
+});
+
 $app->get('/install-cities', function ($request, $response, $arg) {
     $ctrolKey = $this->settings['installerKey'] ?? null;
     $queryKey = $request->getQueryParams()['key'] ?? null;
@@ -71,6 +89,8 @@ $app->group('/v1', function () {
     $this->get('/users/{usr}/groups', 'userApiGate:retrieveGroups')->setName('apiRNUserGroup');
     $this->put('/users/{usr}/password', 'userApiGate:updatePassword')->setName('apiU1UserPassword');
 
+    $this->post('/users/{usr}/groups/{gro}', 'userApiGate:attachGroup')->setName('api1UserAtc1Group');
+
     $this->post('/subjects/{sub}/roles/{rol}', 'userApiGate:attachRole')->setName('api1SubjectAtc1Role');
     $this->get('/subjects', 'userApiGate:retrieveSubjects')->setName('apiRNSubject');
 
@@ -78,6 +98,10 @@ $app->group('/v1', function () {
     $this->post('/initiatives', 'initiativeApiGate:createInitiative')->setName('apiC1Initiative');
     $this->get('/initiatives/{ini}', 'initiativeApiGate:retrieveInitiative')->setName('apiR1Initiative');
     $this->delete('/initiatives/{ini}', 'initiativeApiGate:deleteInitiative')->setName('apiD1Initiative');
+
+    $this->post('/initiatives/{ini}/city', 'initiativeApiGate:attachCity')->setName('api1InitiativeAtc1City');
+    $this->delete('/initiatives/{ini}/city', 'initiativeApiGate:detachCity')->setName('api1InitiativeDtc1City');
+    $this->get('/initiatives/{ini}/members', 'initiativeApiGate:retrieveMembers')->setName('apiRNInitiativeSubject');
 
     $this->get('/terms', 'termApiGate:retrieveTerms')->setName('apiRNTerm');
     $this->post('/terms', 'termApiGate:createTerm')->setName('apiC1Term');
