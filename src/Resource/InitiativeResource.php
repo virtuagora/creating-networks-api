@@ -33,18 +33,7 @@ class InitiativeResource extends Resource
             'additionalProperties' => false,
         ];
         if (isset($options['edit'])) {
-            $keys = $schema['properties'];
-            foreach ($keys as $k => $v) {
-                if (!in_array($k, $schema['required'])) {
-                    $schema[$k] = [
-                        'oneOf' => [
-                            ['type' => 'null'],
-                            $v,
-                        ],
-                    ];
-                }
-            }
-            $schema['required'] = [];
+            $schema = $this->validation->prepareSchema($schema);
         }
         return $schema;
     }
