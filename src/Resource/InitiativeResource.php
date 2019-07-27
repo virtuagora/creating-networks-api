@@ -180,7 +180,7 @@ class InitiativeResource extends Resource
         return $initiative;
     }
 
-    public function editInitiative($subject, $iniId, $data, $options = [], $flags = 3)
+    public function updateInitiative($subject, $iniId, $data, $options = [], $flags = 3)
     {
         $init = $this->db->query('App:Initiative')
             ->findOrFail($iniId);
@@ -196,7 +196,7 @@ class InitiativeResource extends Resource
         $init->save();
         if ($flags & Utils::LOGFLAG) {
             $this->resources['log']->createLog($subject, [
-                'action' => 'editInitiative',
+                'action' => 'updateInitiative',
                 'object' => $init,
             ]);
         }
