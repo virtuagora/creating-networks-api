@@ -98,6 +98,7 @@ $app->group('/v1', function () {
     $this->post('/initiatives', 'initiativeApiGate:createInitiative')->setName('apiC1Initiative');
     $this->get('/initiatives/{ini}', 'initiativeApiGate:retrieveInitiative')->setName('apiR1Initiative');
     $this->delete('/initiatives/{ini}', 'initiativeApiGate:deleteInitiative')->setName('apiD1Initiative');
+    $this->patch('/initiatives/{ini}', 'initiativeApiGate:updateInitiative')->setName('apiU1Initiative');
 
     $this->post('/initiatives/{ini}/city', 'initiativeApiGate:attachCity')->setName('api1InitiativeAtc1City');
     $this->delete('/initiatives/{ini}/city', 'initiativeApiGate:detachCity')->setName('api1InitiativeDtc1City');
