@@ -204,7 +204,7 @@ class InitiativeResource extends Resource
         }
         $city = $init->city;
         $deleted = $init->delete();
-        if ($deleted) {
+        if (isset($city) && $deleted) {
             $city->decrement('initiatives_count');
             if ($city->initiatives_count == 0) {
                 $city->delete();
