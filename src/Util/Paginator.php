@@ -10,6 +10,7 @@ class Paginator
     protected $total;
     protected $size;
     protected $offset;
+    protected $sort;
     protected $params;
     protected $uri;
 
@@ -19,7 +20,23 @@ class Paginator
         $this->total = $query->toBase()->getCountForPagination();
         $this->size = $params['size'];
         $this->offset = $params['offset'];
-        $this->items = $query->offset($params['offset'])->take($params['size'])->get();
+        $this->sort = $params['sort'] ?? null;
+        if ($this->sort == 'random') {
+            if ($this->total < 4 * $this->size) {
+                $this->items = $query->inRandomOrder()->take($this->size)->get();
+            } else {
+                $take = $this->size - 1;
+                $ceil = $this->total;
+                $bseQ = (clone $query)->offset(rand(0, $ceil))->take(1);
+                for ($i = 0; $i < $take; $i++) {
+                    $auxQ = (clone $query)->offset(rand(0, $ceil))->take(1);
+                    $bseQ->union($auxQ);
+                }
+                $this->items = $bseQ->get();
+            }
+        } else {
+            $this->items = $query->offset($this->offset)->take($this->size)->get();
+        }
         $this->uri = $uri;
     }
 

@@ -60,6 +60,21 @@ $app->get('/install-cities', function ($request, $response, $arg) {
     return $response->withJSON(['message' => 'Success']);
 });
 
+// $app->get('/test', function ($request, $response, $arg) {
+//     $query = $this->db->query('App:RegisteredCity');
+//     $take = 2;
+
+//     $ceil = $query->count();
+    
+//     $bseQ = (clone $query)->offset(rand(0, $ceil))->take(1);
+//     for ($i = 0; $i < $take; $i++) {
+//         $auxQ = (clone $query)->offset(rand(0, $ceil))->take(1);
+//         $bseQ->union($auxQ);
+//     }
+//     $result = $bseQ->get();
+//     return $response->withJSON(['message' => $result->toArray()]);
+// });
+
 // $app->post('/upload', function ($request, $response, $args) {
 //     $id = bin2hex(random_bytes(16)); // generate a unique id
 

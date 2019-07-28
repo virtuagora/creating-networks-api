@@ -25,6 +25,9 @@ class PaginationService
             'maximum' => 100,
             'default' => 20,
         ];
+        $extras['sort'] = [
+            'type' => 'string',
+        ];
         $params = array_intersect_key($request->getQueryParams(), $extras);
         $schema = [
             'type' => 'object',
