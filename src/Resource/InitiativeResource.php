@@ -180,6 +180,7 @@ class InitiativeResource extends Resource
         }
         $schema = $this->retrieveSchema(['edit' => true]);
         $v = $this->validation->fromSchema($schema);
+        $data = $this->validation->prepareData($schema, $data);
         $v->assert($data);
         $init->fill($data);
         $init->save();
