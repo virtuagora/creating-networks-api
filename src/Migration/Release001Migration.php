@@ -26,18 +26,69 @@ class Release001Migration
 
     public function up()
     {
-        return;
+        $iniType = $this->db->query('App:GroupType')->find('Initiative');
+        $iniType->public_schema = [
+            'type' => 'object',
+            'properties' => [
+                'founding_year' => [
+                    'type' => 'integer',
+                    'minimum' => 1,
+                    'maximum' => 2020,
+                ],
+                'goals' => [
+                    'type' => 'string',
+                    'minLength' => 1,
+                    'maxLength' => 750,
+                ],
+                'website' => [
+                    'type' => 'string',
+                    'minLength' => 3,
+                    'maxLength' => 100,
+                ],
+                'facebook' => [
+                    'type' => 'string',
+                    'minLength' => 1,
+                    'maxLength' => 100,
+                ],
+                'twitter' => [
+                    'type' => 'string',
+                    'minLength' => 1,
+                    'maxLength' => 100,
+                ],
+                'other_network' => [
+                    'type' => 'string',
+                    'minLength' => 3,
+                    'maxLength' => 100,
+                ],
+                'role_of_youth' => [
+                    'type' => 'string',
+                    'enum' => [
+                        'targetAudience', 'leadership', 'membership', 'volunteer',
+                    ],
+                ],
+                'interested_in_participate' => [
+                    'type' => 'boolean',
+                    'default' => false,
+                ],
+            ],
+            'required' => [
+                'founding_year', 'goals', 'role_of_youth',
+            ],
+            'additionalProperties' => false,
+        ];
+        $iniType->save();
     }
 
     public function down()
     {
-        return;
+        $this->db->query('App:Action')
+            ->whereIn('id', ['updateInitiative', 'associateSubjectGroup'])
+            ->delete();
     }
 
     public function populate()
     {
         $today = \Carbon\Carbon::now();
-        return;
     }
 
     public function updateActions()
