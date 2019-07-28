@@ -90,6 +90,7 @@ $app->group('/v1', function () {
     $this->put('/users/{usr}/password', 'userApiGate:updatePassword')->setName('apiU1UserPassword');
 
     $this->post('/users/{usr}/groups/{gro}', 'userApiGate:attachGroup')->setName('api1UserAtc1Group');
+    $this->delete('/users/{usr}/groups/{gro}', 'userApiGate:detachGroup')->setName('api1UserDtc1Group');
 
     $this->post('/subjects/{sub}/roles/{rol}', 'userApiGate:attachRole')->setName('api1SubjectAtc1Role');
     $this->get('/subjects', 'userApiGate:retrieveSubjects')->setName('apiRNSubject');

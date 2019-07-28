@@ -11,7 +11,7 @@ class Group extends Model implements ObjectInterface
     protected $table = 'groups';
     protected $visible = [
         'id', 'name', 'description', 'quota', 'created_at', 'public_data',
-        'terms', 'pivot', 'city',
+        'terms', 'pivot', 'city', 'group_type',
     ];
     protected $fillable = [
         'name', 'description', 'quota', 'public_data', 'private_data',
@@ -28,7 +28,7 @@ class Group extends Model implements ObjectInterface
 
     public function group_type()
     {
-        return $this->belongsTo('App\Model\GroupType');
+        return $this->belongsTo('App\Model\GroupType', 'group_type_id');
     }
 
     public function city()

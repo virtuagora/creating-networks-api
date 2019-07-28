@@ -252,6 +252,8 @@ class InitiativeResource extends Resource
             $mapCity = $this->db->query('App:City')->find($cityId);
             $mapCity->increment('initiatives_count');
         }
+        $init->city_id = $cityId;
+        $init->save();
         if ($flags & Utils::LOGFLAG) {
             $this->resources['log']->createLog($subject, [
                 'action' => 'updateInitiative',

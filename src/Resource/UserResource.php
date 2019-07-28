@@ -360,7 +360,7 @@ class UserResource extends Resource
         $subj = $this->db->query('App:Subject')->findOrFail($subId);
         $grou = $this->db->query('App:Group', ['group_type'])
             ->findOrFail($groId);
-        $grTy = $group->group_type;
+        $grTy = $grou->group_type;
         if ($flags & Utils::AUTHFLAG) {
             $this->authorization->checkOrFail(
                 $subject, 'associateSubjectGroup', $grou
@@ -390,5 +390,18 @@ class UserResource extends Resource
             ]);
         }
         return count($changes['attached']);
+    }
+
+    public function detachGroup($subject, $subId, $groId, $flags = 3)
+    {
+        $subj = $this->db->query('App:Subject')->findOrFail($subId);
+        $grou = $this->db->query('App:Group')->findOrFail($groId);
+        if ($flags & Utils::AUTHFLAG) {
+            $this->authorization->checkOrFail(
+                $subject, 'associateSubjectGroup', $subj
+            );
+        }
+        $changes = $subj->groups()->detach($groId);
+        return $changes > 0;
     }
 }

@@ -114,4 +114,17 @@ class UserApiGate extends AbstractApiGate
             'attached' => $attached
         ]);
     }
+
+    // DELETE /users/{usr}/groups/{gro}
+    public function detachGroup($request, $response, $params)
+    {
+        $detached = $this->resources['user']->detachGroup(
+            $request->getAttribute('subject'),
+            Utils::sanitizedIdParam('usr', $params),
+            Utils::sanitizedIdParam('gro', $params)
+        );
+        return $this->sendSimpleResponse($response, 'Group detached', 200, [
+            'detached' => $detached
+        ]);
+    }
 }
