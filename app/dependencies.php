@@ -83,6 +83,9 @@ $container['countryApiGate'] = function ($c) {
 $container['cityApiGate'] = function ($c) {
     return new App\Gate\CityApiGate($c);
 };
+$container['videoApiGate'] = function ($c) {
+    return new App\Gate\VideoApiGate($c);
+};
 $container['errorHandler'] = function ($c) {
     return new App\Service\ErrorHandlerService(
         [

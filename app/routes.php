@@ -136,6 +136,12 @@ $app->group('/v1', function () {
     $this->post('/users/{usr}/terms', 'userApiGate:attachTerms')->setName('api1UserAtcNTerm');
     $this->delete('/users/{usr}/terms/{trm}', 'userApiGate:detachTerm')->setName('api1UserDtc1Term');
 
+    $this->get('/videos', 'videoApiGate:retrieveVideos')->setName('apiRNVideo');
+    $this->post('/videos', 'videoApiGate:createVideo')->setName('apiC1Video');
+    $this->get('/videos/{ini}', 'videoApiGate:retrieveVideo')->setName('apiR1Video');
+    $this->delete('/videos/{ini}', 'videoApiGate:deleteVideo')->setName('apiD1Video');
+    $this->patch('/videos/{ini}', 'videoApiGate:updateVideo')->setName('apiU1Video');
+
     $this->get('/regions', 'regionApiGate:retrieveRegions')->setName('apiRNRegion');
     $this->get('/regions/{reg}', 'regionApiGate:retrieveRegion')->setName('apiR1Region');
     $this->get('/countries', 'countryApiGate:retrieveCountries')->setName('apiRNCountry');

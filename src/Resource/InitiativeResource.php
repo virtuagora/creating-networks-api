@@ -43,8 +43,7 @@ class InitiativeResource extends Resource
         $init = $this->db->query(
             'App:Initiative', ['terms', 'city.country.region']
         )->findOrFail($id);
-        // TODO change to updateInitiative or something
-        if ($this->authorization->check($subject, 'deleteInitiative', $init)) {
+        if ($this->authorization->check($subject, 'updateInitiative', $init)) {
             $init->addVisible('private_data');
         }
         return $init;

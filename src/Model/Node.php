@@ -3,23 +3,21 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Auth\ObjectInterface;
+use App\Auth\SubjectInterface;
 
-class Node extends Model
+class Node extends Model implements ObjectInterface
 {
-    // use SoftDeletes;
-
     protected $table = 'nodes';
-    protected $dates = ['deleted_at', 'close_date'];
     protected $visible = [
-        'id', 'title', 'points', 'author', 'created_at',
+        'id', 'title', 'content', 'points', 'author', 'created_at',
+        'subjects', 'pivor', 'node_type',
     ];
     protected $casts = [
-        'meta' => 'array',
-        'unlisted' => 'boolean',
-        'supporter' => 'boolean',
+        'public_data' => 'array',
+        'private_data' => 'array',
         'close_date' => 'datetime',
-        'meta' => 'array',
+        'unlisted' => 'boolean'
     ];
 
     public function author()
@@ -27,14 +25,21 @@ class Node extends Model
         return $this->belongsTo('App\Model\Subject');
     }
 
-    public function setMeta($key, $value = null)
+    public function node_type()
     {
-        $temp = $this->meta ?? [];
-        if (is_array($key)) {
-            $temp = array_merge($temp, $key);
-        } else {
-            $temp[$key] = $value;
-        }
-        $this->meta = $temp;
+        return $this->belongsTo('App\Model\NodeType', 'node_type_id');
+    }
+
+    public function subjects()
+    {
+        return $this->belongsToMany(
+            'App\Model\Subject', 'node_subject', 'node_id', 'subject_id'
+        )->withPivot('relation', 'value');
+    }
+
+    public function relationsWith(SubjectInterface $subject)
+    {
+        $user = $this->members()->where('subject_id', $subject->id)->first();
+        return $subject->id == $this->author_id ? ['author'] : [];
     }
 }
