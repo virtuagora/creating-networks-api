@@ -87,4 +87,23 @@ class TermResource extends Resource
         }
         return $term;
     }
+
+    public function deleteTerm($subject, $trmId, $options = [], $flags = 3)
+    {
+        $term = $this->db->query('App:Term')
+            ->findOrFail($trmId);
+        if ($flags & Utils::AUTHFLAG) {
+            $this->authorization->checkOrFail(
+                $subject, 'deleteTerm', $term
+            );
+        }
+        $deleted = $term->delete();
+        if ($flags & Utils::LOGFLAG) {
+            $this->resources['log']->createLog($subject, [
+                'action' => 'deleteTerm',
+                'object' => $term,
+            ]);
+        }
+        return $deleted;
+    }
 }

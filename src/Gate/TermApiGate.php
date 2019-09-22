@@ -24,6 +24,16 @@ class TermApiGate extends AbstractApiGate
         return $this->sendCreatedResponse($response, $term);
     }
 
+    // GET /terms
+    public function retrieveTerms($request, $response, $params)
+    {
+        $subject = $request->getAttribute('subject');
+        $terms = $this->resources['term']->retrieveTerms(
+            $subject, $request->getQueryParams()
+        );
+        return $this->sendPaginatedResponse($request, $response, $terms);
+    }
+
     // GET /terms/{trm}
     public function retrieveTerm($request, $response, $params)
     {
@@ -35,13 +45,15 @@ class TermApiGate extends AbstractApiGate
         return $this->sendEntityResponse($response, $term);
     }
 
-    // GET /terms
-    public function retrieveTerms($request, $response, $params)
+    // DELETE /terms/{trm}
+    public function deleteTerm($request, $response, $params)
     {
-        $subject = $request->getAttribute('subject');
-        $terms = $this->resources['term']->retrieveTerms(
-            $subject, $request->getQueryParams()
+        $deleted = $this->resources['term']->deleteTerm(
+            $request->getAttribute('subject'),
+            Utils::sanitizedIdParam('trm', $params)
         );
-        return $this->sendPaginatedResponse($request, $response, $terms);
+        return $this->sendSimpleResponse(
+            $response,'Term deleted', 200, ['deleted' => $deleted]
+        );
     }
 }

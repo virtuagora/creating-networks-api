@@ -45,6 +45,43 @@ class UserResource extends Resource
             'required' => ['names', 'surnames', 'password'],
             'additionalProperties' => false,
         ];
+        if (isset($options['edit'])) {
+            $schema['properties'] = [
+                'bio' => [
+                    'type' => 'string',
+                    'minLength' => 1,
+                    'maxLength' => 750,
+                ],
+                'data' => [
+                    'type' => 'object',
+                    'properties' => [
+                        'website' => [
+                            'type' => 'string',
+                            'minLength' => 10,
+                            'maxLength' => 100,
+                        ],
+                        'facebook' => [
+                            'type' => 'string',
+                            'minLength' => 10,
+                            'maxLength' => 100,
+                        ],
+                        'twitter' => [
+                            'type' => 'string',
+                            'minLength' => 10,
+                            'maxLength' => 100,
+                        ],
+                        'other_network' => [
+                            'type' => 'string',
+                            'minLength' => 10,
+                            'maxLength' => 100,
+                        ],
+                    ],
+                    'additionalProperties' => false,
+                ],
+            ];
+            $schema['required'] = [];
+            $schema = $this->validation->prepareSchema($schema);
+        }
         return $schema;
     }
 
@@ -79,9 +116,34 @@ class UserResource extends Resource
 
     public function retrieveUser($subject, $id, $options = [])
     {
-        return $this->db->query('App:Subject')
+        return $this->db->query('App:Subject', ['person'])
             ->where('type', 'User')
             ->findOrFail($id);
+    }
+
+    public function updateUser($subject, $usrId, $data, $options = [], $flags = 3)
+    {
+        $user = $this->db->query('App:Subject')
+            ->where('type', 'User')
+            ->findOrFail($usrId);
+        if ($flags & Utils::AUTHFLAG) {
+            $this->authorization->checkOrFail(
+                $subject, 'updateUser', $user
+            );
+        }
+        $schema = $this->retrieveSchema(['edit' => true]);
+        $v = $this->validation->fromSchema($schema);
+        $data = $this->validation->prepareData($schema, $data);
+        $v->assert($data);
+        $user->fill($data);
+        $user->save();
+        if ($flags & Utils::LOGFLAG) {
+            $this->resources['log']->createLog($subject, [
+                'action' => 'updateUser',
+                'object' => $user,
+            ]);
+        }
+        return $user;
     }
 
     public function retrieveSubjects($subject, $options = [])

@@ -44,6 +44,19 @@ class UserApiGate extends AbstractApiGate
         return $this->sendEntityResponse($response, $user);
     }
 
+    // PATCH /users/{usr}
+    public function updateUser($request, $response, $params)
+    {
+        $user = $this->resources['user']->updateUser(
+            $request->getAttribute('subject'),
+            Utils::sanitizedIdParam('usr', $params),
+            $this->helper->getDataFromRequest($request)
+        );
+        return $this->sendSimpleResponse(
+            $response,'User updated', 200
+        );
+    }
+
     // GET /users/{usr}/groups
     public function retrieveGroups($request, $response, $params)
     {

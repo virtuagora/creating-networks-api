@@ -92,7 +92,7 @@ class Paginator
             $links['next'] = $this->urlWithOffset($this->offset + $this->size);
         }
         if ($this->offset > 0) {
-            $links['prev'] = $this->urlWithOffset(min(0, $this->offset - $this->size));
+            $links['prev'] = $this->urlWithOffset(max(0, $this->offset - $this->size));
         }
         return $links;
     }

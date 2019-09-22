@@ -34,13 +34,17 @@ $app->get('/update', function ($request, $response, $params) {
         return $response->withJSON(['mensaje' => 'La actualización ha fallado']);
     }
     $mig1 = new \App\Migration\Release001Migration($this->db);
-    if ($mig1->isInstalled() && $mig1 == 'pro') {
-        return $response->withJSON(['mensaje' => 'La actualización ha fallado']);
+    if (!$mig1->isInstalled()) {
+        $mig1->up();
+        $mig1->populate();
+        $mig1->updateActions();
     }
-    $mig1->down();
-    $mig1->up();
-    $mig1->populate();
-    $mig1->updateActions();
+    $mig2 = new \App\Migration\Release002Migration($this->db);
+    if (!$mig2->isInstalled()) {
+        $mig2->up();
+        $mig2->populate();
+        $mig2->updateActions();
+    }
     return $response->withJSON(['mensaje' => 'Actualización exitosa']);
 });
 
@@ -101,6 +105,7 @@ $app->group('/v1', function () {
         ->add(new \App\Middleware\RecaptchaMiddleware($this->getContainer()));
     $this->post('/users', 'userApiGate:createUser')->setName('apiC1User');
     $this->get('/users/{usr}', 'userApiGate:retrieveUser')->setName('apiR1User');
+    $this->patch('/users/{usr}', 'userApiGate:updateUser')->setName('apiU1User');
     $this->get('/users/{usr}/groups', 'userApiGate:retrieveGroups')->setName('apiRNUserGroup');
     $this->put('/users/{usr}/password', 'userApiGate:updatePassword')->setName('apiU1UserPassword');
 
@@ -123,6 +128,7 @@ $app->group('/v1', function () {
     $this->get('/terms', 'termApiGate:retrieveTerms')->setName('apiRNTerm');
     $this->post('/terms', 'termApiGate:createTerm')->setName('apiC1Term');
     $this->get('/terms/{trm}', 'termApiGate:retrieveTerm')->setName('apiR1Term');
+    $this->delete('/terms/{trm}', 'termApiGate:deleteTerm')->setName('apiD1Term');
 
     $this->post('/initiatives/{ini}/terms', 'initiativeApiGate:attachTerms')->setName('api1InitiativeAtcNTerm');
     $this->delete('/initiatives/{ini}/terms/{trm}', 'initiativeApiGate:detachTerm')->setName('api1InitiativeDtc1Term');

@@ -3,8 +3,10 @@
 namespace App\Model;
 
 use Illuminate\Database\Eloquent\Model;
+use App\Auth\ObjectInterface;
+use App\Auth\SubjectInterface;
 
-class Term extends Model
+class Term extends Model implements ObjectInterface
 {
     protected $table = 'terms';
     protected $visible = [
@@ -26,5 +28,10 @@ class Term extends Model
     public function groups()
     {
         return $this->morphedByMany('App\Model\Group', 'object', 'term_object')->withTimestamps();
+    }
+
+    public function relationsWith(SubjectInterface $subject)
+    {
+        return [];
     }
 }
