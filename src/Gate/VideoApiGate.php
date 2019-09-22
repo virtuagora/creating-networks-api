@@ -37,7 +37,7 @@ class videoApiGate extends AbstractApiGate
     // GET /videos/{vid}
     public function retrieveVideo($request, $response, $params)
     {
-        $vide = $this->resources['video']->retrieveVideos(
+        $vide = $this->resources['video']->retrieveVideo(
             $request->getAttribute('subject'),
             Utils::sanitizedIdParam('vid', $params),
             $request->getQueryParams()

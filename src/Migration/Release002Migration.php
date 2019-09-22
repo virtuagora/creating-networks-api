@@ -27,22 +27,37 @@ class Release002Migration
     public function up()
     {
         $this->schema->table('nodes', function($t) {
-            $t->boolean('unlisted')->default(false)->change();
+            $t->dropColumn('unlisted');
             $t->dropColumn('type');
+            $t->dropColumn('data');
+            $t->dropForeign(['space_id']);
+            $t->dropColumn('space_id');
+            $t->json('public_data')->nullable();
+            $t->json('private_data')->nullable();
             $t->string('node_type_id');
             $t->foreign('node_type_id')->references('id')->on('node_types')->onDelete('restrict');
+        });
+        $this->schema->table('nodes', function($t) {
+            $t->boolean('unlisted')->default(false);
         });
     }
 
     public function down()
     {
         $this->db->query('App:Action')
-            ->whereIn('id', ['updateUser', 'deleteTerm', 'associateUserTerm'])
-            ->delete();
+            ->whereIn('id', [
+                'updateUser', 'deleteTerm', 'associateUserTerm', 'createVideo',
+                'updateVideo', 'deleteVideo',
+            ])->delete();
         $this->schema->table('nodes', function($t) {
+            $t->dropColumn('public_data');
+            $t->dropColumn('private_data');
+            $t->dropForeign(['node_type_id']);
             $t->dropColumn('node_type_id');
             $t->string('type');
+            $t->json('data')->nullable();
         });
+        $this->db->table('node_types')->where('id', 'Video')->delete();
     }
 
     public function populate()

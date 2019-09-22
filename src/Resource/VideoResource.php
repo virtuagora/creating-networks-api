@@ -74,7 +74,7 @@ class VideoResource extends Resource
         }
         $schema = $this->retrieveSchema();
         $v = $this->validation->fromSchema($schema);
-        $data = $this->validation->prepareData($schema, $data, true);
+        $data = $this->validation->prepareData($schema, $data);
         $v->assert($data);
         $optSchema = [
             'type' => 'object',
@@ -94,7 +94,7 @@ class VideoResource extends Resource
                 ->find($options['initiative_id']);
         }
         $video = $this->db->create('App:Video', $data);
-        $video->author_id = $subject;
+        $video->author_id = $subject->id;
         $video->save();
         if (isset($init)) {
             $video->subjects()->attach(

@@ -23,7 +23,7 @@ class Group extends Model implements ObjectInterface
 
     public function subject()
     {
-        return $this->hasOne('App\Model\Subject');
+        return $this->hasOne('App\Model\Subject', 'group_id');
     }
 
     public function group_type()

@@ -10,8 +10,11 @@ class Node extends Model implements ObjectInterface
 {
     protected $table = 'nodes';
     protected $visible = [
-        'id', 'title', 'content', 'points', 'author', 'created_at',
-        'subjects', 'pivor', 'node_type',
+        'id', 'title', 'content', 'points', 'author', 'created_at', 'unlisted',
+        'public_data', 'subjects', 'pivor', 'node_type',
+    ];
+    protected $fillable = [
+        'title', 'content', 'unlisted', 'public_data', 'private_data',
     ];
     protected $casts = [
         'public_data' => 'array',
@@ -39,7 +42,6 @@ class Node extends Model implements ObjectInterface
 
     public function relationsWith(SubjectInterface $subject)
     {
-        $user = $this->members()->where('subject_id', $subject->id)->first();
         return $subject->id == $this->author_id ? ['author'] : [];
     }
 }
