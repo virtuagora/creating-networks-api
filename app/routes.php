@@ -133,6 +133,9 @@ $app->group('/v1', function () {
     $this->post('/initiatives/{ini}/terms', 'initiativeApiGate:attachTerms')->setName('api1InitiativeAtcNTerm');
     $this->delete('/initiatives/{ini}/terms/{trm}', 'initiativeApiGate:detachTerm')->setName('api1InitiativeDtc1Term');
 
+    $this->post('/users/{usr}/terms', 'userApiGate:attachTerms')->setName('api1UserAtcNTerm');
+    $this->delete('/users/{usr}/terms/{trm}', 'userApiGate:detachTerm')->setName('api1UserDtc1Term');
+
     $this->get('/regions', 'regionApiGate:retrieveRegions')->setName('apiRNRegion');
     $this->get('/regions/{reg}', 'regionApiGate:retrieveRegion')->setName('apiR1Region');
     $this->get('/countries', 'countryApiGate:retrieveCountries')->setName('apiRNCountry');

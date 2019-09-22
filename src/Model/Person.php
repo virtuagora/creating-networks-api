@@ -8,7 +8,7 @@ class Person extends Model
 {
     protected $table = 'people';
     protected $visible = [
-        'id', 'names', 'surnames', 'created_at', 'subject',
+        'id', 'names', 'surnames', 'created_at', 'subject', 'terms',
     ];
     protected $fillable = [
         'names', 'surnames', 'email', 'facebook', 'phone', 'person_id',
@@ -17,6 +17,11 @@ class Person extends Model
     public function subject()
     {
         return $this->hasOne('App\Model\Subject');
+    }
+
+    public function terms()
+    {
+        return $this->morphToMany('App\Model\Term', 'object', 'term_object')->withTimestamps();
     }
 
     // public function groups()

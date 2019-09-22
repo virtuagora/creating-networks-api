@@ -32,7 +32,7 @@ class Release002Migration
     public function down()
     {
         $this->db->query('App:Action')
-            ->whereIn('id', ['updateUser', 'deleteTerm'])
+            ->whereIn('id', ['updateUser', 'deleteTerm', 'associateUserTerm'])
             ->delete();
     }
 
@@ -46,6 +46,7 @@ class Release002Migration
         $this->db->table('actions')->insert([
             ['id' => 'updateUser', 'group' => 'user', 'allowed_roles' => '["Admin"]', 'allowed_relations' => '["owner"]', 'allowed_proxies' => '[]'],
             ['id' => 'deleteTerm', 'group' => 'term', 'allowed_roles' => '["Admin"]', 'allowed_relations' => '[]', 'allowed_proxies' => '[]'],
+            ['id' => 'associateUserTerm', 'group' => 'user', 'allowed_roles' => '["Admin"]', 'allowed_relations' => '["self"]', 'allowed_proxies' => '[]'],
         ]);
     }
 }

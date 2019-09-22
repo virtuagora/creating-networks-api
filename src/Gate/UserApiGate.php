@@ -140,4 +140,30 @@ class UserApiGate extends AbstractApiGate
             'detached' => $detached
         ]);
     }
+
+    // POST /users/{usr}/terms
+    public function attachTerms($request, $response, $params)
+    {
+        $attached = $this->resources['user']->attachTerms(
+            $request->getAttribute('subject'),
+            Utils::sanitizedIdParam('usr', $params),
+            $this->helper->getDataFromRequest($request)
+        );
+        return $this->sendSimpleResponse($response, 'Terms attached', 200, [
+            'attached_terms' => $attached
+        ]);
+    }
+
+    // DELETE /users/{usr}/terms/{trm}
+    public function detachTerm($request, $response, $params)
+    {
+        $detached = $this->resources['user']->detachTerm(
+            $request->getAttribute('subject'),
+            Utils::sanitizedIdParam('usr', $params),
+            Utils::sanitizedIdParam('trm', $params)
+        );
+        return $this->sendSimpleResponse($response, 'Term detached', 200, [
+            'detached' => $detached
+        ]);
+    }
 }

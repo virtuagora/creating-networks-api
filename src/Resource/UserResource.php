@@ -116,7 +116,7 @@ class UserResource extends Resource
 
     public function retrieveUser($subject, $id, $options = [])
     {
-        return $this->db->query('App:Subject', ['person'])
+        return $this->db->query('App:Subject', ['person.terms'])
             ->where('type', 'User')
             ->findOrFail($id);
     }
@@ -465,5 +465,70 @@ class UserResource extends Resource
         }
         $changes = $subj->groups()->detach($groId);
         return $changes > 0;
+    }
+
+    public function attachTerms($subject, $usrId, $data, $flags = 3)
+    {
+        $user = $this->db->query('App:Subject', ['person'])
+            ->where('type', 'User')
+            ->findOrFail($usrId);
+        if ($flags & Utils::AUTHFLAG) {
+            $this->authorization->checkOrFail(
+                $subject, 'associateUserTerm', $user
+            );
+        }
+        $schema = [
+            'type' => 'object',
+            'properties' => [
+                'terms' => [
+                    'type' => 'array',
+                    'items' => [
+                        'type' => 'integer',
+                        'minimum' => 1,
+                    ],
+                ],
+            ],
+            'additionalProperties' => false,
+            'required' => ['terms'],
+        ];
+        $v = $this->validation->fromSchema($schema);
+        $data = $this->validation->prepareData($schema, $data);
+        $terms = $this->db->query('App:Term')
+            ->whereIn('id', $data['terms'])
+            ->get();
+        $changes = $user->person->terms()->syncWithoutDetaching(
+            $terms->pluck('id')->toArray()
+        );
+        foreach ($terms as $term) {
+            if (in_array($term->id, $changes['attached'])) {
+                $term->increment('count');
+            }
+        }
+        if ($flags & Utils::LOGFLAG) {
+            $this->resources['log']->createLog($subject, [
+                'action' => 'associateUserTerm',
+                'object' => $user,
+            ]);
+        }
+        return $changes['attached'];
+    }
+
+    public function detachTerm($subject, $usrId, $trmId, $flags = 3)
+    {
+        $user = $this->db->query('App:Subject', ['person'])
+            ->where('type', 'User')
+            ->findOrFail($usrId);
+        $term = $this->db->query('App:Term')->findOrFail($trmId);
+        if ($flags & Utils::AUTHFLAG) {
+            $this->authorization->checkOrFail(
+                $subject, 'associateUserTerm', $user
+            );
+        }
+        $changes = $user->person->terms()->detach($trmId);
+        if ($changes >= 1) {
+            $term->decrement('count');
+            return true;
+        }
+        return false;
     }
 }
