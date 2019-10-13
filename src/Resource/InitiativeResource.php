@@ -56,24 +56,59 @@ class InitiativeResource extends Resource
                 'type' => 'integer',
                 'minimum' => -1,
             ],
+            'country_id' => [
+                'type' => 'integer',
+                'minimum' => 0,
+            ],
+            'region_id' => [
+                'type' => 'integer',
+                'minimum' => 0,
+            ],
+            'registered_city_id' => [
+                'type' => 'integer',
+                'minimum' => 0,
+            ],
             's' => [
+                'type' => 'string',
+            ],
+            'terms' => [
                 'type' => 'string',
             ],
         ], 50);
         $v = $this->validation->fromSchema($pagSch);
         $options = $this->validation->prepareData($pagSch, $options, true);
         $v->assert($options);
-        $query = $this->db->query('App:Initiative');
+        $query = $this->db->query('App:Initiative', 'terms');
         if (isset($options['city_id'])) {
             if ($options['city_id'] == -1) {
                 $query->whereNull('city_id');
             } else {
-                $query->where('city_id', $options['country_id']);
+                $query->where('city_id', $options['city_id']);
             }
+        } elseif (isset($options['country_id'])) {
+            $query->whereHas('city', function ($q) use ($options) {
+                $q->where('country_id', $options['country_id']);
+            });
+        } elseif (isset($options['region_id'])) {
+            $query->whereHas('city.country', function ($q) use ($options) {
+                $q->where('region_id', $options['region_id']);
+            });
+        } elseif (isset($options['registered_city_id'])) {
+            $query->whereHas('city.registered_city', function ($q) use ($options) {
+                $q->where('id', $options['registered_city_id']);
+            });
         }
         if (isset($options['s'])) {
-            $filter = Utils::traceStr($options['s']);
-            $query->where('trace', 'LIKE', "%$filter%");
+            $query->whereHas('subject', function ($q) use ($options) {
+                $filter = Utils::traceStr($options['s']);
+                $q->where('trace', 'LIKE', "%$filter%");
+            });
+        }
+        if (isset($options['terms'])) {
+            $query->whereHas('terms', function ($q) use ($options) {
+                $terms = explode(',', $options['terms']);
+                $q->whereIn('id', $terms);
+            });
         }
         return new Paginator($query, $options);
     }

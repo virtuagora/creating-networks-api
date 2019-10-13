@@ -27,7 +27,7 @@ class City extends Model
         return $this->belongsTo('App\Model\Country');
     }
 
-    public function Space()
+    public function space()
     {
         return $this->belongsTo('App\Model\Space');
     }
@@ -35,5 +35,10 @@ class City extends Model
     public function initiatives()
     {
         return $this->hasMany('App\Model\Initiative');
+    }
+
+    public function registered_city()
+    {
+        return $this->hasOne('App\Model\RegisteredCity');
     }
 }

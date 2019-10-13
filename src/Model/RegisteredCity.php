@@ -30,7 +30,7 @@ class RegisteredCity extends Model
         return $this->belongsTo('App\Model\Country');
     }
 
-    public function City()
+    public function city()
     {
         return $this->belongsTo('App\Model\City');
     }
