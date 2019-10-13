@@ -107,7 +107,7 @@ class InitiativeResource extends Resource
         if (isset($options['terms'])) {
             $query->whereHas('terms', function ($q) use ($options) {
                 $terms = explode(',', $options['terms']);
-                $q->whereIn('id', $terms);
+                $q->whereIn('term_id', $terms);
             });
         }
         return new Paginator($query, $options);
