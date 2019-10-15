@@ -24,6 +24,10 @@ class CountryResource extends Resource
             'from' => [
                 'type' => 'string',
             ],
+            'having' => [
+                'type' => 'string',
+                'enum' => ['cities'],
+            ],
             'region_id' => [
                 'type' => 'integer',
                 'minimum' => 1,
@@ -41,6 +45,9 @@ class CountryResource extends Resource
         }
         if (isset($options['region_id'])) {
             $query->where('region_id', $options['region_id']);
+        }
+        if (isset($options['having'])) {
+            $query->has($options['having']);
         }
         return new Paginator($query, $options);
     }

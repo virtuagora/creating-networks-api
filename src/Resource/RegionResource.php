@@ -24,6 +24,10 @@ class RegionResource extends Resource
             'from' => [
                 'type' => 'string',
             ],
+            'having' => [
+                'type' => 'string',
+                'enum' => ['cities'],
+            ],
         ]);
         $v = $this->validation->fromSchema($pagSch);
         $options = $this->validation->prepareData($pagSch, $options, true);
@@ -34,6 +38,10 @@ class RegionResource extends Resource
                 list($a, $b) = explode(',', $options['from']);
                 $q->distance('point', new Point($a, $b), $options['distance']);
             });
+        }
+        // TODO mejorar porque no es dinámico
+        if (isset($options['having'])) {
+            $query->has('countries.cities');
         }
         return new Paginator($query, $options);
     }
