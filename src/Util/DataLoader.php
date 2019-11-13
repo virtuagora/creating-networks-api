@@ -19,6 +19,27 @@ class DataLoader
         return !is_null($this->db->query('App:Region')->first());
     }
 
+    public function createCountrySpaces()
+    {
+        $csv = Reader::createFromPath(__DIR__ . '/../../data/geocountries.csv', 'r');
+        $csv->setHeaderOffset(0);
+        $records = $csv->getRecords();
+        foreach ($records as $offset => $record) {
+            // $space = $this->db->createAndSave('App:Space', [
+            //     'geometry' => $record['geojson'],
+            // ]);
+            $country = $this->db->query('App:Country', ['space'])->find($record['id']);
+            $space = $country->space;
+            $space->geometry = $record['geojson'];
+            $space->save();
+            // $country->space()->associate($space);
+            // $country->save();
+            // if (isset($oldSpace)) {
+            //     $oldSpace->delete();
+            // }
+        }
+    }
+
     public function createRegions()
     {
         $csv = Reader::createFromPath(__DIR__ . '/../../data/regions.csv', 'r');

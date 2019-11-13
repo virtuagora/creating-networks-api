@@ -45,6 +45,12 @@ $app->get('/update', function ($request, $response, $params) {
         $mig2->populate();
         $mig2->updateActions();
     }
+    $mig3 = new \App\Migration\Release003Migration($this->db);
+    if (!$mig3->isInstalled()) {
+        $mig3->up();
+        $mig3->populate();
+        $mig3->updateActions();
+    }
     return $response->withJSON(['mensaje' => 'Actualización exitosa']);
 });
 
@@ -55,29 +61,37 @@ $app->get('/install-cities', function ($request, $response, $arg) {
         return $response->withJSON(['message' => 'Fail']);
     }
     $loader = new \App\Util\DataLoader($this->db);
-    if ($loader->dataAlreadyLoaded()) {
-        return $response->withJSON(['message' => 'Fail']);
-    }
-    $loader->createRegions();
-    $loader->createCountries();
-    $loader->createRegisteredCities();
+    // if ($loader->dataAlreadyLoaded()) {
+    //     return $response->withJSON(['message' => 'Fail']);
+    // }
+    // $loader->createRegions();
+    // $loader->createCountries();
+    // $loader->createRegisteredCities();
+    $loader->createCountrySpaces();
     return $response->withJSON(['message' => 'Success']);
 });
 
-// $app->get('/test', function ($request, $response, $arg) {
-//     $query = $this->db->query('App:RegisteredCity');
-//     $take = 2;
+$app->get('/test', function ($request, $response, $arg) {
 
-//     $ceil = $query->count();
+    $json = '{"type":"Polygon","coordinates":[[[-61.368136813681,15.208056087092],[-61.476147614761,15.640648468807],[-61.260126012601,15.473193353304],[-61.368136813681,15.208056087092]]]}';
+    $json = '{"type":"MultiPoint","coordinates":[[-61.368136813681,15.208056087092],[-61.476147614761,15.640648468807],[-61.260126012601,15.473193353304],[-61.368136813681,15.208056087092]]}';
     
-//     $bseQ = (clone $query)->offset(rand(0, $ceil))->take(1);
-//     for ($i = 0; $i < $take; $i++) {
-//         $auxQ = (clone $query)->offset(rand(0, $ceil))->take(1);
-//         $bseQ->union($auxQ);
-//     }
-//     $result = $bseQ->get();
-//     return $response->withJSON(['message' => $result->toArray()]);
-// });
+    $polygon = new Grimzy\LaravelMysqlSpatial\Types\Polygon([new Grimzy\LaravelMysqlSpatial\Types\LineString([
+        new Grimzy\LaravelMysqlSpatial\Types\Point(40.74894149554006, -73.98615270853043),
+        new Grimzy\LaravelMysqlSpatial\Types\Point(40.74848633046773, -73.98648262023926),
+        new Grimzy\LaravelMysqlSpatial\Types\Point(40.747925497790725, -73.9851602911949),
+        new Grimzy\LaravelMysqlSpatial\Types\Point(40.74837050671544, -73.98482501506805),
+        new Grimzy\LaravelMysqlSpatial\Types\Point(40.74894149554006, -73.98615270853043)
+    ])]);
+    
+    $space = $this->db->create('App:Space');
+    $space->geometry = $polygon;
+    //$space->type = "Polygon";
+    return $response->withJSON([
+        'message' => $space->toArray(),
+        'compare' => $polygon->toArray(),
+    ]);
+});
 
 // $app->post('/upload', function ($request, $response, $args) {
 //     $id = bin2hex(random_bytes(16)); // generate a unique id
