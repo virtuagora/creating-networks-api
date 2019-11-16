@@ -11,7 +11,7 @@ class Group extends Model implements ObjectInterface
     protected $table = 'groups';
     protected $visible = [
         'id', 'name', 'description', 'quota', 'created_at', 'public_data',
-        'terms', 'pivot', 'city', 'group_type',
+        'terms', 'countries', 'pivot', 'city', 'group_type',
     ];
     protected $fillable = [
         'name', 'description', 'quota', 'public_data', 'private_data',

@@ -41,7 +41,7 @@ class InitiativeResource extends Resource
     public function retrieveInitiative($subject, $id, $options = [])
     {
         $init = $this->db->query(
-            'App:Initiative', ['terms', 'city.country.region']
+            'App:Initiative', ['terms', 'countries', 'city.country.region']
         )->findOrFail($id);
         if ($this->authorization->check($subject, 'updateInitiative', $init)) {
             $init->addVisible('private_data');
