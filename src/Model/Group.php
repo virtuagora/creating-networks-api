@@ -41,6 +41,13 @@ class Group extends Model implements ObjectInterface
         return $this->belongsTo('App\Model\Group');
     }
 
+    public function countries()
+    {
+        return $this->belongsToMany(
+            'App\Model\Country', 'group_country', 'group_id', 'country_id'
+        );
+    }
+
     public function members()
     {
         return $this->belongsToMany(

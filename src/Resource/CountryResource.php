@@ -22,11 +22,20 @@ class CountryResource extends Resource
                 'type' => 'integer',
             ],
             'from' => [
-                'type' => 'string',
+                'type' => 'array',
+                'minItems' => 2,
+                'maxItems' => 2,
+                'items' => [
+                    'type' => 'number',
+                ],
             ],
             'having' => [
-                'type' => 'string',
-                'enum' => ['cities'],
+                'type' => 'array',
+                'uniqueItems' => true,
+                'items' => [
+                    'type' => 'string',
+                    'enum' => ['cities', 'initiatives'],
+                ],
             ],
             'region_id' => [
                 'type' => 'integer',
@@ -34,12 +43,12 @@ class CountryResource extends Resource
             ],
         ]);
         $v = $this->validation->fromSchema($pagSch);
-        $options = $this->validation->prepareData($pagSch, $options, true);
+        $options = Utils::prepareData($pagSch, $options);
         $v->assert($options);
         $query = $this->db->query('App:Country');
         if (isset($options['distance'])) {
             $query->whereHas('space', function ($q) use ($options) {
-                list($a, $b) = explode(',', $options['from']);
+                list($a, $b) = $options['from'];
                 $q->distance('point', new Point($a, $b), $options['distance']);
             });
         }
@@ -47,7 +56,9 @@ class CountryResource extends Resource
             $query->where('region_id', $options['region_id']);
         }
         if (isset($options['having'])) {
-            $query->has($options['having']);
+            foreach ($options['having'] as $rel) {
+                $query->has($rel);
+            }
         }
         return new Paginator($query, $options);
     }

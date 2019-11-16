@@ -131,4 +131,30 @@ class InitiativeApiGate extends AbstractApiGate
             'detached' => $detached
         ]);
     }
+
+    // POST /initiatives/{ini}/countries
+    public function attachCountries($request, $response, $params)
+    {
+        $attached = $this->resources['initiative']->attachCountries(
+            $request->getAttribute('subject'),
+            Utils::sanitizedIdParam('ini', $params),
+            $this->helper->getDataFromRequest($request)
+        );
+        return $this->sendSimpleResponse($response, 'Countries attached', 200, [
+            'attached_countries' => $attached
+        ]);
+    }
+
+    // DELETE /initiatives/{ini}/countries/{cou}
+    public function detachCountry($request, $response, $params)
+    {
+        $detached = $this->resources['initiative']->detachCountry(
+            $request->getAttribute('subject'),
+            Utils::sanitizedIdParam('ini', $params),
+            Utils::sanitizedIdParam('cou', $params)
+        );
+        return $this->sendSimpleResponse($response, 'Country detached', 200, [
+            'detached' => $detached
+        ]);
+    }
 }

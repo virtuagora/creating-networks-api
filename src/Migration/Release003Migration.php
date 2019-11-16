@@ -26,7 +26,7 @@ class Release003Migration
 
     public function up()
     {
-        $this->schema->table('spaces', function($t) {
+        $this->schema->table('spaces', function(Blueprint $t) {
             $t->lineString('line_string')->nullable();
             $t->multiPoint('multi_point')->nullable();
             $t->multiLineString('multi_line_string')->nullable();
@@ -34,14 +34,29 @@ class Release003Migration
             $t->string('type')->default('Point');
             $t->dropColumn('line');
         });
-        $this->schema->table('countries', function($t) {
+        $this->schema->table('countries', function(Blueprint $t) {
             $t->integer('initiatives_count')->unsigned()->default(0);
+        });
+        $this->schema->table('groups', function(Blueprint $t) {
+            $t->json('pictures')->nullable();
+        });
+        $this->schema->create('group_country', function (Blueprint $t) {
+            $t->engine = 'InnoDB';
+            $t->increments('id');
+            $t->integer('group_id')->unsigned();
+            $t->foreign('group_id')->references('id')->on('groups')->onDelete('cascade');
+            $t->integer('country_id')->unsigned();
+            $t->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
         });
     }
 
     public function down()
     {
-        $this->schema->table('spaces', function($t) {
+        $this->db->query('App:Action')
+            ->whereIn('id', [
+                'associateInitiativeCountry',
+            ])->delete();
+        $this->schema->table('spaces', function(Blueprint $t) {
             $t->lineString('line')->nullable();
             $t->dropColumn('line_string');
             $t->dropColumn('multi_point');
@@ -49,19 +64,26 @@ class Release003Migration
             $t->dropColumn('multi_polygon');
             $t->dropColumn('type');
         });
-        $this->schema->table('countries', function($t) {
+        $this->schema->table('countries', function(Blueprint $t) {
             $t->dropColumn('initiatives_count');
         });
+        $this->schema->table('groups', function(Blueprint $t) {
+            $t->dropColumn('pictures');
+        });
+        $this->schema->dropIfExists('group_country');
     }
 
     public function populate()
     {
+        $loader = new \App\Util\DataLoader($this->db);
+        $loader->createCountrySpaces();
     }
 
     public function updateActions()
     {
         $this->db->table('actions')->insert([
             ['id' => 'associateInitiativeCountry', 'group' => 'initiative', 'allowed_roles' => '["Admin"]', 'allowed_relations' => '["owner"]', 'allowed_proxies' => '[]'],
+            ['id' => 'joinInitiative', 'group' => 'initiative', 'allowed_roles' => '["User"]', 'allowed_relations' => '[]', 'allowed_proxies' => '[]'],
         ]);
     }
 }

@@ -524,41 +524,6 @@ class Release000Migration
             ['name' => 'Health', 'trace' => 'Health', 'taxonomy_id' => 'topics', 'created_at' => $today, 'updated_at' => $today],
             ['name' => 'Transparency and Government Accountability', 'trace' => 'TransparencyandGovernmentAccountability', 'taxonomy_id' => 'topics', 'created_at' => $today, 'updated_at' => $today],
         ]);
-
-    //     $this->db->table('users')->insert([
-    //         [
-    //             'email' => 'admin@rutatrans.org',
-    //             'names' => 'Augusto',
-    //             'surnames' => 'Mathurin',
-    //             'password' => password_hash('123', PASSWORD_DEFAULT),
-    //             'created_at' => $today,
-    //             'updated_at' => $today,
-    //             'trace' => 'augustomathurin',
-    //         ],
-    //     ]);
-
-    //     $this->db->table('subjects')->insert([
-    //         [
-    //             'display_name' => 'Augusto Mathurin',
-    //             'img_type' => '0',
-    //             'img_hash' => '0',
-    //             'points' => 0,
-    //             'type' => 'User',
-    //             'user_id' => 1,
-    //             'updated_at' => $today,
-    //             'created_at' => $today,
-    //         ],
-    //     ]);
-
-    //     $this->db->table('subject_role')->insert([
-    //         [
-    //             'subject_id' => 1,
-    //             'role_id' => 'user',
-    //         ], [
-    //             'subject_id' => 1,
-    //             'role_id' => 'admin',
-    //         ],
-    //     ]);
     }
 
     public function updateActions()

@@ -61,13 +61,13 @@ $app->get('/install-cities', function ($request, $response, $arg) {
         return $response->withJSON(['message' => 'Fail']);
     }
     $loader = new \App\Util\DataLoader($this->db);
-    // if ($loader->dataAlreadyLoaded()) {
-    //     return $response->withJSON(['message' => 'Fail']);
-    // }
-    // $loader->createRegions();
-    // $loader->createCountries();
-    // $loader->createRegisteredCities();
-    $loader->createCountrySpaces();
+    if ($loader->dataAlreadyLoaded()) {
+        return $response->withJSON(['message' => 'Fail']);
+    }
+    $loader->createRegions();
+    $loader->createCountries();
+    $loader->createRegisteredCities();
+    // $loader->createCountrySpaces();
     return $response->withJSON(['message' => 'Success']);
 });
 
@@ -146,6 +146,9 @@ $app->group('/v1', function () {
 
     $this->post('/initiatives/{ini}/terms', 'initiativeApiGate:attachTerms')->setName('api1InitiativeAtcNTerm');
     $this->delete('/initiatives/{ini}/terms/{trm}', 'initiativeApiGate:detachTerm')->setName('api1InitiativeDtc1Term');
+
+    $this->post('/initiatives/{ini}/countries', 'initiativeApiGate:attachCountries')->setName('api1InitiativeAtcNCountry');
+    $this->delete('/initiatives/{ini}/countries/{cou}', 'initiativeApiGate:detachCountry')->setName('api1InitiativeDtc1Country');
 
     $this->post('/users/{usr}/terms', 'userApiGate:attachTerms')->setName('api1UserAtcNTerm');
     $this->delete('/users/{usr}/terms/{trm}', 'userApiGate:detachTerm')->setName('api1UserDtc1Term');

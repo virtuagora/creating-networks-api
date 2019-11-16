@@ -26,16 +26,64 @@ class Utils
         return preg_replace('/[^[:alnum:]]/ui', '', $str);
     }
 
-    public function sanitizedIdParam($attr, $params)
+    static public function sanitizedIdParam($attr, $params)
     {
         $isDigit = ctype_digit($params[$attr] ?? 'x');
         return $isDigit ? $params[$attr] : -1;
     }
 
-    public function sanitizedStrParam($attr, $params)
+    static public function sanitizedStrParam($attr, $params)
     {
         // TODO hacer validacion de verdad
         return $params[$attr] ?? null;
+    }
+
+    static public function prepareData($schema, $data, $style = 'simple')
+    {
+        $newData = [];
+        foreach ($data as $prop => $val) {
+            if (isset($schema['properties'][$prop]['type'])) {
+                $type = $schema['properties'][$prop]['type'];
+                if ($type == 'array') {
+                    $newData[$prop] = self::castArray($val, $style);
+                } elseif ($type == 'object') {
+                    $newData[$prop] = $val;
+                } else {
+                    $newData[$prop] = self::castPrimitive($val);
+                }
+            }
+        }
+        return $newData;
+    }
+
+    static public function castPrimitive($v)
+    {
+        if (is_numeric($v)) {
+            if (strpos('.', $v) !== false) {
+                return floatval($v);
+            } else {
+                return intval($v);
+            }
+        } elseif ($v === '' || $v === 'NULL') {
+            return null;
+        } elseif ($v === 'TRUE') {
+            return true;
+        } elseif ($v === 'FALSE') {
+            return false;
+        }
+        return (string) $v;
+    }
+
+    static public function castArray($v, $style)
+    {
+        $delimiters = [
+            'spaceDelimited' => ' ',
+            'pipeDelimited' => '|',
+            'simple' => ',',
+        ];
+        $d = $delimiters[$style] ?? ',';
+        $a = explode($d, $v);
+        return array_map(self::castPrimitive, $a);
     }
     
     // static public function checkBefore($date) {

@@ -380,6 +380,67 @@ class InitiativeResource extends Resource
         return false;
     }
 
+    public function attachCountries($subject, $iniId, $data, $flags = 3)
+    {
+        $init = $this->db->query('App:Initiative')->findOrFail($iniId);
+        if ($flags & Utils::AUTHFLAG) {
+            $this->authorization->checkOrFail(
+                $subject, 'associateInitiativeCountry', $init
+            );
+        }
+        $schema = [
+            'type' => 'object',
+            'properties' => [
+                'countries' => [
+                    'type' => 'array',
+                    'items' => [
+                        'type' => 'integer',
+                        'minimum' => 1,
+                    ],
+                ],
+            ],
+            'additionalProperties' => false,
+            'required' => ['countries'],
+        ];
+        $v = $this->validation->fromSchema($schema);
+        $data = $this->validation->prepareData($schema, $data);
+        $countries = $this->db->query('App:Country')
+            ->whereIn('id', $data['countries'])
+            ->get();
+        $changes = $init->countries()->syncWithoutDetaching(
+            $countries->pluck('id')->toArray()
+        );
+        foreach ($countries as $country) {
+            if (in_array($country->id, $changes['attached'])) {
+                $country->increment('initiatives_count');
+            }
+        }
+        if ($flags & Utils::LOGFLAG) {
+            $this->resources['log']->createLog($subject, [
+                'action' => 'associateInitiativeCountry',
+                'object' => $init,
+            ]);
+        }
+        return $changes['attached'];
+    }
+
+    public function detachCountry($subject, $iniId, $couId, $flags = 3)
+    {
+        $init = $this->db->query('App:Initiative')->findOrFail($iniId);
+        $coun = $this->db->query('App:Country')->findOrFail($couId);
+        if ($flags & Utils::AUTHFLAG) {
+            $this->authorization->checkOrFail(
+                $subject, 'associateInitiativeCountry', $init
+            );
+        }
+        $changes = $init->countries()->detach($couId);
+        if ($changes >= 1) {
+            $coun->decrement('count');
+            return true;
+        }
+        return false;
+    }
+
     private function createCityFromRegistered($registered)
     {
         $s = $this->db->createAndSave('App:Space', [
