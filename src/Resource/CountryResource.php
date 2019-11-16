@@ -31,7 +31,6 @@ class CountryResource extends Resource
             ],
             'having' => [
                 'type' => 'array',
-                'uniqueItems' => true,
                 'items' => [
                     'type' => 'string',
                     'enum' => ['cities', 'initiatives'],

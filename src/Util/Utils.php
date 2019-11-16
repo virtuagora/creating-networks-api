@@ -41,18 +41,27 @@ class Utils
     static public function prepareData($schema, $data, $style = 'simple')
     {
         $newData = [];
-        foreach ($data as $prop => $val) {
-            if (isset($schema['properties'][$prop]['type'])) {
-                $type = $schema['properties'][$prop]['type'];
-                if ($type == 'array') {
-                    $newData[$prop] = self::castArray($val, $style);
-                } elseif ($type == 'object') {
-                    $newData[$prop] = $val;
-                } else {
-                    $newData[$prop] = self::castPrimitive($val);
+        $defaults = [];
+        if (isset($schema['properties'])) {
+            foreach ($schema['properties'] as $attr => $rule) {
+                if (isset($rule['default'])) {
+                    $newData[$attr] = $rule['default'];
+                }
+            }
+            foreach ($data as $prop => $val) {
+                if (isset($schema['properties'][$prop]['type'])) {
+                    $type = $schema['properties'][$prop]['type'];
+                    if ($type == 'array') {
+                        $newData[$prop] = self::castArray($val, $style);
+                    } elseif ($type == 'object') {
+                        $newData[$prop] = $val;
+                    } else {
+                        $newData[$prop] = self::castPrimitive($val);
+                    }
                 }
             }
         }
+        
         return $newData;
     }
 
@@ -83,7 +92,7 @@ class Utils
         ];
         $d = $delimiters[$style] ?? ',';
         $a = explode($d, $v);
-        return array_map(self::castPrimitive, $a);
+        return array_map(['self', 'castPrimitive'], $a);
     }
     
     // static public function checkBefore($date) {

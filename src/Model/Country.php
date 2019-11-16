@@ -38,7 +38,7 @@ class Country extends Model
         return $this->hasMany('App\Model\City');
     }
 
-    public function countries()
+    public function initiatives()
     {
         return $this->belongsToMany(
             'App\Model\Group', 'group_country', 'country_id', 'group_id'

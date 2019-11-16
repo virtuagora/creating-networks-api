@@ -17,7 +17,7 @@ class Space extends Model
     protected $table = 'spaces';
     protected $appends = ['geometry'];
     protected $visible = [
-        'id', 'geometry', 'type', 'point', 'line_string', 'polygon',
+        'id', 'type', 'point', 'line_string', 'polygon',
         'multi_point', 'multi_line_string', 'multi_polygon',
     ];
     protected $fillable = [
