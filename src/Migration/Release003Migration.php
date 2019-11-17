@@ -48,13 +48,30 @@ class Release003Migration
             $t->integer('country_id')->unsigned();
             $t->foreign('country_id')->references('id')->on('countries')->onDelete('cascade');
         });
+        $iniType = $this->db->query('App:GroupType')->find('Initiative');
+        $iniType->allowed_relations = [
+            'owner' => [
+                'name' => 'Owner',
+            ],
+            'member' => [
+                'name' => 'Member',
+                'lower_relation' => 'follower',
+                'action' => 'addInitiativeMember',
+            ],
+            'follower' => [
+                'name' => 'Follower',
+                'action' => 'addInitiativeFollower',
+            ],
+        ];
+        $iniType->save();
+        $this->db->query('App:Action')->where('id', 'updateUser')->delete();
     }
 
     public function down()
     {
         $this->db->query('App:Action')
             ->whereIn('id', [
-                'associateInitiativeCountry',
+                'associateInitiativeCountry', 'addInitiativeFollower', 'addInitiativeMember',
             ])->delete();
         $this->schema->table('spaces', function(Blueprint $t) {
             $t->lineString('line')->nullable();
@@ -82,8 +99,10 @@ class Release003Migration
     public function updateActions()
     {
         $this->db->table('actions')->insert([
+            ['id' => 'updateUser', 'group' => 'user', 'allowed_roles' => '["Admin"]', 'allowed_relations' => '["self"]', 'allowed_proxies' => '[]'],
             ['id' => 'associateInitiativeCountry', 'group' => 'initiative', 'allowed_roles' => '["Admin"]', 'allowed_relations' => '["owner"]', 'allowed_proxies' => '[]'],
-            ['id' => 'joinInitiative', 'group' => 'initiative', 'allowed_roles' => '["User"]', 'allowed_relations' => '[]', 'allowed_proxies' => '[]'],
+            ['id' => 'addInitiativeFollower', 'group' => 'initiative', 'allowed_roles' => '["User"]', 'allowed_relations' => '[]', 'allowed_proxies' => '[]'],
+            ['id' => 'addInitiativeMember', 'group' => 'initiative', 'allowed_roles' => '["Admin"]', 'allowed_relations' => '["owner"]', 'allowed_proxies' => '[]'],
         ]);
     }
 }

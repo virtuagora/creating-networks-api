@@ -9,5 +9,6 @@
     "invalidData": "The form you've sent is incomplete or invalid",
     "signInError": "Invalid sign in data",
     "bannedAccount": "Your account is suspended",
-    "emailAlreadyExists": "Your email account has been already registered"
+    "emailAlreadyExists": "Your email account has been already registered",
+    "unauthorizedUser": "User not allowed"
 }

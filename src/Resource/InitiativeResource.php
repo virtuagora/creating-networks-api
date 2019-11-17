@@ -435,7 +435,7 @@ class InitiativeResource extends Resource
         }
         $changes = $init->countries()->detach($couId);
         if ($changes >= 1) {
-            $coun->decrement('count');
+            $coun->decrement('initiatives_count');
             return true;
         }
         return false;
@@ -451,5 +451,97 @@ class InitiativeResource extends Resource
             'country_id' => $registered->country_id,
             'space_id' => $s->id,
         ]);
+    }
+
+    public function addFollower($subject, $iniId, $subId, $flags = 3)
+    {
+        $init = $this->db->query('App:Initiative')->findOrFail($iniId);
+        $user = $this->db->query('App:Subject')
+            ->where('type', 'User')
+            ->findOrFail($subId);
+        if ($flags & Utils::AUTHFLAG) {
+            $this->authorization->checkOrFail(
+                $subject, 'addInitiativeFollower', $init
+            );
+        }
+        if ($subject->id != $user->id) {
+            throw new AppException(
+                'Cannot add another user as follower', 'unauthorizedUser'
+            );
+        }
+        $changes = $init->members()->syncWithoutDetaching([
+            $subId => [
+                'relation' => 'follower',
+            ],
+        ]);
+        if ($flags & Utils::LOGFLAG) {
+            $this->resources['log']->createLog($subject, [
+                'action' => 'addInitiativeFollower',
+                'object' => $init,
+            ]);
+        }
+        return $changes > 0;
+    }
+
+    public function removeFollower($subject, $iniId, $subId, $flags = 3)
+    {
+        $init = $this->db->query('App:Initiative')->findOrFail($iniId);
+        $user = $this->db->query('App:Subject')
+            ->where('type', 'User')
+            ->findOrFail($subId);
+        if ($flags & Utils::AUTHFLAG) {
+            $this->authorization->checkOrFail(
+                $subject, 'addInitiativeFollower', $init
+            );
+        }
+        $changes = $init->members()->detach($subId);
+        return $changes > 0;
+    }
+
+    public function addMember($subject, $iniId, $subId, $flags = 3)
+    {
+        $init = $this->db->query('App:Initiative')->findOrFail($iniId);
+        $user = $this->db->query('App:Subject')
+            ->where('type', 'User')
+            ->findOrFail($subId);
+        if ($flags & Utils::AUTHFLAG) {
+            $this->authorization->checkOrFail(
+                $subject, 'addInitiativeMember', $init
+            );
+        }
+        $changes = $init->members()->syncWithoutDetaching([
+            $subId => [
+                'relation' => 'member',
+            ],
+        ]);
+        if ($flags & Utils::LOGFLAG) {
+            $this->resources['log']->createLog($subject, [
+                'action' => 'addInitiativeMember',
+                'object' => $init,
+            ]);
+        }
+        return $changes;
+    }
+
+    public function removeMember($subject, $iniId, $subId, $flags = 3)
+    {
+        $init = $this->db->query('App:Initiative')->findOrFail($iniId);
+        $user = $this->db->query('App:Subject')
+            ->where('type', 'User')
+            ->findOrFail($subId);
+        if ($flags & Utils::AUTHFLAG) {
+            $this->authorization->checkOrFail(
+                $subject, 'addInitiativeMember', $init
+            );
+        }
+        if (in_array('member', $init->relationsWith($user))) {
+            $changes = $init->members()->updateExistingPivot([
+                $subId => [
+                    'relation' => 'follower',
+                ],
+            ]);
+            return $changes > 0;
+        }
+        return false;
     }
 }

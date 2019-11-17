@@ -138,6 +138,10 @@ $app->group('/v1', function () {
     $this->post('/initiatives/{ini}/city', 'initiativeApiGate:attachCity')->setName('api1InitiativeAtc1City');
     $this->delete('/initiatives/{ini}/city', 'initiativeApiGate:detachCity')->setName('api1InitiativeDtc1City');
     $this->get('/initiatives/{ini}/members', 'initiativeApiGate:retrieveMembers')->setName('apiRNInitiativeSubject');
+    $this->post('/initiatives/{ini}/members/{usr}', 'initiativeApiGate:addMember')->setName('api1InitiativeAdd1Member');
+    $this->delete('/initiatives/{ini}/members/{usr}', 'initiativeApiGate:removeMember')->setName('api1InitiativeRmv1Member');
+    $this->post('/initiatives/{ini}/followers/{usr}', 'initiativeApiGate:addFollower')->setName('api1InitiativeAdd1Follower');
+    $this->delete('/initiatives/{ini}/followers/{usr}', 'initiativeApiGate:removeFollower')->setName('api1InitiativeRmv1Follower');
 
     $this->get('/terms', 'termApiGate:retrieveTerms')->setName('apiRNTerm');
     $this->post('/terms', 'termApiGate:createTerm')->setName('apiC1Term');

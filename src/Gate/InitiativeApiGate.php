@@ -157,4 +157,70 @@ class InitiativeApiGate extends AbstractApiGate
             'detached' => $detached
         ]);
     }
+
+    // POST /initiatives/{ini}/followers/{usr}
+    public function addFollower($request, $response, $params)
+    {
+        $result = $this->resources['initiative']->addFollower(
+            $request->getAttribute('subject'),
+            Utils::sanitizedIdParam('ini', $params),
+            Utils::sanitizedIdParam('usr', $params)
+        );
+        return $this->sendSimpleResponse($response, 'Follower added', 200, [
+            'added' => $result
+        ]);
+    }
+
+    // DELETE /initiatives/{ini}/followers/{usr}
+    public function removeFollower($request, $response, $params)
+    {
+        $result = $this->resources['initiative']->removeFollower(
+            $request->getAttribute('subject'),
+            Utils::sanitizedIdParam('ini', $params),
+            Utils::sanitizedIdParam('usr', $params)
+        );
+        return $this->sendSimpleResponse($response, 'Follower removed', 200, [
+            'removed' => $result
+        ]);
+    }
+
+    // POST /initiatives/{ini}/members/{usr}
+    public function addMember($request, $response, $params)
+    {
+        $result = $this->resources['initiative']->addMember(
+            $request->getAttribute('subject'),
+            Utils::sanitizedIdParam('ini', $params),
+            Utils::sanitizedIdParam('usr', $params)
+        );
+        return $this->sendSimpleResponse($response, 'Member added', 200, [
+            'added' => $result
+        ]);
+    }
+
+    // DELETE /initiatives/{ini}/members/{usr}
+    public function removeMember($request, $response, $params)
+    {
+        $result = $this->resources['initiative']->removeMember(
+            $request->getAttribute('subject'),
+            Utils::sanitizedIdParam('ini', $params),
+            Utils::sanitizedIdParam('usr', $params)
+        );
+        return $this->sendSimpleResponse($response, 'Member removed', 200, [
+            'removed' => $result
+        ]);
+    }
+
+    // POST /initiatives/{ini}/pictures/{pic}
+    public function updatePictures($request, $response, $params)
+    {
+        $updated = $this->resources['user']->updatePictures(
+            $request->getAttribute('subject'),
+            Utils::sanitizedIdParam('ini', $params),
+            Utils::sanitizedStrParam('pic', $params),
+            $request->getBody()
+        );
+        return $this->sendSimpleResponse($response, 'Picture updated', 200, [
+            'updated' => $updated
+        ]);
+    }
 }

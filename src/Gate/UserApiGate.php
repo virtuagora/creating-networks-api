@@ -166,4 +166,27 @@ class UserApiGate extends AbstractApiGate
             'detached' => $detached
         ]);
     }
+
+    // POST /subjects/{sub}/picture
+    public function updatePicture($request, $response, $params)
+    {
+        $updated = $this->resources['user']->updatePicture(
+            $request->getAttribute('subject'),
+            $request->getBody()
+        );
+        return $this->sendSimpleResponse($response, 'Picture updated', 200, [
+            'updated' => $updated
+        ]);
+    }
+
+    // DELETE /subjects/{sub}/picture
+    public function deletedPicture($request, $response, $params)
+    {
+        $deleted = $this->resources['user']->deletePicture(
+            $request->getAttribute('subject')
+        );
+        return $this->sendSimpleResponse($response, 'Picture deleted', 200, [
+            'deleted' => $deleted
+        ]);
+    }
 }
