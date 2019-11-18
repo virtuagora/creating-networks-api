@@ -32,6 +32,9 @@ $container['mailer'] = function ($c) {
     }
     return $mailer;
 };
+$container['image'] = function ($c) {
+    return new Intervention\Image\ImageManager(['driver' => 'imagick']);
+};
 $container['jwt'] = function ($c) {
     return new App\Service\JwtService($c->get('settings')['jwt']);
 };

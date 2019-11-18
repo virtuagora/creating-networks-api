@@ -167,23 +167,25 @@ class UserApiGate extends AbstractApiGate
         ]);
     }
 
-    // POST /subjects/{sub}/picture
+    // PUT /subjects/{sub}/picture
     public function updatePicture($request, $response, $params)
     {
-        $updated = $this->resources['user']->updatePicture(
+        $path = $this->resources['user']->updatePicture(
             $request->getAttribute('subject'),
+            Utils::sanitizedIdParam('sub', $params),
             $request->getBody()
         );
         return $this->sendSimpleResponse($response, 'Picture updated', 200, [
-            'updated' => $updated
+            'path' => $path
         ]);
     }
 
     // DELETE /subjects/{sub}/picture
-    public function deletedPicture($request, $response, $params)
+    public function deletePicture($request, $response, $params)
     {
         $deleted = $this->resources['user']->deletePicture(
-            $request->getAttribute('subject')
+            $request->getAttribute('subject'),
+            Utils::sanitizedIdParam('sub', $params)
         );
         return $this->sendSimpleResponse($response, 'Picture deleted', 200, [
             'deleted' => $deleted

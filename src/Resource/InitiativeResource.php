@@ -74,7 +74,7 @@ class InitiativeResource extends Resource
             'terms' => [
                 'type' => 'string',
             ],
-        ], 50);
+        ], 250);
         $v = $this->validation->fromSchema($pagSch);
         $options = $this->validation->prepareData($pagSch, $options, true);
         $v->assert($options);
@@ -153,6 +153,20 @@ class InitiativeResource extends Resource
                     'type' => 'boolean',
                     'default' => true,
                 ],
+                'terms' => [
+                    'type' => 'array',
+                    'items' => [
+                        'type' => 'integer',
+                        'minimum' => 1,
+                    ],
+                ],
+                'countries' => [
+                    'type' => 'array',
+                    'items' => [
+                        'type' => 'integer',
+                        'minimum' => 1,
+                    ],
+                ],
             ],
             'additionalProperties' => false,
         ];
@@ -193,6 +207,12 @@ class InitiativeResource extends Resource
             $initiative->members()->attach(
                 $subject->id, ['relation' => 'owner']
             );
+        }
+        if (isset($options['terms'])) {
+            $this->attachTerms($subject, $initiative->id, $options, 0);
+        }
+        if (isset($options['countries'])) {
+            $this->attachCountries($subject, $initiative->id, $options, 0);
         }
         if ($flags & Utils::LOGFLAG) {
             $this->resources['log']->createLog($subject, [
@@ -319,7 +339,7 @@ class InitiativeResource extends Resource
         return false;
     }
 
-    public function attachTerms($subject, $iniId, $data, $flags = 3)
+    public function attachTerms($subject, $iniId, $data, $flags = 7)
     {
         $init = $this->db->query('App:Initiative')->findOrFail($iniId);
         if ($flags & Utils::AUTHFLAG) {
@@ -327,22 +347,24 @@ class InitiativeResource extends Resource
                 $subject, 'associateInitiativeTerm', $init
             );
         }
-        $schema = [
-            'type' => 'object',
-            'properties' => [
-                'terms' => [
-                    'type' => 'array',
-                    'items' => [
-                        'type' => 'integer',
-                        'minimum' => 1,
+        if ($flags & Utils::VALIDATIONFLAG) {
+            $schema = [
+                'type' => 'object',
+                'properties' => [
+                    'terms' => [
+                        'type' => 'array',
+                        'items' => [
+                            'type' => 'integer',
+                            'minimum' => 1,
+                        ],
                     ],
                 ],
-            ],
-            'additionalProperties' => false,
-            'required' => ['terms'],
-        ];
-        $v = $this->validation->fromSchema($schema);
-        $data = $this->validation->prepareData($schema, $data);
+                'additionalProperties' => false,
+                'required' => ['terms'],
+            ];
+            $v = $this->validation->fromSchema($schema);
+            $data = $this->validation->prepareData($schema, $data);
+        }
         $terms = $this->db->query('App:Term')
             ->whereIn('id', $data['terms'])
             ->get();
@@ -380,7 +402,7 @@ class InitiativeResource extends Resource
         return false;
     }
 
-    public function attachCountries($subject, $iniId, $data, $flags = 3)
+    public function attachCountries($subject, $iniId, $data, $flags = 7)
     {
         $init = $this->db->query('App:Initiative')->findOrFail($iniId);
         if ($flags & Utils::AUTHFLAG) {
@@ -388,22 +410,24 @@ class InitiativeResource extends Resource
                 $subject, 'associateInitiativeCountry', $init
             );
         }
-        $schema = [
-            'type' => 'object',
-            'properties' => [
-                'countries' => [
-                    'type' => 'array',
-                    'items' => [
-                        'type' => 'integer',
-                        'minimum' => 1,
+        if ($flags & Utils::VALIDATIONFLAG) {
+            $schema = [
+                'type' => 'object',
+                'properties' => [
+                    'countries' => [
+                        'type' => 'array',
+                        'items' => [
+                            'type' => 'integer',
+                            'minimum' => 1,
+                        ],
                     ],
                 ],
-            ],
-            'additionalProperties' => false,
-            'required' => ['countries'],
-        ];
-        $v = $this->validation->fromSchema($schema);
-        $data = $this->validation->prepareData($schema, $data);
+                'additionalProperties' => false,
+                'required' => ['countries'],
+            ];
+            $v = $this->validation->fromSchema($schema);
+            $data = $this->validation->prepareData($schema, $data);
+        }
         $countries = $this->db->query('App:Country')
             ->whereIn('id', $data['countries'])
             ->get();

@@ -6,6 +6,7 @@ class Utils
 {
     const LOGFLAG = 1;
     const AUTHFLAG = 2;
+    const VALIDATIONFLAG = 4;
 
     static public function randomStr($length, $keyspace = '123456789ABCDEFGHJKLMNPQRSTUVWXYZ')
     {

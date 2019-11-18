@@ -531,4 +531,49 @@ class UserResource extends Resource
         }
         return false;
     }
+
+    public function updatePicture($subject, $subId, $file, $flags = 3)
+    {
+        $subj = $this->db->query('App:Subject')->findOrFail($subId);
+        if ($flags & Utils::AUTHFLAG) {
+            $this->authorization->checkOrFail(
+                $subject, 'updateUser', $subj
+            );
+        }
+        $baseDir = __DIR__ . '/../../public';
+        $localDir = '/data/' . $subId;
+        $fileName =  'avatar.png';
+        if (!file_exists($baseDir . $localDir)) {
+            mkdir($baseDir . $localDir, 0777, true);
+        }
+        $this->image->make($file->getContents())
+            ->resize(256, 256, function ($constraint) {
+                $constraint->aspectRatio();
+                $constraint->upsize();
+            })->save($baseDir . $localDir . '/' . $fileName);
+        $subj->img_hash = $localDir . '/' . $fileName;
+        $subj->img_type = 2;
+        $subj->save();
+        return $localDir . '/' . $fileName;
+    }
+
+    public function deletePicture($subject, $subId, $flags = 3)
+    {
+        $subj = $this->db->query('App:Subject')->findOrFail($subId);
+        if ($flags & Utils::AUTHFLAG) {
+            $this->authorization->checkOrFail(
+                $subject, 'updateUser', $subj
+            );
+        }
+        $path = __DIR__ . '/../../public/data/' . $subId . '/avatar.png';
+        $exists = file_exists($path);
+        if (!$exists) {
+            return false;
+        }
+        unlink($path);
+        $subj->img_hash = md5($subj->username);
+        $subj->img_type = 1;
+        $subj->save();
+        return true;
+    }
 }

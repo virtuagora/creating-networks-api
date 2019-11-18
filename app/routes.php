@@ -123,6 +123,9 @@ $app->group('/v1', function () {
     $this->get('/users/{usr}/groups', 'userApiGate:retrieveGroups')->setName('apiRNUserGroup');
     $this->put('/users/{usr}/password', 'userApiGate:updatePassword')->setName('apiU1UserPassword');
 
+    $this->put('/subjects/{sub}/picture', 'userApiGate:updatePicture')->setName('apiU1SubjectPicture');
+    $this->delete('/subjects/{sub}/picture', 'userApiGate:deletePicture')->setName('apiD1SubjectPicture');
+
     $this->post('/users/{usr}/groups/{gro}', 'userApiGate:attachGroup')->setName('api1UserAtc1Group');
     $this->delete('/users/{usr}/groups/{gro}', 'userApiGate:detachGroup')->setName('api1UserDtc1Group');
 
