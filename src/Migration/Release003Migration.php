@@ -56,11 +56,9 @@ class Release003Migration
             'member' => [
                 'name' => 'Member',
                 'lower_relation' => 'follower',
-                'action' => 'addInitiativeMember',
             ],
             'follower' => [
                 'name' => 'Follower',
-                'action' => 'addInitiativeFollower',
             ],
         ];
         $iniType->save();
@@ -71,7 +69,8 @@ class Release003Migration
     {
         $this->db->query('App:Action')
             ->whereIn('id', [
-                'associateInitiativeCountry', 'addInitiativeFollower', 'addInitiativeMember',
+                'associateInitiativeCountry', 'updateInitiativeMember',
+                'joinInitiative', 'leaveInitiative',
             ])->delete();
         $this->schema->table('spaces', function(Blueprint $t) {
             $t->lineString('line')->nullable();
@@ -101,8 +100,9 @@ class Release003Migration
         $this->db->table('actions')->insert([
             ['id' => 'updateUser', 'group' => 'user', 'allowed_roles' => '["Admin"]', 'allowed_relations' => '["self"]', 'allowed_proxies' => '[]'],
             ['id' => 'associateInitiativeCountry', 'group' => 'initiative', 'allowed_roles' => '["Admin"]', 'allowed_relations' => '["owner"]', 'allowed_proxies' => '[]'],
-            ['id' => 'addInitiativeFollower', 'group' => 'initiative', 'allowed_roles' => '["User"]', 'allowed_relations' => '[]', 'allowed_proxies' => '[]'],
-            ['id' => 'addInitiativeMember', 'group' => 'initiative', 'allowed_roles' => '["Admin"]', 'allowed_relations' => '["owner"]', 'allowed_proxies' => '[]'],
+            ['id' => 'joinInitiative', 'group' => 'initiative', 'allowed_roles' => '["Admin"]', 'allowed_relations' => '["self"]', 'allowed_proxies' => '[]'],
+            ['id' => 'leaveInitiative', 'group' => 'initiative', 'allowed_roles' => '["Admin"]', 'allowed_relations' => '["self"]', 'allowed_proxies' => '[]'],
+            ['id' => 'updateInitiativeMember', 'group' => 'initiative', 'allowed_roles' => '["Admin"]', 'allowed_relations' => '["owner"]', 'allowed_proxies' => '[]'],
         ]);
     }
 }

@@ -453,7 +453,7 @@ class InitiativeResource extends Resource
         ]);
     }
 
-    public function addFollower($subject, $iniId, $subId, $flags = 3)
+    public function addMember($subject, $iniId, $subId, $flags = 3)
     {
         $init = $this->db->query('App:Initiative')->findOrFail($iniId);
         $user = $this->db->query('App:Subject')
@@ -461,12 +461,7 @@ class InitiativeResource extends Resource
             ->findOrFail($subId);
         if ($flags & Utils::AUTHFLAG) {
             $this->authorization->checkOrFail(
-                $subject, 'addInitiativeFollower', $init
-            );
-        }
-        if ($subject->id != $user->id) {
-            throw new AppException(
-                'Cannot add another user as follower', 'unauthorizedUser'
+                $subject, 'joinInitiative', $user
             );
         }
         $changes = $init->members()->syncWithoutDetaching([
@@ -476,51 +471,11 @@ class InitiativeResource extends Resource
         ]);
         if ($flags & Utils::LOGFLAG) {
             $this->resources['log']->createLog($subject, [
-                'action' => 'addInitiativeFollower',
+                'action' => 'joinInitiative',
                 'object' => $init,
             ]);
         }
         return $changes > 0;
-    }
-
-    public function removeFollower($subject, $iniId, $subId, $flags = 3)
-    {
-        $init = $this->db->query('App:Initiative')->findOrFail($iniId);
-        $user = $this->db->query('App:Subject')
-            ->where('type', 'User')
-            ->findOrFail($subId);
-        if ($flags & Utils::AUTHFLAG) {
-            $this->authorization->checkOrFail(
-                $subject, 'addInitiativeFollower', $init
-            );
-        }
-        $changes = $init->members()->detach($subId);
-        return $changes > 0;
-    }
-
-    public function addMember($subject, $iniId, $subId, $flags = 3)
-    {
-        $init = $this->db->query('App:Initiative')->findOrFail($iniId);
-        $user = $this->db->query('App:Subject')
-            ->where('type', 'User')
-            ->findOrFail($subId);
-        if ($flags & Utils::AUTHFLAG) {
-            $this->authorization->checkOrFail(
-                $subject, 'addInitiativeMember', $init
-            );
-        }
-        $changes = $init->members()->syncWithoutDetaching([
-            $subId => [
-                'relation' => 'member',
-            ],
-        ]);
-        if ($flags & Utils::LOGFLAG) {
-            $this->resources['log']->createLog($subject, [
-                'action' => 'addInitiativeMember',
-                'object' => $init,
-            ]);
-        }
-        return $changes;
     }
 
     public function removeMember($subject, $iniId, $subId, $flags = 3)
@@ -531,17 +486,55 @@ class InitiativeResource extends Resource
             ->findOrFail($subId);
         if ($flags & Utils::AUTHFLAG) {
             $this->authorization->checkOrFail(
-                $subject, 'addInitiativeMember', $init
+                $subject, 'leaveInitiative', $user
             );
         }
-        if (in_array('member', $init->relationsWith($user))) {
-            $changes = $init->members()->updateExistingPivot([
-                $subId => [
-                    'relation' => 'follower',
-                ],
+        $changes = $init->members()->detach($subId);
+        if ($flags & Utils::LOGFLAG) {
+            $this->resources['log']->createLog($subject, [
+                'action' => 'leaveInitiative',
+                'object' => $init,
             ]);
-            return $changes > 0;
         }
-        return false;
+        return $changes > 0;
+    }
+
+    public function updateMember($subject, $iniId, $subId, $data, $flags = 3)
+    {
+        $init = $this->db->query('App:Initiative')->findOrFail($iniId);
+        $user = $this->db->query('App:Subject')
+            ->where('type', 'User')
+            ->findOrFail($subId);
+        if ($flags & Utils::AUTHFLAG) {
+            $this->authorization->checkOrFail(
+                $subject, 'updateInitiativeMember', $user
+            );
+        }
+        $schema = [
+            'type' => 'object',
+            'properties' => [
+                'relation' => [
+                    'type' => 'string',
+                    // TODO get from InitiativeType
+                    'enum' => ['follower', 'member', 'owner'],
+                ],
+            ],
+            'additionalProperties' => false,
+            'required' => ['relation'],
+        ];
+        $v = $this->validation->fromSchema($schema);
+        $data = $this->validation->prepareData($schema, $data);
+        $changes = $init->members()->syncWithoutDetaching([
+            $subId => [
+                'relation' => $data['relation'],
+            ],
+        ]);
+        if ($flags & Utils::LOGFLAG) {
+            $this->resources['log']->createLog($subject, [
+                'action' => 'updateInitiativeMember',
+                'object' => $init,
+            ]);
+        }
+        return $changes > 0;
     }
 }

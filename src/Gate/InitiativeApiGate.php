@@ -158,32 +158,6 @@ class InitiativeApiGate extends AbstractApiGate
         ]);
     }
 
-    // POST /initiatives/{ini}/followers/{usr}
-    public function addFollower($request, $response, $params)
-    {
-        $result = $this->resources['initiative']->addFollower(
-            $request->getAttribute('subject'),
-            Utils::sanitizedIdParam('ini', $params),
-            Utils::sanitizedIdParam('usr', $params)
-        );
-        return $this->sendSimpleResponse($response, 'Follower added', 200, [
-            'added' => $result
-        ]);
-    }
-
-    // DELETE /initiatives/{ini}/followers/{usr}
-    public function removeFollower($request, $response, $params)
-    {
-        $result = $this->resources['initiative']->removeFollower(
-            $request->getAttribute('subject'),
-            Utils::sanitizedIdParam('ini', $params),
-            Utils::sanitizedIdParam('usr', $params)
-        );
-        return $this->sendSimpleResponse($response, 'Follower removed', 200, [
-            'removed' => $result
-        ]);
-    }
-
     // POST /initiatives/{ini}/members/{usr}
     public function addMember($request, $response, $params)
     {
@@ -206,6 +180,20 @@ class InitiativeApiGate extends AbstractApiGate
             Utils::sanitizedIdParam('usr', $params)
         );
         return $this->sendSimpleResponse($response, 'Member removed', 200, [
+            'removed' => $result
+        ]);
+    }
+
+    // PATCH /initiatives/{ini}/members/{usr}
+    public function updateMember($request, $response, $params)
+    {
+        $result = $this->resources['initiative']->removeMember(
+            $request->getAttribute('subject'),
+            Utils::sanitizedIdParam('ini', $params),
+            Utils::sanitizedIdParam('usr', $params),
+            $this->helper->getDataFromRequest($request)
+        );
+        return $this->sendSimpleResponse($response, 'Member updated', 200, [
             'removed' => $result
         ]);
     }
