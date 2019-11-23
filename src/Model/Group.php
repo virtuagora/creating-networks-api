@@ -12,6 +12,7 @@ class Group extends Model implements ObjectInterface
     protected $visible = [
         'id', 'name', 'description', 'quota', 'created_at', 'public_data',
         'terms', 'countries', 'pivot', 'city', 'group_type', 'subject',
+        'pictures',
     ];
     protected $fillable = [
         'name', 'description', 'quota', 'public_data', 'private_data',
@@ -19,6 +20,7 @@ class Group extends Model implements ObjectInterface
     protected $casts = [
         'public_data' => 'array',
         'private_data' => 'array',
+        'pictures' => 'array',
     ];
 
     public function subject()

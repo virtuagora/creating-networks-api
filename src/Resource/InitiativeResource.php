@@ -561,4 +561,64 @@ class InitiativeResource extends Resource
         }
         return $changes > 0;
     }
+
+    public function updatePicture($subject, $iniId, $pic, $file, $flags = 3)
+    {
+        $init = $this->db->query('App:Initiative')->findOrFail($iniId);
+        if ($flags & Utils::AUTHFLAG) {
+            $this->authorization->checkOrFail(
+                $subject, 'updateInitiative', $init
+            );
+        }
+        // TODO improve and document error
+        if (!in_array($pic, ['cover'])) {
+            throw new AppException(
+                'Picture not valid', 'invalidOption'
+            );
+        }
+        $baseDir = __DIR__ . '/../../public';
+        $localDir = '/data/initiatives/' . $iniId;
+        $fileName =  $pic . '.jpg';
+        if (!file_exists($baseDir . $localDir)) {
+            mkdir($baseDir . $localDir, 0777, true);
+        }
+        $this->image->make($file->getContents())
+            ->widen(1000)->resizeCanvas(1000, 600, 'center', false, '#F7912D')
+            ->save($baseDir . $localDir . '/' . $fileName, 85);
+        $pictures = $init->pictures;
+        $pictures[$pic] = [
+            'path' => $localDir . '/' . $fileName,
+        ];
+        $init->pictures = $pictures;
+        $init->save();
+        return $pictures;
+    }
+
+    public function deletePicture($subject, $iniId, $pic, $flags = 3)
+    {
+        $init = $this->db->query('App:Initiative')->findOrFail($iniId);
+        if ($flags & Utils::AUTHFLAG) {
+            $this->authorization->checkOrFail(
+                $subject, 'updateInitiative', $init
+            );
+        }
+        $pictures = $init->pictures;
+        // TODO improve and document error
+        if (!isset($pictures[$pic])) {
+            throw new AppException(
+                'Picture not valid', 'invalidOption'
+            );
+        }
+        $path = __DIR__ . '/../../public/data/initiatives/' . $iniId . '/' .
+            $pic . '.jpg';
+        $exists = file_exists($path);
+        if (!$exists) {
+            return false;
+        }
+        unlink($path);
+        unset($pictures[$pic]);
+        $init->pictures = $pictures;
+        $init->save();
+        return true;
+    }
 }

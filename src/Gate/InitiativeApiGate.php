@@ -198,17 +198,30 @@ class InitiativeApiGate extends AbstractApiGate
         ]);
     }
 
-    // POST /initiatives/{ini}/pictures/{pic}
-    public function updatePictures($request, $response, $params)
+    // PUT /initiatives/{ini}/pictures/{pic}
+    public function updatePicture($request, $response, $params)
     {
-        $updated = $this->resources['user']->updatePictures(
+        $pics = $this->resources['initiative']->updatePicture(
             $request->getAttribute('subject'),
             Utils::sanitizedIdParam('ini', $params),
             Utils::sanitizedStrParam('pic', $params),
             $request->getBody()
         );
         return $this->sendSimpleResponse($response, 'Picture updated', 200, [
-            'updated' => $updated
+            'pictures' => $pics
+        ]);
+    }
+
+    // DELETE /initiatives/{ini}/pictures/{pic}
+    public function deletePicture($request, $response, $params)
+    {
+        $deleted = $this->resources['initiative']->deletePicture(
+            $request->getAttribute('subject'),
+            Utils::sanitizedIdParam('ini', $params),
+            Utils::sanitizedStrParam('pic', $params)
+        );
+        return $this->sendSimpleResponse($response, 'Picture deleted', 200, [
+            'deleted' => $deleted
         ]);
     }
 }
