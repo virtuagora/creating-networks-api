@@ -40,9 +40,9 @@ class InitiativeResource extends Resource
 
     public function retrieveInitiative($subject, $id, $options = [])
     {
-        $init = $this->db->query(
-            'App:Initiative', ['terms', 'countries', 'city.country.region']
-        )->findOrFail($id);
+        $init = $this->db->query('App:Initiative', [
+            'terms', 'countries', 'city.country.region', 'subject'
+        ])->findOrFail($id);
         if ($this->authorization->check($subject, 'updateInitiative', $init)) {
             $init->addVisible('private_data');
         }
@@ -78,7 +78,7 @@ class InitiativeResource extends Resource
         $v = $this->validation->fromSchema($pagSch);
         $options = $this->validation->prepareData($pagSch, $options, true);
         $v->assert($options);
-        $query = $this->db->query('App:Initiative', 'terms');
+        $query = $this->db->query('App:Initiative', ['terms', 'subject']);
         if (isset($options['city_id'])) {
             if ($options['city_id'] == -1) {
                 $query->whereNull('city_id');
