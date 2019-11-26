@@ -2,9 +2,7 @@
 
 namespace App\Model;
 
-use Illuminate\Database\Eloquent\Model;
-
-class NodeType extends Model
+class NodeType extends ResourceModel
 {
     public $incrementing = false;
     protected $table = 'node_types';

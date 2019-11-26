@@ -40,7 +40,7 @@ class CountryResource extends Resource
                 'type' => 'integer',
                 'minimum' => 1,
             ],
-        ]);
+        ], 210);
         $v = $this->validation->fromSchema($pagSch);
         $options = Utils::prepareData($pagSch, $options);
         $v->assert($options);

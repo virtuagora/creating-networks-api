@@ -46,6 +46,19 @@ class InitiativeResource extends Resource
         if ($this->authorization->check($subject, 'updateInitiative', $init)) {
             $init->addVisible('private_data');
         }
+        if (isset($subject->id)) {
+            $relation = $this->db->table('subject_group')
+            ->select('relation', 'title')
+            ->where([
+                ['subject_id', '=', $subject->id],
+                ['group_id', '=', $init->id],
+            ])->first();
+        } else {
+            $relation = null;
+        }
+        $init->setContext([
+            'connection' => $relation,
+        ]);
         return $init;
     }
 
@@ -74,7 +87,7 @@ class InitiativeResource extends Resource
             'terms' => [
                 'type' => 'string',
             ],
-        ], 250);
+        ], 200);
         $v = $this->validation->fromSchema($pagSch);
         $options = $this->validation->prepareData($pagSch, $options, true);
         $v->assert($options);

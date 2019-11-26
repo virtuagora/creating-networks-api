@@ -2,7 +2,6 @@
 
 namespace App\Model;
 
-use Illuminate\Database\Eloquent\Model;
 use Grimzy\LaravelMysqlSpatial\Eloquent\SpatialTrait;
 use Grimzy\LaravelMysqlSpatial\Types\Geometry;
 use Illuminate\Support\Str;
@@ -10,7 +9,7 @@ use App\Util\GeoUtils;
 use ReflectionClass;
 use Exception;
 
-class Space extends Model
+class Space extends ResourceModel
 {
     use SpatialTrait;
 

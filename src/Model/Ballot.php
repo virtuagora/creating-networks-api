@@ -2,9 +2,7 @@
 
 namespace App\Model;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Ballot extends Model
+class Ballot extends ResourceModel
 {
     public $timestamps = false;
     protected $table = 'ballots';

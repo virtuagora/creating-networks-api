@@ -2,9 +2,7 @@
 
 namespace App\Model;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Taxonomy extends Model
+class Taxonomy extends ResourceModel
 {
     public $incrementing = false;
     protected $table = 'taxonomies';

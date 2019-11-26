@@ -1,8 +1,6 @@
 <?php namespace App\Model;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Action extends Model
+class Action extends ResourceModel
 {
     public $incrementing = false;
     protected $table = 'actions';

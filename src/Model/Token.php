@@ -1,9 +1,8 @@
 <?php namespace App\Model;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Token extends Model
+class Token extends ResourceModel
 {
     protected $table = 'tokens';
     protected $visible = [

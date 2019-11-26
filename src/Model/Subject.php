@@ -5,9 +5,8 @@ namespace App\Model;
 use App\Util\Utils;
 use App\Auth\SubjectInterface;
 use App\Auth\ObjectInterface;
-use Illuminate\Database\Eloquent\Model;
 
-class Subject extends Model implements SubjectInterface, ObjectInterface
+class Subject extends ResourceModel implements SubjectInterface, ObjectInterface
 {
     protected $table = 'subjects';
     protected $visible = [

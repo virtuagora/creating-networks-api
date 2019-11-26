@@ -2,11 +2,10 @@
 
 namespace App\Model;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Auth\ObjectInterface;
 use App\Auth\SubjectInterface;
 
-class Group extends Model implements ObjectInterface
+class Group extends ResourceModel implements ObjectInterface
 {
     protected $table = 'groups';
     protected $visible = [

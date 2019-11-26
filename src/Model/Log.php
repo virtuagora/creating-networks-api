@@ -2,9 +2,7 @@
 
 namespace App\Model;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Log extends Model
+class Log extends ResourceModel
 {
     protected $table = 'logs';
     protected $visible = [

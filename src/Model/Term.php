@@ -2,11 +2,10 @@
 
 namespace App\Model;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Auth\ObjectInterface;
 use App\Auth\SubjectInterface;
 
-class Term extends Model implements ObjectInterface
+class Term extends ResourceModel implements ObjectInterface
 {
     protected $table = 'terms';
     protected $visible = [

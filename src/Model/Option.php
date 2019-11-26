@@ -2,10 +2,9 @@
 
 namespace App\Model;
 
-use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
-class Option extends Model
+class Option extends ResourceModel
 {
     protected $table = 'options';
     protected $visible = ['id', 'key', 'value', 'type', 'group', 'autoload'];

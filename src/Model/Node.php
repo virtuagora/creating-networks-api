@@ -2,11 +2,10 @@
 
 namespace App\Model;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Auth\ObjectInterface;
 use App\Auth\SubjectInterface;
 
-class Node extends Model implements ObjectInterface
+class Node extends ResourceModel implements ObjectInterface
 {
     protected $table = 'nodes';
     protected $visible = [

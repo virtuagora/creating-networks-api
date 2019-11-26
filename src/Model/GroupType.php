@@ -2,9 +2,7 @@
 
 namespace App\Model;
 
-use Illuminate\Database\Eloquent\Model;
-
-class GroupType extends Model
+class GroupType extends ResourceModel
 {
     public $incrementing = false;
     protected $table = 'group_types';

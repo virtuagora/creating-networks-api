@@ -37,9 +37,13 @@ abstract class AbstractApiGate extends ContainerClient
 
     protected function sendEntityResponse($response, $entity)
     {
-        return $response->withJSON([
+        $data = [
             'data' => $entity->toArray(),
-        ]);
+        ];
+        if ($entity->hasContext()) {
+            $data['context'] = $entity->getContext();
+        }
+        return $response->withJSON($data);
     }
 
     protected function sendSimpleResponse($response, $message, $status = 200, $fields = [])

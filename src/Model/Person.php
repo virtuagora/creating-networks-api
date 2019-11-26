@@ -2,9 +2,7 @@
 
 namespace App\Model;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Person extends Model
+class Person extends ResourceModel
 {
     protected $table = 'people';
     protected $visible = [

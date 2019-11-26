@@ -2,9 +2,7 @@
 
 namespace App\Model;
 
-use Illuminate\Database\Eloquent\Model;
-
-class Region extends Model
+class Region extends ResourceModel
 {
     protected $table = 'regions';
     protected $visible = [
