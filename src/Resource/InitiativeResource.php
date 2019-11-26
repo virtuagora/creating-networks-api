@@ -85,11 +85,22 @@ class InitiativeResource extends Resource
                 'type' => 'string',
             ],
             'terms' => [
-                'type' => 'string',
+                'type' => 'array',
+                'items' => [
+                    'type' => 'integer',
+                    'minimum' => 1,
+                ],
+            ],
+            'countries' => [
+                'type' => 'array',
+                'items' => [
+                    'type' => 'integer',
+                    'minimum' => 1,
+                ],
             ],
         ], 200);
         $v = $this->validation->fromSchema($pagSch);
-        $options = $this->validation->prepareData($pagSch, $options, true);
+        $options = Utils::prepareData($pagSch, $options);
         $v->assert($options);
         $query = $this->db->query('App:Initiative', ['terms', 'subject']);
         if (isset($options['city_id'])) {
@@ -119,8 +130,12 @@ class InitiativeResource extends Resource
         }
         if (isset($options['terms'])) {
             $query->whereHas('terms', function ($q) use ($options) {
-                $terms = explode(',', $options['terms']);
-                $q->whereIn('term_id', $terms);
+                $q->whereIn('term_id', $options['terms']);
+            });
+        }
+        if (isset($options['countries'])) {
+            $query->whereHas('countries', function ($q) use ($options) {
+                $q->whereIn('country_id', $options['countries']);
             });
         }
         return new Paginator($query, $options);
