@@ -29,9 +29,11 @@ class DataLoader
             //     'geometry' => $record['geojson'],
             // ]);
             $country = $this->db->query('App:Country', ['space'])->find($record['id']);
-            $space = $country->space;
-            $space->geometry = $record['geojson'];
-            $space->save();
+            if (isset($country)) {
+                $space = $country->space;
+                $space->geometry = $record['geojson'];
+                $space->save();
+            }
             // $country->space()->associate($space);
             // $country->save();
             // if (isset($oldSpace)) {

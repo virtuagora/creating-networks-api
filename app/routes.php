@@ -23,6 +23,12 @@ $app->get('/install', function($request, $response, $args) {
     $installer->up();
     $installer->populate();
     $installer->updateActions();
+    $loader = new \App\Util\DataLoader($this->db);
+    if (!$loader->dataAlreadyLoaded()) {
+        $loader->createRegions();
+        $loader->createCountries();
+        $loader->createRegisteredCities();
+    }
     return $response->withJSON(['message' => 'Success']);
 });
 
