@@ -559,7 +559,7 @@ class InitiativeResource extends Resource
             ->findOrFail($subId);
         if ($flags & Utils::AUTHFLAG) {
             $this->authorization->checkOrFail(
-                $subject, 'updateInitiativeMember', $user
+                $subject, 'updateInitiativeMember', $init
             );
         }
         $schema = [

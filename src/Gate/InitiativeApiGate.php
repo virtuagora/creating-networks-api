@@ -187,14 +187,14 @@ class InitiativeApiGate extends AbstractApiGate
     // PATCH /initiatives/{ini}/members/{usr}
     public function updateMember($request, $response, $params)
     {
-        $result = $this->resources['initiative']->removeMember(
+        $result = $this->resources['initiative']->updateMember(
             $request->getAttribute('subject'),
             Utils::sanitizedIdParam('ini', $params),
             Utils::sanitizedIdParam('usr', $params),
             $this->helper->getDataFromRequest($request)
         );
         return $this->sendSimpleResponse($response, 'Member updated', 200, [
-            'removed' => $result
+            'updated' => $result
         ]);
     }
 
