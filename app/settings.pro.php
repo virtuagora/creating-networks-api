@@ -48,7 +48,7 @@ return [
             'hostname' => null,
         ],
         'cors' => [
-            'origin' => ['https://creatingnetworks.youthsig.org'],
+            'origin' => ['https://creatingnetworks.youthsig.virtuagora.org'],
             'methods' => ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
             'headers.allow' => ['X-Requested-With', 'Content-Type', 'Accept', 'Origin', 'Authorization'],
             'headers.expose' => [],
